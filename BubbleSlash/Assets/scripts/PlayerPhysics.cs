@@ -28,6 +28,7 @@ public class PlayerPhysics : MonoBehaviour {
 	
 	//privates
 	private Rigidbody2D body;
+	private Animator animator;
 	private Vector2 direction;
 	private Vector2 direction_input;
 	private float horizontal_direction;
@@ -37,6 +38,8 @@ public class PlayerPhysics : MonoBehaviour {
 	
 	void Start () {
 		body = GetComponent<Rigidbody2D> ();
+		animator = GetComponent<Animator>();
+
 		jumps_left = max_jumps - 1;
 		is_grounded = false;
 		horizontal_direction = 1;		
@@ -44,7 +47,36 @@ public class PlayerPhysics : MonoBehaviour {
 		able_to_move = true;
 		able_to_jump = true;
 	}
-	
+
+	void FixedUpdate(){
+
+		animator.SetFloat ("inputX", direction_input.x);
+		animator.SetFloat ("inputY", direction_input.y);
+		animator.SetFloat ("speedX", body.velocity.x);
+		animator.SetBool ("isOnFeet", is_grounded);
+		if (Input.GetKeyDown ("space"))
+			animator.SetFloat ("inputJump", 1.0f);
+		else
+			animator.SetFloat("inputJump", 0.0f);
+
+		if( animator.GetCurrentAnimatorStateInfo(0).IsName("idle"))
+		{
+			Debug.Log ("idle");
+		}
+		if( animator.GetCurrentAnimatorStateInfo(0).IsName("walking"))
+		{
+			Debug.Log ("walking");
+		}
+		if( animator.GetCurrentAnimatorStateInfo(0).IsName("falling"))
+		{
+			Debug.Log ("falling");
+		}
+		if( animator.GetCurrentAnimatorStateInfo(0).IsName("jumping"))
+		{
+			Debug.Log ("jumping");
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
 
