@@ -1,0 +1,62 @@
+body {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    margin: 0;
+
+    background-color: cadetblue;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+header {
+    background: tan;
+    color: antiquewhite;
+
+    display: flex;
+    justify-content: center;
+
+}
+
+header h1 {
+    margin: 0.2em;
+    font: 300 60px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 2em;
+}
+
+article {
+    background: tan;
+    padding: 0.5em;
+    margin: 0.5em;
+    width: 600px;
+    box-shadow: 2px 5px 5px -3px;
+    border-radius: 3px;
+}
+
+a {
+    text-decoration: unset;
+    color: slategray;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    background: lightblue;
+    color: slategrey;
+}
+
