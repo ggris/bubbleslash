@@ -1,107 +1,107 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class playerPhysics : MonoBehaviour {
+public class PlayerPhysics : MonoBehaviour {
 
 	public int playerNumber;
 
 	//physics settings
-	public float groundAcc;
-	public float airAcc;
+	public float ground_acc;
+	public float air_acc;
 
-	public float jumpSpeed;
-	public float pushAirSpeed;
+	public float jump_speed;
+	public float push_air_speed;
 
-	public float groundHorizontalDrag;
-	public float airHorizontalDrag;
-	public float airVerticalDrag;
+	public float ground_horizontal_drag;
+	public float air_horizontal_drag;
+	public float air_vertical_drag;
 
-	public float maxFallingSpeed;
-	public float maxHorizontalSpeed;
+	public float max_falling_speed;
+	public float max_horizontal_speed;
 
 	//ables
-	public int maxJumps;
-	public int jumpsLeft;
-	public bool isGrounded;
-	public bool ableToMove;
-	public bool ableToJump;
+	public int max_jumps;
+	public int jumps_left;
+	public bool is_grounded;
+	public bool able_to_move;
+	public bool able_to_jump;
 	
 	//privates
 	private Rigidbody2D body;
 	private Vector2 direction;
-	private Vector2 directionInput;
-	private float horizontalDirection;
+	private Vector2 direction_input;
+	private float horizontal_direction;
 
 	
 	
 	
 	void Start () {
 		body = GetComponent<Rigidbody2D> ();
-		jumpsLeft = maxJumps - 1;
-		isGrounded = false;
-		horizontalDirection = 1;		
+		jumps_left = max_jumps - 1;
+		is_grounded = false;
+		horizontal_direction = 1;		
 		
-		ableToMove = true;
-		ableToJump = true;
+		able_to_move = true;
+		able_to_jump = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
 		//updates direction
-		directionInput = directionFromInput ();
-		direction = realDirection (directionInput);
+		direction_input = directionFromInput ();
+		direction = realDirection (direction_input);
 		//controls
-		if (directionInput.x < 0 && ableToMove) {
-			if (isGrounded){
-				body.AddForce (-Vector2.right * groundAcc * Time.deltaTime);
+		if (direction_input.x < 0 && able_to_move) {
+			if (is_grounded){
+				body.AddForce (-Vector2.right * ground_acc * Time.deltaTime);
 				//body.AddForce (new Vector2 (body.velocity.x*body.velocity.x, 0f) * groundHorizontalDrag * Time.deltaTime);
 			}
 			else {
-				body.AddForce (-Vector2.right * airAcc * Time.deltaTime);
-				body.AddForce (new Vector2 (-body.velocity.x, 0f) * airHorizontalDrag * Time.deltaTime);
-				body.AddForce (new Vector2 (0f, -body.velocity.y) * airVerticalDrag * Time.deltaTime);
+				body.AddForce (-Vector2.right * air_acc * Time.deltaTime);
+				body.AddForce (new Vector2 (-body.velocity.x, 0f) * air_horizontal_drag * Time.deltaTime);
+				body.AddForce (new Vector2 (0f, -body.velocity.y) * air_vertical_drag * Time.deltaTime);
 			}
 		}
-		if (directionInput.x > 0 && ableToMove) {
-			if (isGrounded){
-				body.AddForce (Vector2.right * groundAcc * Time.deltaTime);
+		if (direction_input.x > 0 && able_to_move) {
+			if (is_grounded){
+				body.AddForce (Vector2.right * ground_acc * Time.deltaTime);
 				//body.AddForce (new Vector2 (-body.velocity.x*body.velocity.x, 0f) * groundHorizontalDrag * Time.deltaTime);
 			}
 			else {
-				body.AddForce (Vector2.right * airAcc * Time.deltaTime);
-				body.AddForce (new Vector2 (-body.velocity.x, 0f) * airHorizontalDrag * Time.deltaTime);
-				body.AddForce (new Vector2 (0f, -body.velocity.y) * airVerticalDrag * Time.deltaTime);
+				body.AddForce (Vector2.right * air_acc * Time.deltaTime);
+				body.AddForce (new Vector2 (-body.velocity.x, 0f) * air_horizontal_drag * Time.deltaTime);
+				body.AddForce (new Vector2 (0f, -body.velocity.y) * air_vertical_drag * Time.deltaTime);
 			}
 		}
 		
-		if (Input.GetKeyDown ("space") && ableToJump) {
+		if (Input.GetKeyDown ("space") && able_to_jump) {
 
-			if (jumpsLeft > 0) {
-				if (!isGrounded) {
+			if (jumps_left > 0) {
+				if (!is_grounded) {
 					if (Input.GetKey ("left") && body.velocity.x > 0)
-						body.velocity = new Vector2 (-pushAirSpeed, jumpSpeed);
+						body.velocity = new Vector2 (-push_air_speed, jump_speed);
 					else if (Input.GetKey ("right") && body.velocity.x < 0)
-						body.velocity = new Vector2 (pushAirSpeed, jumpSpeed);
+						body.velocity = new Vector2 (push_air_speed, jump_speed);
 					else 
-						body.velocity = new Vector2 (body.velocity.x, jumpSpeed);
+						body.velocity = new Vector2 (body.velocity.x, jump_speed);
 							
-					jumpsLeft--;
+					jumps_left--;
 				} else
-					body.velocity = new Vector2 (body.velocity.x, jumpSpeed);
+					body.velocity = new Vector2 (body.velocity.x, jump_speed);
 			}
 		}
 
 		//max speeds
 
-		if (body.velocity.x < -maxHorizontalSpeed) {
-			body.velocity=new Vector2(-maxHorizontalSpeed,body.velocity.y);
+		if (body.velocity.x < -max_horizontal_speed) {
+			body.velocity=new Vector2(-max_horizontal_speed,body.velocity.y);
 		}
-		if (body.velocity.x > maxHorizontalSpeed) {
-			body.velocity=new Vector2(maxHorizontalSpeed,body.velocity.y);
+		if (body.velocity.x > max_horizontal_speed) {
+			body.velocity=new Vector2(max_horizontal_speed,body.velocity.y);
 		}
-		if (body.velocity.y < -maxFallingSpeed) {
-			body.velocity=new Vector2(body.velocity.x,-maxFallingSpeed);
+		if (body.velocity.y < -max_falling_speed) {
+			body.velocity=new Vector2(body.velocity.x,-max_falling_speed);
 		}
 
 	}
@@ -121,16 +121,16 @@ public class playerPhysics : MonoBehaviour {
 			ansY -= 1f;
 		
 		if(ansX!=0)
-			horizontalDirection=ansX;
+			horizontal_direction=ansX;
 		
 		return new Vector2 (ansX, ansY);
 	}
 	
-	public Vector2 realDirection(Vector2 directionInput){
-		if (directionInput.x==0 && directionInput.y==0)
-			return new Vector2(horizontalDirection, 0);
+	public Vector2 realDirection(Vector2 direction_input){
+		if (direction_input.x==0 && direction_input.y==0)
+			return new Vector2(horizontal_direction, 0);
 		else
-			return directionInput;
+			return direction_input;
 	}
 
 }

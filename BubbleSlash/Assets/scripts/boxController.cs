@@ -1,38 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class boxController : MonoBehaviour {
+public class BoxController : MonoBehaviour {
 
-	public playerPhysics physics;
+	public PlayerPhysics physics;
 	
-	void feetstay(){
-		Debug.Log ("feet stay");
-		physics.jumpsLeft = physics.maxJumps;
-		physics.isGrounded = true;
+	void feetStay(){
+		physics.jumps_left = physics.max_jumps;
+		physics.is_grounded = true;
 	}
 
-	void feetenter(){
+	void feetEnter(){
 	}
 
-	void feetexit(){
-		Debug.Log ("feet exit");
-		if (physics.isGrounded) {
-			physics.jumpsLeft--;
+	void feetExit(){
+		if (physics.is_grounded) {
+			physics.jumps_left--;
 		}
-		physics.isGrounded=false;
+		physics.is_grounded=false;
 	}
 
-	void leftstay(){
+	void leftStay(){
 	}
-	void leftenter(){
+	void leftEnter(){
 	}
-	void leftexit(){
+	void leftExit(){
 	}
-	void rightstay(){
+	void rightStay(){
 	}
-	void rightenter(){
+	void rightEnter(){
 	}
-	void rightexit(){
+	void rightExit(){
 	}
 
 

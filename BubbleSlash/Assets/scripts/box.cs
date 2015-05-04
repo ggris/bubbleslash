@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class box : MonoBehaviour {
+public class Box : MonoBehaviour {
 
-	public boxController controller;
+	public BoxController controller;
 
 	void Start () {
 	}
@@ -12,14 +12,14 @@ public class box : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.gameObject.tag == "floor")
-			controller.SendMessage (this.name + "enter");
+			controller.SendMessage (this.name + "Enter");
 	}
 	void OnTriggerStay2D(Collider2D other){
 		if (other.gameObject.tag == "floor")
-			controller.SendMessage (this.name + "stay");
+			controller.SendMessage (this.name + "Stay");
 	}
 	void OnTriggerExit2D(Collider2D other){
 		if (other.gameObject.tag == "floor")
-			controller.SendMessage (this.name + "exit");
+			controller.SendMessage (this.name + "Exit");
 	}
 }
