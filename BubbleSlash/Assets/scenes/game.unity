@@ -426,20 +426,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 1
-  groundAcc: 10000
-  airAcc: 500
-  jumpSpeed: 20
-  pushAirSpeed: 10
-  groundHorizontalDrag: 100
-  airHorizontalDrag: 0
-  airVerticalDrag: 0
-  maxFallingSpeed: 20
-  maxHorizontalSpeed: 15
-  maxJumps: 3
-  jumpsLeft: 2
-  isGrounded: 0
-  ableToMove: 0
-  ableToJump: 0
+  ground_acc: 10000
+  air_acc: 2000
+  jump_speed: 20
+  push_air_speed: 20
+  ground_horizontal_drag: 0
+  air_horizontal_drag: 0
+  air_vertical_drag: 0
+  max_falling_speed: 20
+  max_horizontal_speed: 15
+  max_jumps: 3
+  jumps_left: 0
+  is_grounded: 0
+  able_to_move: 0
+  able_to_jump: 0
 --- !u!1 &781760317
 GameObject:
   m_ObjectHideFlags: 0
