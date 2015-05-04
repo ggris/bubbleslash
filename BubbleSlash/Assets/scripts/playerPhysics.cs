@@ -8,10 +8,16 @@ public class playerPhysics : MonoBehaviour {
 	//physics settings
 	public float groundAcc;
 	public float airAcc;
+
 	public float jumpSpeed;
 	public float pushAirSpeed;
+
+	public float groundHorizontalDrag;
 	public float airHorizontalDrag;
 	public float airVerticalDrag;
+
+	public float maxFallingSpeed;
+	public float maxHorizontalSpeed;
 
 	//ables
 	public int maxJumps;
@@ -47,8 +53,10 @@ public class playerPhysics : MonoBehaviour {
 		direction = realDirection (directionInput);
 		//controls
 		if (directionInput.x < 0 && ableToMove) {
-			if (isGrounded)
+			if (isGrounded){
 				body.AddForce (-Vector2.right * groundAcc * Time.deltaTime);
+				//body.AddForce (new Vector2 (body.velocity.x*body.velocity.x, 0f) * groundHorizontalDrag * Time.deltaTime);
+			}
 			else {
 				body.AddForce (-Vector2.right * airAcc * Time.deltaTime);
 				body.AddForce (new Vector2 (-body.velocity.x, 0f) * airHorizontalDrag * Time.deltaTime);
@@ -56,8 +64,10 @@ public class playerPhysics : MonoBehaviour {
 			}
 		}
 		if (directionInput.x > 0 && ableToMove) {
-			if (isGrounded)
+			if (isGrounded){
 				body.AddForce (Vector2.right * groundAcc * Time.deltaTime);
+				//body.AddForce (new Vector2 (-body.velocity.x*body.velocity.x, 0f) * groundHorizontalDrag * Time.deltaTime);
+			}
 			else {
 				body.AddForce (Vector2.right * airAcc * Time.deltaTime);
 				body.AddForce (new Vector2 (-body.velocity.x, 0f) * airHorizontalDrag * Time.deltaTime);
@@ -66,7 +76,6 @@ public class playerPhysics : MonoBehaviour {
 		}
 		
 		if (Input.GetKeyDown ("space") && ableToJump) {
-			
 
 			if (jumpsLeft > 0) {
 				if (!isGrounded) {
@@ -81,7 +90,20 @@ public class playerPhysics : MonoBehaviour {
 				} else
 					body.velocity = new Vector2 (body.velocity.x, jumpSpeed);
 			}
-		}	
+		}
+
+		//max speeds
+
+		if (body.velocity.x < -maxHorizontalSpeed) {
+			body.velocity=new Vector2(-maxHorizontalSpeed,body.velocity.y);
+		}
+		if (body.velocity.x > maxHorizontalSpeed) {
+			body.velocity=new Vector2(maxHorizontalSpeed,body.velocity.y);
+		}
+		if (body.velocity.y < -maxFallingSpeed) {
+			body.velocity=new Vector2(body.velocity.x,-maxFallingSpeed);
+		}
+
 	}
 
 	public Vector2 directionFromInput (){
