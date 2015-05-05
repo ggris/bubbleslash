@@ -49,38 +49,23 @@ public class PlayerPhysics : MonoBehaviour {
 	}
 
 	void logState(){
-		if( animator.GetCurrentAnimatorStateInfo(0).IsName("idle left"))
+		if( animator.GetCurrentAnimatorStateInfo(0).IsName("idle"))
 		{
-			Debug.Log ("idle left");
+			Debug.Log ("idle");
 		}
-		if( animator.GetCurrentAnimatorStateInfo(0).IsName("walking left"))
+		if( animator.GetCurrentAnimatorStateInfo(0).IsName("walking"))
 		{
-			Debug.Log ("walking left");
+			Debug.Log ("walking");
 		}
-		if( animator.GetCurrentAnimatorStateInfo(0).IsName("falling left"))
+		if( animator.GetCurrentAnimatorStateInfo(0).IsName("falling"))
 		{
-			Debug.Log ("falling left");
+			Debug.Log ("falling");
 		}
-		if( animator.GetCurrentAnimatorStateInfo(0).IsName("jumping left"))
+		if( animator.GetCurrentAnimatorStateInfo(0).IsName("jumping"))
 		{
-			Debug.Log ("jumping left");
+			Debug.Log ("jumping");
 		}
-		if( animator.GetCurrentAnimatorStateInfo(0).IsName("idle right"))
-		{
-			Debug.Log ("idle right");
-		}
-		if( animator.GetCurrentAnimatorStateInfo(0).IsName("walking right"))
-		{
-			Debug.Log ("walking right");
-		}
-		if( animator.GetCurrentAnimatorStateInfo(0).IsName("falling right"))
-		{
-			Debug.Log ("falling right");
-		}
-		if( animator.GetCurrentAnimatorStateInfo(0).IsName("jumping right"))
-		{
-			Debug.Log ("jumping right");
-		}
+
 	}
 
 	void FixedUpdate(){
