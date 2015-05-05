@@ -127,13 +127,13 @@ public class PlayerPhysics : MonoBehaviour {
 			}
 		}
 		
-		if (Input.GetKeyDown ("space") && able_to_jump) {
-
+		if (playerInputAxis("Jump") == 1 && able_to_jump) {
+		
 			if (jumps_left > 0) {
 				if (!is_grounded) {
-					if (Input.GetKey ("left") && body.velocity.x > 0)
+					if (playerInputAxis("Horizontal") <= 0 && body.velocity.x > 0)
 						body.velocity = new Vector2 (-push_air_speed, jump_speed);
-					else if (Input.GetKey ("right") && body.velocity.x < 0)
+					else if (playerInputAxis("Horizontal") >= 0 && body.velocity.x < 0)
 						body.velocity = new Vector2 (push_air_speed, jump_speed);
 					else 
 						body.velocity = new Vector2 (body.velocity.x, jump_speed);
@@ -161,16 +161,8 @@ public class PlayerPhysics : MonoBehaviour {
 	public Vector2 directionFromInput (){
 		//return direction from input + update horizontalDirection
 		
-		float ansX = 0f;
-		float ansY = 0f;
-		if (Input.GetKey("left"))
-			ansX -= 1f;
-		if (Input.GetKey("right"))
-			ansX += 1f;
-		if (Input.GetKey("up"))
-			ansY += 1f;
-		if (Input.GetKey("down"))
-			ansY -= 1f;
+		float ansX = playerInputAxis("Horizontal");
+		float ansY = playerInputAxis("Vertical");
 		
 		if(ansX!=0)
 			horizontal_direction=ansX;
@@ -183,6 +175,10 @@ public class PlayerPhysics : MonoBehaviour {
 			return new Vector2(horizontal_direction, 0);
 		else
 			return direction_input;
+	}
+
+	private float playerInputAxis(string inputName) {
+		return Input.GetAxis("P" + playerNumber + inputName);
 	}
 
 }
