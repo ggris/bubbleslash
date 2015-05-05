@@ -5,8 +5,8 @@ body {
     left: 0;
     bottom: 0;
     margin: 0;
-
-    background-color: cadetblue;
+    
+    background-color: #F0F0F0;
 
     display: flex;
     flex-direction: column;
@@ -14,8 +14,8 @@ body {
 }
 
 header {
-    background: tan;
-    color: antiquewhite;
+    background: #005572;
+    color: white;
 
     display: flex;
     justify-content: center;
@@ -37,12 +37,28 @@ main {
 
 article {
     color: black;
-    background: tan;
-    padding: 0.5em;
+    background: white;
+    padding: 0;
     margin: 0.5em;
     width: 600px;
-    box-shadow: 2px 5px 5px -3px;
-    border-radius: 3px;
+    border-radius: 2px;
+    border: 1px solid #F0F0F0;
+    border-bottom-color: #D0D0D0;
+}
+
+article:hover {
+    background: #81BEAA;
+}
+
+h3 {
+    color: white;
+    background: #006573;
+    padding: 0.5em 0.5em;
+    margin: 0;
+}
+
+p {
+    margin-left: 1em;
 }
 
 a {
