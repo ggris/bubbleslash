@@ -178,7 +178,7 @@ public class PlayerPhysics : MonoBehaviour {
 	}
 
 	private float playerInputAxis(string inputName) {
-		return Input.GetAxis("P" + playerNumber + inputName);
+		return Input.GetAxis("P" + playerNumber + " " + inputName);
 	}
 
 }
