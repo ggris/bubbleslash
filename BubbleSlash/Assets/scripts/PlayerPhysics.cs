@@ -48,6 +48,41 @@ public class PlayerPhysics : MonoBehaviour {
 		able_to_jump = true;
 	}
 
+	void logState(){
+		if( animator.GetCurrentAnimatorStateInfo(0).IsName("idle left"))
+		{
+			Debug.Log ("idle left");
+		}
+		if( animator.GetCurrentAnimatorStateInfo(0).IsName("walking left"))
+		{
+			Debug.Log ("walking left");
+		}
+		if( animator.GetCurrentAnimatorStateInfo(0).IsName("falling left"))
+		{
+			Debug.Log ("falling left");
+		}
+		if( animator.GetCurrentAnimatorStateInfo(0).IsName("jumping left"))
+		{
+			Debug.Log ("jumping left");
+		}
+		if( animator.GetCurrentAnimatorStateInfo(0).IsName("idle right"))
+		{
+			Debug.Log ("idle right");
+		}
+		if( animator.GetCurrentAnimatorStateInfo(0).IsName("walking right"))
+		{
+			Debug.Log ("walking right");
+		}
+		if( animator.GetCurrentAnimatorStateInfo(0).IsName("falling right"))
+		{
+			Debug.Log ("falling right");
+		}
+		if( animator.GetCurrentAnimatorStateInfo(0).IsName("jumping right"))
+		{
+			Debug.Log ("jumping right");
+		}
+	}
+
 	void FixedUpdate(){
 
 		animator.SetFloat ("inputX", direction_input.x);
@@ -57,24 +92,9 @@ public class PlayerPhysics : MonoBehaviour {
 		if (Input.GetKeyDown ("space"))
 			animator.SetFloat ("inputJump", 1.0f);
 		else
-			animator.SetFloat("inputJump", 0.0f);
+			animator.SetFloat ("inputJump", 0.0f);
 
-		if( animator.GetCurrentAnimatorStateInfo(0).IsName("idle"))
-		{
-			Debug.Log ("idle");
-		}
-		if( animator.GetCurrentAnimatorStateInfo(0).IsName("walking"))
-		{
-			Debug.Log ("walking");
-		}
-		if( animator.GetCurrentAnimatorStateInfo(0).IsName("falling"))
-		{
-			Debug.Log ("falling");
-		}
-		if( animator.GetCurrentAnimatorStateInfo(0).IsName("jumping"))
-		{
-			Debug.Log ("jumping");
-		}
+		logState ();
 	}
 
 	// Update is called once per frame
