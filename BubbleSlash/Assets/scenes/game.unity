@@ -197,6 +197,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &57812417 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 446792, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
+  m_PrefabInternal: {fileID: 57812416}
 --- !u!1 &73540860
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,6 +214,7 @@ GameObject:
   - 124: {fileID: 73540862}
   - 81: {fileID: 73540861}
   - 114: {fileID: 73540866}
+  - 114: {fileID: 73540867}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -258,7 +263,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6.40160465
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -277,7 +282,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 73540860}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .389999986, y: 2.99000001, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -294,6 +299,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   post_material: {fileID: 2100000, guid: c348ca3013e8044659d7ba91f21b2718, type: 2}
+--- !u!114 &73540867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 73540860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fd11ca6d32144bbc84edf0599e3c043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  players:
+  - {fileID: 57812417}
+  - {fileID: 1841872528}
+  max_zoom: 4
+  speed: .0199999996
 --- !u!1 &370226281
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,3 +953,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &1841872528 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 446792, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
+  m_PrefabInternal: {fileID: 1841872527}
