@@ -28,18 +28,28 @@ public class CameraTracking : MonoBehaviour {
 		dy = Mathf.Max(dyx, dy);
 		
 		dy = Mathf.Max (dy, max_zoom);
-		dy *= speed;
-		my_camera.orthographicSize *= (1.0f - speed);
-		my_camera.orthographicSize += dy;
+
+		float d = smoothDelta (dy, my_camera.orthographicSize);
+
+		d /= my_camera.orthographicSize;
+
+		//dy *= speed;
+		//my_camera.orthographicSize *= (1.0f - speed);
+		my_camera.orthographicSize += d;
 	}
 
 	void updatePosition() {
 		float x = (players [0].position.x + players [1].position.x) / 2.0f;
 		float y = (players [0].position.y + players [1].position.y) / 2.0f;
-		Vector3 target_position = new Vector3 (x, y, transform.position.z);
-		target_position *= speed;
-		transform.position *= (1.0f) - speed;
+		float dx = smoothDelta (x, transform.position.x);
+		float dy = smoothDelta (y, transform.position.y);
+		Vector3 target_position = new Vector3 (dx, dy, 0);
 		transform.position += target_position;
+	}
 
+	float smoothDelta(float a, float b) {
+		float d = a - b;
+		d *= Mathf.Abs (d) * speed;
+		return d;
 	}
 }
