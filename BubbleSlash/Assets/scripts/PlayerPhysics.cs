@@ -29,11 +29,14 @@ public class PlayerPhysics : MonoBehaviour {
 	//privates
 	private Rigidbody2D body;
 	private Animator animator;
-	private Vector2 direction;
+	//private Vector2 direction;
 	private Vector2 direction_input;
 	private float horizontal_direction;
 
-	
+	//quick under tea
+	public string key_jump;
+	public string key_weapon;
+	public string key_hat;
 	
 	
 	void Start () {
@@ -69,30 +72,30 @@ public class PlayerPhysics : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-
-		animator.SetFloat ("inputX", direction_input.x);
-		animator.SetFloat ("inputY", direction_input.y);
-		animator.SetFloat ("speedX", body.velocity.x);
-		animator.SetBool ("isOnFeet", is_grounded);
-		if (Input.GetKeyDown ("space"))
-			animator.SetFloat ("inputJump", 1.0f);
-		else
-			animator.SetFloat ("inputJump", 0.0f);
-
-		logState ();
 	}
 
 	// Update is called once per frame
 	void Update () {
 
+		able_to_jump = isAbleToJump();
+
 		//updates direction
 		direction_input = directionFromInput ();
-		direction = realDirection (direction_input);
+		//direction = realDirection (direction_input);
+
+		animator.SetFloat ("inputX", direction_input.x);
+		animator.SetFloat ("inputY", direction_input.y);
+		animator.SetFloat ("speedX", body.velocity.x);
+		animator.SetBool ("isOnFeet", is_grounded);
+		if (Input.GetKeyDown(key_jump) && able_to_jump)
+			animator.SetTrigger ("triggerJump");
+
+
 		//controls
 		if (direction_input.x < 0 && able_to_move) {
 			if (is_grounded){
 				body.AddForce (-Vector2.right * ground_acc * Time.deltaTime);
-				//body.AddForce (new Vector2 (body.velocity.x*body.velocity.x, 0f) * groundHorizontalDrag * Time.deltaTime);
+
 			}
 			else {
 				body.AddForce (-Vector2.right * air_acc * Time.deltaTime);
@@ -112,7 +115,7 @@ public class PlayerPhysics : MonoBehaviour {
 			}
 		}
 		
-		if (playerInputAxis("Jump") == 1 && able_to_jump) {
+		if (Input.GetKeyDown(key_jump) && able_to_jump) {
 		
 			if (jumps_left > 0) {
 				if (!is_grounded) {
@@ -123,7 +126,6 @@ public class PlayerPhysics : MonoBehaviour {
 					else 
 						body.velocity = new Vector2 (body.velocity.x, jump_speed);
 							
-					jumps_left--;
 				} else
 					body.velocity = new Vector2 (body.velocity.x, jump_speed);
 			}
@@ -166,4 +168,10 @@ public class PlayerPhysics : MonoBehaviour {
 		return Input.GetAxis("P" + playerNumber + " " + inputName);
 	}
 
+	public bool isAbleToJump(){
+		bool ans = animator.GetCurrentAnimatorStateInfo(0).IsName("idle")
+			|| animator.GetCurrentAnimatorStateInfo(0).IsName("walking")
+				|| animator.GetCurrentAnimatorStateInfo(0).IsName("falling");
+		return ans && (jumps_left > 0);
+	}
 }
