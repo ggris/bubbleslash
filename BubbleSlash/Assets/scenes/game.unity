@@ -198,6 +198,14 @@ Prefab:
       propertyPath: key_jump
       value: space
       objectReference: {fileID: 0}
+    - target: {fileID: 11442956, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
+      propertyPath: key_weapon
+      value: b
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442956, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
+      propertyPath: dash_speed
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
   m_IsPrefabParent: 0
@@ -957,6 +965,10 @@ Prefab:
     - target: {fileID: 11442956, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
       propertyPath: key_jump
       value: left ctrl
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442956, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
+      propertyPath: key_weapon
+      value: left alt
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}

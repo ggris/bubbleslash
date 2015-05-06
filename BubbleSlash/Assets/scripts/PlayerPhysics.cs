@@ -25,19 +25,21 @@ public class PlayerPhysics : MonoBehaviour {
 	public bool is_grounded;
 	public bool able_to_move;
 	public bool able_to_jump;
-	
+	public bool able_to_attack;
+
 	//privates
 	private Rigidbody2D body;
 	private Animator animator;
-	//private Vector2 direction;
+	private Vector2 direction;
 	private Vector2 direction_input;
+	private Vector2 direction_action;
 	private float horizontal_direction;
 
 	//quick under tea
 	public string key_jump;
 	public string key_weapon;
 	public string key_hat;
-	
+	public float dash_speed;
 	
 	void Start () {
 		body = GetComponent<Rigidbody2D> ();
@@ -77,86 +79,46 @@ public class PlayerPhysics : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		able_to_jump = isAbleToJump();
-
-		//updates direction
-		direction_input = directionFromInput ();
-		//direction = realDirection (direction_input);
-
+		//set animation values
 		animator.SetFloat ("inputX", direction_input.x);
 		animator.SetFloat ("inputY", direction_input.y);
 		animator.SetFloat ("speedX", body.velocity.x);
 		animator.SetBool ("isOnFeet", is_grounded);
 		if (Input.GetKeyDown(key_jump) && able_to_jump)
 			animator.SetTrigger ("triggerJump");
+		if (Input.GetKeyDown (key_weapon) && able_to_attack)
+			animator.SetTrigger ("triggerAttack");
 
-
+		able_to_jump = isAbleToJump();
+		able_to_move = isAbleToMove();
+		able_to_attack = isAbleToAttack ();
+		//updates direction
+		direction_input = directionFromInput ();
+		direction = realDirection (direction_input);
 		//controls
-		if (direction_input.x < 0 && able_to_move) {
-			if (is_grounded){
-				body.AddForce (-Vector2.right * ground_acc * Time.deltaTime);
+		checkAttack ();
 
-			}
-			else {
-				body.AddForce (-Vector2.right * air_acc * Time.deltaTime);
-				body.AddForce (new Vector2 (-body.velocity.x, 0f) * air_horizontal_drag * Time.deltaTime);
-				body.AddForce (new Vector2 (0f, -body.velocity.y) * air_vertical_drag * Time.deltaTime);
-			}
-		}
-		if (direction_input.x > 0 && able_to_move) {
-			if (is_grounded){
-				body.AddForce (Vector2.right * ground_acc * Time.deltaTime);
-				//body.AddForce (new Vector2 (-body.velocity.x*body.velocity.x, 0f) * groundHorizontalDrag * Time.deltaTime);
-			}
-			else {
-				body.AddForce (Vector2.right * air_acc * Time.deltaTime);
-				body.AddForce (new Vector2 (-body.velocity.x, 0f) * air_horizontal_drag * Time.deltaTime);
-				body.AddForce (new Vector2 (0f, -body.velocity.y) * air_vertical_drag * Time.deltaTime);
-			}
-		}
-		
-		if (Input.GetKeyDown(key_jump) && able_to_jump) {
-		
-			if (jumps_left > 0) {
-				if (!is_grounded) {
-					if (playerInputAxis("Horizontal") <= 0 && body.velocity.x > 0)
-						body.velocity = new Vector2 (-push_air_speed, jump_speed);
-					else if (playerInputAxis("Horizontal") >= 0 && body.velocity.x < 0)
-						body.velocity = new Vector2 (push_air_speed, jump_speed);
-					else 
-						body.velocity = new Vector2 (body.velocity.x, jump_speed);
-							
-				} else
-					body.velocity = new Vector2 (body.velocity.x, jump_speed);
-			}
-		}
+		checkMove ();
+
+		checkJump ();
+
 
 		//max speeds
+		checkMaxSpeeds ();
 
-		if (body.velocity.x < -max_horizontal_speed) {
-			body.velocity=new Vector2(-max_horizontal_speed,body.velocity.y);
-		}
-		if (body.velocity.x > max_horizontal_speed) {
-			body.velocity=new Vector2(max_horizontal_speed,body.velocity.y);
-		}
-		if (body.velocity.y < -max_falling_speed) {
-			body.velocity=new Vector2(body.velocity.x,-max_falling_speed);
-		}
+
 
 	}
 
 	public Vector2 directionFromInput (){
 		//return direction from input + update horizontalDirection
-		
-		float ansX = playerInputAxis("Horizontal");
-		float ansY = playerInputAxis("Vertical");
-		
-		if(ansX!=0)
-			horizontal_direction=ansX;
-		
-		return new Vector2 (ansX, ansY);
+		Vector2 ans = new Vector2 (playerInputAxis("Horizontal"), playerInputAxis("Vertical"));
+		ans.Normalize ();
+		if(ans.x!=0)
+			horizontal_direction=ans.x;
+
+		return ans;
 	}
-	
 	public Vector2 realDirection(Vector2 direction_input){
 		if (direction_input.x==0 && direction_input.y==0)
 			return new Vector2(horizontal_direction, 0);
@@ -174,4 +136,83 @@ public class PlayerPhysics : MonoBehaviour {
 				|| animator.GetCurrentAnimatorStateInfo(0).IsName("falling");
 		return ans && (jumps_left > 0);
 	}
+
+	public bool isAbleToMove(){
+		return !animator.GetCurrentAnimatorStateInfo (0).IsTag ("weapon");
+	}
+
+	public bool isAbleToAttack(){
+		return true;
+	}
+	public void checkMove(){
+		if (direction_input.x < 0 && able_to_move) {
+			if (is_grounded){
+				body.AddForce (-Vector2.right * ground_acc * Time.deltaTime);
+				
+			}
+			else {
+				body.AddForce (-Vector2.right * air_acc * Time.deltaTime);
+				body.AddForce (new Vector2 (-body.velocity.x, 0f) * air_horizontal_drag * Time.deltaTime);
+				body.AddForce (new Vector2 (0f, -body.velocity.y) * air_vertical_drag * Time.deltaTime);
+			}
+		}
+		if (direction_input.x > 0 && able_to_move) {
+			if (is_grounded){
+				body.AddForce (Vector2.right * ground_acc * Time.deltaTime);
+			}
+			else {
+				body.AddForce (Vector2.right * air_acc * Time.deltaTime);
+				body.AddForce (new Vector2 (-body.velocity.x, 0f) * air_horizontal_drag * Time.deltaTime);
+				body.AddForce (new Vector2 (0f, -body.velocity.y) * air_vertical_drag * Time.deltaTime);
+			}
+		}
+	}
+
+	public void checkJump (){
+		if (Input.GetKeyDown(key_jump) && able_to_jump) {
+			
+			if (jumps_left > 0) {
+				if (!is_grounded) {
+					if (playerInputAxis("Horizontal") <= 0 && body.velocity.x > 0)
+						body.velocity = new Vector2 (-push_air_speed, jump_speed);
+					else if (playerInputAxis("Horizontal") >= 0 && body.velocity.x < 0)
+						body.velocity = new Vector2 (push_air_speed, jump_speed);
+					else 
+						body.velocity = new Vector2 (body.velocity.x, jump_speed);
+					
+				} else
+					body.velocity = new Vector2 (body.velocity.x, jump_speed);
+			}
+		}
+	}
+
+	public void checkMaxSpeeds(){
+		if (body.velocity.x < -max_horizontal_speed) {
+			body.velocity=new Vector2(-max_horizontal_speed,body.velocity.y);
+		}
+		if (body.velocity.x > max_horizontal_speed) {
+			body.velocity=new Vector2(max_horizontal_speed,body.velocity.y);
+		}
+		if (body.velocity.y < -max_falling_speed) {
+			body.velocity=new Vector2(body.velocity.x,-max_falling_speed);
+		}
+	}
+
+	public void checkAttack(){
+		//getKeyDown -> attackstart
+		if (Input.GetKeyDown (key_weapon) && able_to_attack) {
+			direction_action=direction;
+		}
+
+		//if in state -> attack behaviour
+		if (animator.GetCurrentAnimatorStateInfo(0).IsTag("weapon")){
+			body.velocity= direction_action * dash_speed;
+			body.gravityScale=0;
+		}
+		else {
+			body.gravityScale=5;
+		}
+	}
+
+
 }
