@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PlayerPhysics : MonoBehaviour {
 
+
 	public int playerNumber;
 
 	//physics settings
@@ -34,6 +35,8 @@ public class PlayerPhysics : MonoBehaviour {
 	private Vector2 direction_input;
 	private Vector2 direction_action;
 	private float horizontal_direction;
+	private GameObject weapon;
+	private PlayerManager manager;
 
 	//quick under tea
 	public string key_jump;
@@ -44,13 +47,15 @@ public class PlayerPhysics : MonoBehaviour {
 	void Start () {
 		body = GetComponent<Rigidbody2D> ();
 		animator = GetComponent<Animator>();
+		weapon = transform.Find("weapon").gameObject;
+		manager = GameObject.Find ("playerManager").GetComponent<PlayerManager> ();
 
 		jumps_left = max_jumps - 1;
 		is_grounded = false;
 		horizontal_direction = 1;		
-		
 		able_to_move = true;
 		able_to_jump = true;
+
 	}
 
 	void logState(){
@@ -79,19 +84,21 @@ public class PlayerPhysics : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		able_to_jump = isAbleToJump();
+		able_to_move = isAbleToMove();
+		able_to_attack = isAbleToAttack ();
+
 		//set animation values
 		animator.SetFloat ("inputX", direction_input.x);
 		animator.SetFloat ("inputY", direction_input.y);
 		animator.SetFloat ("speedX", body.velocity.x);
 		animator.SetBool ("isOnFeet", is_grounded);
+
 		if (Input.GetKeyDown(key_jump) && able_to_jump)
 			animator.SetTrigger ("triggerJump");
 		if (Input.GetKeyDown (key_weapon) && able_to_attack)
 			animator.SetTrigger ("triggerAttack");
 
-		able_to_jump = isAbleToJump();
-		able_to_move = isAbleToMove();
-		able_to_attack = isAbleToAttack ();
 		//updates direction
 		direction_input = directionFromInput ();
 		direction = realDirection (direction_input);
@@ -144,11 +151,11 @@ public class PlayerPhysics : MonoBehaviour {
 	public bool isAbleToAttack(){
 		return true;
 	}
+
 	public void checkMove(){
 		if (direction_input.x < 0 && able_to_move) {
 			if (is_grounded){
 				body.AddForce (-Vector2.right * ground_acc * Time.deltaTime);
-				
 			}
 			else {
 				body.AddForce (-Vector2.right * air_acc * Time.deltaTime);
@@ -199,20 +206,30 @@ public class PlayerPhysics : MonoBehaviour {
 	}
 
 	public void checkAttack(){
-		//getKeyDown -> attackstart
-		if (Input.GetKeyDown (key_weapon) && able_to_attack) {
+		if (animator.GetCurrentAnimatorStateInfo(0).IsName("startAttack")) {
+
 			direction_action=direction;
+			weapon.SetActive(true);
+			body.gravityScale=0;
+			weapon.transform.localEulerAngles=new Vector3(0,0,getAngle(direction_action,new Vector2(1,0)));
 		}
 
-		//if in state -> attack behaviour
-		if (animator.GetCurrentAnimatorStateInfo(0).IsTag("weapon")){
+		if (animator.GetCurrentAnimatorStateInfo(0).IsName("attack")){
 			body.velocity= direction_action * dash_speed;
-			body.gravityScale=0;
 		}
-		else {
+
+		if (animator.GetCurrentAnimatorStateInfo(0).IsName("endAttack")){
+			weapon.SetActive(false);
 			body.gravityScale=5;
 		}
 	}
 
+	public float getAngle (Vector2 a, Vector2 b){
+		return Vector2.Angle (a, b) * -1 * Mathf.Sign (Vector3.Cross (new Vector3 (a.x, a.y, 0), new Vector3 (b.x, b.y, 0)).z);
+	}
+
+	public void isHit(){
+		GameObject.Find ("playerManager").GetComponent<PlayerManager> ().dealWithDeath (playerNumber-1);
+	}
 
 }
