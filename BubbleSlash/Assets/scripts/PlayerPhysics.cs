@@ -134,7 +134,7 @@ public class PlayerPhysics : MonoBehaviour {
 	}
 
 	private float playerInputAxis(string inputName) {
-		return Input.GetAxis("P" + playerNumber + " " + inputName);
+		return Input.GetAxisRaw("P" + playerNumber + " " + inputName);
 	}
 
 	public bool isAbleToJump(){
@@ -180,9 +180,9 @@ public class PlayerPhysics : MonoBehaviour {
 			
 			if (jumps_left > 0) {
 				if (!is_grounded) {
-					if (playerInputAxis("Horizontal") <= 0 && body.velocity.x > 0)
+					if (playerInputAxis("Horizontal") < -0.5 && body.velocity.x > 0)
 						body.velocity = new Vector2 (-push_air_speed, jump_speed);
-					else if (playerInputAxis("Horizontal") >= 0 && body.velocity.x < 0)
+					else if (playerInputAxis("Horizontal") > 0.5 && body.velocity.x < 0)
 						body.velocity = new Vector2 (push_air_speed, jump_speed);
 					else 
 						body.velocity = new Vector2 (body.velocity.x, jump_speed);
