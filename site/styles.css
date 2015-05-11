@@ -11,17 +11,39 @@ body {
     font-family: Geneva, sans-serif;
     font-size: 80%;
     
+}
+
+main {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+}
+
+section {
+    flex: 1 20px;
+}
+
+.about {
+    position: fixed;
+    width: 400px;
+}
+
+.fantom {
+    width: 400px;
+}
+
+.games {
+    padding-bottom: 1em;
+    max-width: 600px;
 }
 
 header {
-    background: #005572;
+    background: #0097c2;
     color: white;
 
     display: flex;
     justify-content: center;
+    
+    width: 100%;
 
 }
 
@@ -30,38 +52,32 @@ header h1 {
     font: 300 60px Tahoma, Geneva, sans-serif;
 }
 
-main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 1em;
-}
-
 article {
     color: black;
     background: white;
     padding: 0;
-    margin: 0.5em;
-    width: 600px;
-    border-radius: 2px;
+    margin: 1em;
+    border-radius: 6px;
     border: 1px solid #F0F0F0;
     border-bottom-color: #D0D0D0;
 }
 
-article:hover {
-    background: #81BEAA;
+.games article:hover {
+    background: #31cEeA;
 }
 
-h3 {
+h2, h3, h3 {
     color: white;
-    background: #006573;
+    background: #0075c3;
     padding: 0.5em 0.5em;
     margin: 0;
+    border-radius: 6px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 p {
-    margin-left: 1em;
+    margin: 1em 4em 1em 2em;
 }
 
 a {
