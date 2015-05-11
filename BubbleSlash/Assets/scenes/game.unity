@@ -328,7 +328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resolution_: 64
-  time_step_: 1
+  time_step_: .00100000005
   obstacles_: {fileID: 0}
   initial_density_: {fileID: 0}
   initial_velocity_: {fileID: 0}
