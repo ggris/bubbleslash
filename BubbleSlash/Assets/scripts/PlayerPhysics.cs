@@ -12,6 +12,8 @@ public class PlayerPhysics : MonoBehaviour {
 
 	public float jump_speed;
 	public float push_air_speed;
+	public float wall_jump_speed;
+	public float push_wall_speed;
 
 	public float ground_horizontal_drag;
 	public float air_horizontal_drag;
@@ -24,6 +26,8 @@ public class PlayerPhysics : MonoBehaviour {
 	public int max_jumps;
 	public int jumps_left;
 	public bool is_grounded;
+	public bool is_touching_left;
+	public bool is_touching_right;
 	public bool able_to_move;
 	public bool able_to_jump;
 	public bool able_to_attack;
@@ -75,6 +79,18 @@ public class PlayerPhysics : MonoBehaviour {
 		{
 			Debug.Log ("jumping");
 		}
+		if( animator.GetCurrentAnimatorStateInfo(0).IsName("sliding"))
+		{
+			Debug.Log ("sliding");
+		}
+		if( animator.GetCurrentAnimatorStateInfo(0).IsName("walljumping"))
+		{
+			Debug.Log ("walljumping");
+		}
+		if( animator.GetCurrentAnimatorStateInfo(0).IsName("attack"))
+		{
+			Debug.Log ("attack");
+		}
 
 	}
 
@@ -83,6 +99,8 @@ public class PlayerPhysics : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if (playerNumber == 1)
+			Debug.Log (horizontal_direction);
 
 		able_to_jump = isAbleToJump();
 		able_to_move = isAbleToMove();
@@ -93,6 +111,7 @@ public class PlayerPhysics : MonoBehaviour {
 		animator.SetFloat ("inputY", direction_input.y);
 		animator.SetFloat ("speedX", body.velocity.x);
 		animator.SetBool ("isOnFeet", is_grounded);
+		animator.SetBool ("isOnHand", is_touching_left || is_touching_right);
 
 		if (Input.GetKeyDown(key_jump) && able_to_jump)
 			animator.SetTrigger ("triggerJump");
@@ -101,6 +120,7 @@ public class PlayerPhysics : MonoBehaviour {
 
 		//updates direction
 		direction_input = directionFromInput ();
+		checkSlide (); //only changes "horizontal_direction" if sliding
 		direction = realDirection (direction_input);
 		//controls
 		checkAttack ();
@@ -112,7 +132,6 @@ public class PlayerPhysics : MonoBehaviour {
 
 		//max speeds
 		checkMaxSpeeds ();
-
 
 
 	}
@@ -139,9 +158,9 @@ public class PlayerPhysics : MonoBehaviour {
 
 	public bool isAbleToJump(){
 		bool ans = animator.GetCurrentAnimatorStateInfo(0).IsName("idle")
-			|| animator.GetCurrentAnimatorStateInfo(0).IsName("walking")
+				|| animator.GetCurrentAnimatorStateInfo(0).IsName("walking")
 				|| animator.GetCurrentAnimatorStateInfo(0).IsName("falling");
-		return ans && (jumps_left > 0);
+		return (ans && (jumps_left > 0)) || animator.GetCurrentAnimatorStateInfo(0).IsName("sliding");
 	}
 
 	public bool isAbleToMove(){
@@ -174,34 +193,54 @@ public class PlayerPhysics : MonoBehaviour {
 			}
 		}
 	}
-
-	public void checkJump (){
-		if (Input.GetKeyDown(key_jump) && able_to_jump) {
-			
-			if (jumps_left > 0) {
-				if (!is_grounded) {
-					if (playerInputAxis("Horizontal") < -0.5 && body.velocity.x > 0)
-						body.velocity = new Vector2 (-push_air_speed, jump_speed);
-					else if (playerInputAxis("Horizontal") > 0.5 && body.velocity.x < 0)
-						body.velocity = new Vector2 (push_air_speed, jump_speed);
-					else 
-						body.velocity = new Vector2 (body.velocity.x, jump_speed);
-					
-				} else
-					body.velocity = new Vector2 (body.velocity.x, jump_speed);
+	public void checkSlide(){
+		if (animator.GetCurrentAnimatorStateInfo(0).IsName("sliding")){
+			if (is_touching_left)
+				horizontal_direction=1;
+			else {
+				if (is_touching_right)
+					horizontal_direction=-1;
 			}
 		}
 	}
 
+	public void checkJump (){
+
+		if (Input.GetKeyDown(key_jump) && able_to_jump) {
+
+			if (animator.GetCurrentAnimatorStateInfo(0).IsName("sliding")){
+				body.velocity = new Vector2 (horizontal_direction * push_wall_speed, wall_jump_speed);
+			}
+			else {
+				if (jumps_left > 0) {
+					
+					if (!is_grounded) {
+						if (playerInputAxis("Horizontal") < -0.5 && body.velocity.x > 0)
+							body.velocity = new Vector2 (-push_air_speed, jump_speed);
+						else if (playerInputAxis("Horizontal") > 0.5 && body.velocity.x < 0)
+							body.velocity = new Vector2 (push_air_speed, jump_speed);
+						else 
+							body.velocity = new Vector2 (body.velocity.x, jump_speed);
+					
+					} else
+					body.velocity = new Vector2 (body.velocity.x, jump_speed);
+				}
+			}
+		}
+
+	}
+
 	public void checkMaxSpeeds(){
-		if (body.velocity.x < -max_horizontal_speed) {
-			body.velocity=new Vector2(-max_horizontal_speed,body.velocity.y);
-		}
-		if (body.velocity.x > max_horizontal_speed) {
-			body.velocity=new Vector2(max_horizontal_speed,body.velocity.y);
-		}
-		if (body.velocity.y < -max_falling_speed) {
-			body.velocity=new Vector2(body.velocity.x,-max_falling_speed);
+		if (animator.GetCurrentAnimatorStateInfo(0).IsName("falling"))
+		    if (body.velocity.y < -max_falling_speed) 
+				body.velocity=new Vector2(body.velocity.x,-max_falling_speed);
+		if (! animator.GetCurrentAnimatorStateInfo (0).IsName ("attack")) {
+			if (body.velocity.x < -max_horizontal_speed) {
+				body.velocity = new Vector2 (-max_horizontal_speed, body.velocity.y);
+			}
+			if (body.velocity.x > max_horizontal_speed) {
+				body.velocity = new Vector2 (max_horizontal_speed, body.velocity.y);
+			}
 		}
 	}
 
@@ -229,7 +268,7 @@ public class PlayerPhysics : MonoBehaviour {
 	}
 
 	public void isHit(){
-		GameObject.Find ("playerManager").GetComponent<PlayerManager> ().dealWithDeath (playerNumber-1);
+		manager.dealWithDeath (playerNumber-1);
 	}
 
 }

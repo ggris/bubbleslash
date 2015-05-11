@@ -28,9 +28,13 @@ public class PlayerManager : MonoBehaviour {
 	public void spawn(int i){
 		int j =Random.Range(0,spawn_points.Length-1);
 		players [i].transform.position = spawn_points [j].position;
+		players [i].gameObject.GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
 	}
 
 	void OnGUI(){
-
+		for (int i=0; i <players.Length; i++) {
+			string message = "P" + i + " : " + score[i];
+			GUI.Box (new Rect (50*i, 10, 50, 25), message);
+		}
 	}
 }
