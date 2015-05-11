@@ -9,6 +9,7 @@ public class FluidSim : MonoBehaviour {
 	public float time_step_ = 1.0f;
 	public RenderTexture obstacles_, initial_density_, initial_velocity_;
 	public Material advect_mat_;
+	bool snap_ = true;
 
 
 	float inverse_size_;
@@ -43,20 +44,30 @@ public class FluidSim : MonoBehaviour {
 		buffer[1].wrapMode = TextureWrapMode.Clamp;
 		buffer[1].Create();
 	}
+
+	void swap (RenderTexture[] buffer) {
+		RenderTexture tmp = buffer [0];
+		buffer [0] = buffer [1];
+		buffer [1] = buffer [0];
+	}
 	
 	// Update is called once per frame
 	void Update () {
-		//advect (velocity_[0], density_ [0], density_ [1], 0.0f);
-	
+		advect (velocity_[0], density_ [0], density_ [1], 0.0f);
+		swap (density_);
 	}
 	
 	public Material post_material;
 	// Called by the camera to apply the image effect
 	void OnRenderImage (RenderTexture source, RenderTexture destination)
 	{
-		advect_mat_.SetTexture("_Velocity", source);
-		advect_mat_.SetTexture("_Source", source);
-		Graphics.Blit (null, destination, advect_mat_);
+		if (snap_) {
+			velocity_ [0] = source;
+			density_ [0] = source;
+			snap_ = false;
+		}
+
+		Graphics.Blit (density_[1], destination, post_material);
 	}
 	
 	void advect(RenderTexture velocity, RenderTexture source, RenderTexture dest, float dissipation)
