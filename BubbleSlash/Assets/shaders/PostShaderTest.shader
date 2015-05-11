@@ -1,6 +1,7 @@
 ﻿Shader "Custom/PostShaderTest" {
 Properties {
  _MainTex ("", 2D) = "white" {}
+ _Blood ("Blood", 2D) = "black" {} 
 }
  
 SubShader {
@@ -27,13 +28,15 @@ ZTest Always Cull Off ZWrite Off Fog { Mode Off } //Rendering settings
    return o; 
   }
     
-  sampler2D _MainTex; //Reference in Pass is necessary to let us use this variable in shaders
+  sampler2D _MainTex;
+  sampler2D _Blood;
     
   //Our Fragment Shader
   fixed4 frag (v2f i) : COLOR{
-   fixed4 orgCol = tex2D(_MainTex, i.uv); //Get the orginal rendered color 
-     
-   return orgCol;
+   fixed4 orgCol = tex2D(_MainTex, i.uv);
+   fixed4 bloodCol = tex2D(_Blood, i.uv);
+   bloodCol = max(2 * bloodCol -1, 0);
+   return orgCol + bloodCol;
   }
   ENDCG
  }

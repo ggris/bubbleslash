@@ -306,7 +306,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 73540860}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1fd11ca6d32144bbc84edf0599e3c043, type: 3}
   m_Name: 
@@ -327,12 +327,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f11e42005a64a466ca9c3121a3048c76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resolution_: 64
-  time_step_: .00100000005
+  resolution_: 512
+  time_step_: .00200000009
+  dissipation_: .00999999978
+  ambient_temperature_: 0
+  smoke_buoyancy_: 1
+  smoke_weight_: 1
+  source_pos_: {x: .5, y: .5}
+  source_temperature_: 2
+  source_density_: 5
   obstacles_: {fileID: 0}
   initial_density_: {fileID: 0}
   initial_velocity_: {fileID: 0}
   advect_mat_: {fileID: 2100000, guid: 77b1368782b38425a88762fba317f068, type: 2}
+  buoyancy_mat_: {fileID: 2100000, guid: 8f9b31ee40ffe4e57927ba8c920f3646, type: 2}
+  source_mat_: {fileID: 2100000, guid: 7aa83d9db0f524e618ee27e2bca9e62e, type: 2}
+  divergence_mat: {fileID: 2100000, guid: 9a282212430a1474dbfaa4fb5733d072, type: 2}
+  snap_: 1
   post_material: {fileID: 2100000, guid: c348ca3013e8044659d7ba91f21b2718, type: 2}
 --- !u!1001 &133260172
 Prefab:

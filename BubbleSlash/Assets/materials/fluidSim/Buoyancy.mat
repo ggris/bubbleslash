@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: PostMatTest
-  m_Shader: {fileID: 4800000, guid: 45415797253934f2d90844fcc3dadb9c, type: 3}
+  m_Name: Buoyancy
+  m_Shader: {fileID: 4800000, guid: 4c73bf8a5f22649ae94da6cd25293e50, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: -1
@@ -79,7 +79,21 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _Blood
+          name: _Velocity
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Temperature
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Density
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
@@ -137,6 +151,22 @@ Material:
         first:
           name: _Metallic
         second: 0
+      data:
+        first:
+          name: _TimeStep
+        second: .00200000009
+      data:
+        first:
+          name: _T0
+        second: 1
+      data:
+        first:
+          name: _Sigma
+        second: 1
+      data:
+        first:
+          name: _Kappa
+        second: 1
     m_Colors:
       data:
         first:
