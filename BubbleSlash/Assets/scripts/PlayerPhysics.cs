@@ -21,10 +21,16 @@ public class PlayerPhysics : MonoBehaviour {
 
 	public float max_falling_speed;
 	public float max_horizontal_speed;
+	
+	public float attack_cd;
+	private float attack_start;
 
 	//ables
 	public int max_jumps;
 	public int jumps_left;
+	public int max_attacks;
+	public int attacks_left;
+
 	public bool is_grounded;
 	public bool is_touching_left;
 	public bool is_touching_right;
@@ -42,12 +48,16 @@ public class PlayerPhysics : MonoBehaviour {
 	private GameObject weapon;
 	private PlayerManager manager;
 
+
+
 	//quick under tea
 	public string key_jump;
 	public string key_weapon;
 	public string key_hat;
 	public float dash_speed;
-	
+
+
+
 	void Start () {
 		body = GetComponent<Rigidbody2D> ();
 		animator = GetComponent<Animator>();
@@ -59,7 +69,7 @@ public class PlayerPhysics : MonoBehaviour {
 		horizontal_direction = 1;		
 		able_to_move = true;
 		able_to_jump = true;
-
+		attack_start = Time.time;
 	}
 
 	void logState(){
@@ -168,7 +178,7 @@ public class PlayerPhysics : MonoBehaviour {
 	}
 
 	public bool isAbleToAttack(){
-		return true;
+		return (Time.time-attack_start >=attack_cd);
 	}
 
 	public void checkMove(){
@@ -246,7 +256,7 @@ public class PlayerPhysics : MonoBehaviour {
 
 	public void checkAttack(){
 		if (animator.GetCurrentAnimatorStateInfo(0).IsName("startAttack")) {
-
+			attack_start=Time.time;
 			direction_action=direction;
 			weapon.SetActive(true);
 			body.gravityScale=0;
