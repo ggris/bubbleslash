@@ -109,8 +109,8 @@ public class PlayerPhysics : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (playerNumber == 1)
-			Debug.Log (horizontal_direction);
+		//if (playerNumber == 1)
+		//	logState();
 
 		able_to_jump = isAbleToJump();
 		able_to_move = isAbleToMove();
@@ -123,9 +123,9 @@ public class PlayerPhysics : MonoBehaviour {
 		animator.SetBool ("isOnFeet", is_grounded);
 		animator.SetBool ("isOnHand", is_touching_left || is_touching_right);
 
-		if (Input.GetKeyDown(key_jump) && able_to_jump)
+		if (playerInputButton("Jump") && able_to_jump)
 			animator.SetTrigger ("triggerJump");
-		if (Input.GetKeyDown (key_weapon) && able_to_attack)
+		if (playerInputButton("Weapon") && able_to_attack)
 			animator.SetTrigger ("triggerAttack");
 
 		//updates direction
@@ -149,12 +149,24 @@ public class PlayerPhysics : MonoBehaviour {
 	public Vector2 directionFromInput (){
 		//return direction from input + update horizontalDirection
 		Vector2 ans = new Vector2 (playerInputAxis("Horizontal"), playerInputAxis("Vertical"));
+
+		if (ans.x > 0)
+			ans.x = 1;
+		if (ans.x < 0)
+			ans.x = -1;
+		if (ans.y > 0)
+			ans.y = 1;
+		if (ans.y < 0)
+			ans.y = -1;
+
 		ans.Normalize ();
+
 		if(ans.x!=0)
 			horizontal_direction=ans.x;
 
 		return ans;
 	}
+
 	public Vector2 realDirection(Vector2 direction_input){
 		if (direction_input.x==0 && direction_input.y==0)
 			return new Vector2(horizontal_direction, 0);
@@ -164,6 +176,9 @@ public class PlayerPhysics : MonoBehaviour {
 
 	private float playerInputAxis(string inputName) {
 		return Input.GetAxisRaw("P" + playerNumber + " " + inputName);
+	}
+	private bool playerInputButton(string inputName){
+		return Input.GetButtonDown("P" + playerNumber + " " + inputName);
 	}
 
 	public bool isAbleToJump(){
@@ -216,7 +231,7 @@ public class PlayerPhysics : MonoBehaviour {
 
 	public void checkJump (){
 
-		if (Input.GetKeyDown(key_jump) && able_to_jump) {
+		if (playerInputButton("Jump") && able_to_jump) {
 
 			if (animator.GetCurrentAnimatorStateInfo(0).IsName("sliding")){
 				body.velocity = new Vector2 (horizontal_direction * push_wall_speed, wall_jump_speed);
