@@ -33,11 +33,7 @@ ZTest Always Cull Off ZWrite Off Fog { Mode Off } //Rendering settings
   fixed4 frag (v2f i) : COLOR{
    fixed4 orgCol = tex2D(_MainTex, i.uv); //Get the orginal rendered color 
      
-   //Make changes on the color
-   float avg = (orgCol.r + orgCol.g + orgCol.b)/3.0;
-   fixed4 col = fixed4(avg+0.2, avg, avg, 1);
-     
-   return col;
+   return orgCol;
   }
   ENDCG
  }
