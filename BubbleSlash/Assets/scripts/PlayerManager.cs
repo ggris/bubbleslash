@@ -29,6 +29,7 @@ public class PlayerManager : MonoBehaviour {
 		int j =Random.Range(0,spawn_points.Length-1);
 		players [i].transform.position = spawn_points [j].position;
 		players [i].gameObject.GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
+		players [i].gameObject.GetComponent<Animator> ().SetTrigger ("respawn");
 	}
 
 	void OnGUI(){

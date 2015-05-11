@@ -44,6 +44,7 @@ public class PlayerPhysics : MonoBehaviour {
 	private Vector2 direction;
 	private Vector2 direction_input;
 	private Vector2 direction_action;
+	private Vector2 last_velocity;
 	private float horizontal_direction;
 	private GameObject weapon;
 	private PlayerManager manager;
@@ -70,6 +71,7 @@ public class PlayerPhysics : MonoBehaviour {
 		able_to_move = true;
 		able_to_jump = true;
 		attack_start = Time.time;
+		last_velocity = new Vector2 (0, 0);
 	}
 
 	void logState(){
@@ -274,8 +276,10 @@ public class PlayerPhysics : MonoBehaviour {
 			attack_start=Time.time;
 			direction_action=direction;
 			weapon.SetActive(true);
+			last_velocity=body.velocity;
 			body.gravityScale=0;
 			weapon.transform.localEulerAngles=new Vector3(0,0,getAngle(direction_action,new Vector2(1,0)));
+
 		}
 
 		if (animator.GetCurrentAnimatorStateInfo(0).IsName("attack")){
@@ -285,6 +289,7 @@ public class PlayerPhysics : MonoBehaviour {
 		if (animator.GetCurrentAnimatorStateInfo(0).IsName("endAttack")){
 			weapon.SetActive(false);
 			body.gravityScale=5;
+			body.velocity=new Vector2 (0,0);
 		}
 	}
 
