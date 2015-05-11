@@ -17,16 +17,20 @@ public class BoxController : MonoBehaviour {
 	}
 
 	void leftStay(){
+		physics.is_touching_left = true;
 	}
 	void leftEnter(){
 	}
 	void leftExit(){
+		physics.is_touching_left = false;
 	}
 	void rightStay(){
+		physics.is_touching_right = true;
 	}
 	void rightEnter(){
 	}
 	void rightExit(){
+		physics.is_touching_right = false;
 	}
 
 

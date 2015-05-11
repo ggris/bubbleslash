@@ -12,7 +12,7 @@ GameObject:
   - 114: {fileID: 11446784}
   - 61: {fileID: 6190042}
   - 95: {fileID: 9578160}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: player
   m_TagString: player
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 409236}
   - 114: {fileID: 11427852}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: collision boxes
   m_TagString: player
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - 4: {fileID: 428078}
   - 61: {fileID: 6199504}
   - 114: {fileID: 11488434}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: right
   m_TagString: player
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 464732}
   - 61: {fileID: 6182042}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: body
   m_TagString: player
   m_Icon: {fileID: 0}
@@ -78,7 +78,7 @@ GameObject:
   - 4: {fileID: 455012}
   - 61: {fileID: 6125964}
   - 114: {fileID: 11418970}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: box
   m_TagString: weapon
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 405282}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: weapon
   m_TagString: weapon
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400918}
   - 212: {fileID: 21278852}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: sprite
   m_TagString: player
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 494914}
   - 212: {fileID: 21239082}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: sprite
   m_TagString: weapon
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ GameObject:
   - 4: {fileID: 419456}
   - 61: {fileID: 6184374}
   - 114: {fileID: 11404360}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: left
   m_TagString: player
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ GameObject:
   - 4: {fileID: 494086}
   - 61: {fileID: 6142996}
   - 114: {fileID: 11482570}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: feet
   m_TagString: player
   m_Icon: {fileID: 0}
@@ -174,7 +174,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 451354}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: translation
   m_TagString: weapon
   m_Icon: {fileID: 0}
@@ -483,16 +483,23 @@ MonoBehaviour:
   ground_acc: 10000
   air_acc: 2000
   jump_speed: 20
-  push_air_speed: 20
+  push_air_speed: 15
+  wall_jump_speed: 20
+  push_wall_speed: 10
   ground_horizontal_drag: 0
   air_horizontal_drag: 0
   air_vertical_drag: 0
   max_falling_speed: 20
   max_horizontal_speed: 15
+  attack_cd: 1
   max_jumps: 3
   jumps_left: 0
+  max_attacks: 0
+  attacks_left: 0
   is_grounded: 0
-  able_to_move: 0
+  is_touching_left: 0
+  is_touching_right: 0
+  able_to_move: 1
   able_to_jump: 0
   able_to_attack: 0
   key_jump: space
