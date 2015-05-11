@@ -215,6 +215,7 @@ GameObject:
   - 81: {fileID: 73540861}
   - 114: {fileID: 73540866}
   - 114: {fileID: 73540867}
+  - 114: {fileID: 73540868}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -235,7 +236,7 @@ Behaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 73540860}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!92 &73540863
 Behaviour:
   m_ObjectHideFlags: 0
@@ -305,7 +306,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 73540860}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1fd11ca6d32144bbc84edf0599e3c043, type: 3}
   m_Name: 
@@ -315,6 +316,24 @@ MonoBehaviour:
   - {fileID: 1834841413}
   max_zoom: 4
   speed: .0299999993
+--- !u!114 &73540868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 73540860}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f11e42005a64a466ca9c3121a3048c76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resolution_: 64
+  time_step_: 1
+  obstacles_: {fileID: 0}
+  initial_density_: {fileID: 0}
+  initial_velocity_: {fileID: 0}
+  advect_mat_: {fileID: 2100000, guid: 77b1368782b38425a88762fba317f068, type: 2}
+  post_material: {fileID: 2100000, guid: c348ca3013e8044659d7ba91f21b2718, type: 2}
 --- !u!1001 &133260172
 Prefab:
   m_ObjectHideFlags: 0

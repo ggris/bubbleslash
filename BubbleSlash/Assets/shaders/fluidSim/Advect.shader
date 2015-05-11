@@ -31,24 +31,24 @@ SubShader
 			{
     			v2f coords;
     			coords.pos = mul(UNITY_MATRIX_MVP, v.vertex);
-    			coords.uv = v.texcoord.xy;
+    			coords.uv = MultiplyUV (UNITY_MATRIX_TEXTURE0, v.texcoord.xy);
     			return coords;
 			}
 			
-			uniform sampler2D _Velocity;
-			uniform sampler2D _Source;
-			uniform sampler2D _Obstacles;
+			sampler2D _Velocity;
+			sampler2D _Source;
+			sampler2D _Obstacles;
 
-			uniform float _InverseGridScale;
-			uniform float _TimeStep;
-			uniform float _Dissipation;
+			float _InverseGridScale;
+			float _TimeStep;
+			float _Dissipation;
 			
 			float4 frag(v2f coords) : COLOR	{
 			
 			    float4 result = float4(0,0,0,0);
 			    
 			    float solid = tex2D(_Obstacles, coords.uv).x;
-			    if(solid == 0.0) {
+			    if(true) {
 			   	
 			    	float2 u = tex2D(_Velocity, coords.uv).xy;
 			    	float2 pos = coords.uv - (u * _InverseGridScale * _TimeStep);
