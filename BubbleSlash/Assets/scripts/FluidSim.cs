@@ -16,12 +16,12 @@ public class FluidSim : MonoBehaviour {
 	public float source_temperature_ = 0.0f;
 	public float source_density_ = 1.0f;
 	public RenderTexture obstacles_, initial_density_, initial_velocity_;
-	public Material advect_mat_, buoyancy_mat_, source_mat_, divergence_mat_, jacoby_mat_;
+	public Material advect_mat_, buoyancy_mat_, source_mat_, divergence_mat_, jacoby_mat_, substract_gradient_;
 	public int jacobi_itts_ = 1;
 	public bool snap_ = true;
-	
-	
-	float cell_size_ = 1.0f;
+	public float grad_scale_ = 1.0f;
+	public float cell_size_ = 1.0f;
+
 	float inverse_size_;
 	
 	RenderTexture[] density_, velocity_, temperature_, pressure_;
@@ -111,9 +111,13 @@ public class FluidSim : MonoBehaviour {
 		
 		for(int i = 0; i < jacobi_itts_; ++i) 
 		{
-			Jacobi(pressure_[0], divergence_, pressure_[1]);
+			jacobi(pressure_[0], divergence_, pressure_[1]);
 			swapBuffer(pressure_);
 		}
+
+		subGrad(velocity_[0], pressure_[0], velocity_[1]);
+		
+		swapBuffer(velocity_);
 		
 	}
 	
@@ -170,7 +174,7 @@ public class FluidSim : MonoBehaviour {
 		Graphics.Blit(null, dest, divergence_mat_);
 	}
 	
-	void Jacobi(RenderTexture pressure, RenderTexture divergence, RenderTexture dest)
+	void jacobi(RenderTexture pressure, RenderTexture divergence, RenderTexture dest)
 	{
 		
 		jacoby_mat_.SetTexture("_Pressure", pressure);
@@ -180,6 +184,16 @@ public class FluidSim : MonoBehaviour {
 		jacoby_mat_.SetFloat("_InverseBeta", 0.25f);
 		
 		Graphics.Blit(null, dest, jacoby_mat_);
+	}
+	
+	void subGrad(RenderTexture velocity, RenderTexture pressure, RenderTexture dest)
+	{
+		substract_gradient_.SetTexture("_Velocity", velocity);
+		substract_gradient_.SetTexture("_Pressure", pressure);
+		substract_gradient_.SetFloat("_GradientScale", grad_scale_);
+		substract_gradient_.SetVector("_InverseSize", new Vector2(inverse_size_, inverse_size_));
+		
+		Graphics.Blit(null, dest, substract_gradient_);
 	}
 	
 	

@@ -154,7 +154,7 @@ Material:
       data:
         first:
           name: _TimeStep
-        second: .00200000009
+        second: .00100000005
       data:
         first:
           name: _T0
@@ -162,11 +162,11 @@ Material:
       data:
         first:
           name: _Sigma
-        second: 100
+        second: 1
       data:
         first:
           name: _Kappa
-        second: 100
+        second: 3
     m_Colors:
       data:
         first:

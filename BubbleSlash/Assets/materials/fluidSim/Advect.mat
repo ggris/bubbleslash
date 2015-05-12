@@ -158,7 +158,7 @@ Material:
       data:
         first:
           name: _TimeStep
-        second: .00200000009
+        second: .00100000005
       data:
         first:
           name: _Dissipation
