@@ -49,7 +49,7 @@ public class PlayerPhysics : MonoBehaviour {
 	private Vector2 direction;
 	private Vector2 direction_input;
 	public Vector2 direction_action;
-	private Vector2 direction_parry;
+	public Vector2 direction_parry;
 	private float horizontal_direction;
 	private GameObject weapon;
 	private Animator weapon_state;
@@ -316,8 +316,10 @@ public class PlayerPhysics : MonoBehaviour {
 		manager.dealWithDeath (playerNumber-1);
 	}
 	public void isParried(Vector2 dir_parry){
-		animator.SetTrigger ("stopAttack");
-		//direction_parry = dir_parry * parry_speed;
+		direction_parry = dir_parry;
+		animator.SetTrigger ("parried");
+
+
 	}
 
 
