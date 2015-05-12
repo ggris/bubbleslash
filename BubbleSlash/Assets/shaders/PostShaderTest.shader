@@ -2,6 +2,7 @@
 Properties {
  _MainTex ("", 2D) = "white" {}
  _Blood ("Blood", 2D) = "black" {} 
+ _BloodColor ("Blood color", Color) = (1,0,0,0)
 }
  
 SubShader {
@@ -30,13 +31,17 @@ ZTest Always Cull Off ZWrite Off Fog { Mode Off } //Rendering settings
     
   sampler2D _MainTex;
   sampler2D _Blood;
+  float4 _BloodColor;
     
   //Our Fragment Shader
-  fixed4 frag (v2f i) : COLOR{
-   fixed4 orgCol = tex2D(_MainTex, i.uv);
-   fixed4 bloodCol = tex2D(_Blood, i.uv);
+  float4 frag (v2f i) : COLOR{
+   float4 orgCol = tex2D(_MainTex, i.uv);
+   float bloodCol = tex2D(_Blood, i.uv);
    bloodCol = max(2 * bloodCol -1, 0);
-   return orgCol + bloodCol;
+  
+   bloodCol = saturate(bloodCol);
+   
+   return orgCol * (1 - bloodCol) + bloodCol/(1+2*bloodCol)*_BloodColor;
   }
   ENDCG
  }
