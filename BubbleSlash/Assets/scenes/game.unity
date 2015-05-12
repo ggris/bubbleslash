@@ -332,7 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resolution_: 512
-  time_step_: .00100000005
+  time_step_: .00200000009
   dissipation_: .00100000005
   ambient_temperature_: 0
   smoke_buoyancy_: 1
@@ -349,10 +349,10 @@ MonoBehaviour:
   divergence_mat_: {fileID: 2100000, guid: 9a282212430a1474dbfaa4fb5733d072, type: 2}
   jacoby_mat_: {fileID: 2100000, guid: 88025c56676d145a291935f2804737b8, type: 2}
   substract_gradient_: {fileID: 2100000, guid: 3881ff0ff4b784625bdf64a84fae599e, type: 2}
-  jacobi_itts_: 1
-  snap_: 1
-  grad_scale_: 1
-  cell_size_: 1
+  jacobi_itts_: 3
+  snap_: 0
+  grad_scale_: 9.5
+  cell_size_: .200000003
   post_material: {fileID: 2100000, guid: c348ca3013e8044659d7ba91f21b2718, type: 2}
 --- !u!1001 &133260172
 Prefab:

@@ -181,7 +181,7 @@ public class FluidSim : MonoBehaviour {
 		jacoby_mat_.SetTexture("_Divergence", divergence);
 		jacoby_mat_.SetVector("_InverseSize", new Vector2(inverse_size_, inverse_size_));
 		jacoby_mat_.SetFloat("_Alpha", -cell_size_*cell_size_);
-		jacoby_mat_.SetFloat("_InverseBeta", 0.25f);
+		jacoby_mat_.SetFloat("_RBeta", 0.25f);
 		
 		Graphics.Blit(null, dest, jacoby_mat_);
 	}
@@ -190,7 +190,7 @@ public class FluidSim : MonoBehaviour {
 	{
 		substract_gradient_.SetTexture("_Velocity", velocity);
 		substract_gradient_.SetTexture("_Pressure", pressure);
-		substract_gradient_.SetFloat("_GradientScale", grad_scale_);
+		substract_gradient_.SetFloat("_GradScale", grad_scale_);
 		substract_gradient_.SetVector("_InverseSize", new Vector2(inverse_size_, inverse_size_));
 		
 		Graphics.Blit(null, dest, substract_gradient_);
