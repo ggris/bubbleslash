@@ -93,13 +93,15 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 405282}
+  - 95: {fileID: 9558874}
+  - 114: {fileID: 11459460}
   m_Layer: 9
   m_Name: weapon
   m_TagString: weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &168142
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,7 +182,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &400918
 Transform:
   m_ObjectHideFlags: 1
@@ -213,7 +215,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 110914}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.69000006, y: -2.36999989, z: 0}
+  m_LocalPosition: {x: 5, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400918}
@@ -337,7 +339,7 @@ Rigidbody2D:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!61 &6125964
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -416,6 +418,23 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
+--- !u!95 &9558874
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165950}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e28c46a812f4b3346ae2061fef3b90bd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!95 &9578160
 Animator:
   serializedVersion: 3
@@ -479,7 +498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08c8e783d24dc12468d3e744090d711f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNumber: 1
+  playerNumber: 2
   ground_acc: 10000
   air_acc: 2000
   jump_speed: 20
@@ -501,10 +520,25 @@ MonoBehaviour:
   attacks_left: 0
   is_grounded: 0
   is_touching_left: 0
-  is_touching_right: 0
+  is_touching_right: 1
   able_to_move: 1
   able_to_jump: 0
   able_to_attack: 0
+  direction_action: {x: 0, y: 0}
+--- !u!114 &11459460
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de5053cb3234b5a41bfe61bb8057545d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ennemyDirection: {x: 0, y: 0}
+  ennemy: {fileID: 0}
+  player: {fileID: 0}
 --- !u!114 &11482570
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -580,7 +614,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 3a492af4a9086ae44b4a1ebeacffb5b5, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: .0482757092, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

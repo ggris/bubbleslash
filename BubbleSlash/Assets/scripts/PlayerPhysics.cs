@@ -41,16 +41,18 @@ public class PlayerPhysics : MonoBehaviour {
 	public bool able_to_move;
 	public bool able_to_jump;
 	public bool able_to_attack;
+	
 
 	//privates
 	private Rigidbody2D body;
 	private Animator animator;
 	private Vector2 direction;
 	private Vector2 direction_input;
-	private Vector2 direction_action;
+	public Vector2 direction_action;
 	private Vector2 direction_parry;
 	private float horizontal_direction;
 	private GameObject weapon;
+	private Animator weapon_state;
 	private PlayerManager manager;
 
 
@@ -61,6 +63,7 @@ public class PlayerPhysics : MonoBehaviour {
 		body = GetComponent<Rigidbody2D> ();
 		animator = GetComponent<Animator>();
 		weapon = transform.Find("weapon").gameObject;
+		weapon_state = weapon.GetComponent<Animator> ();
 		manager = GameObject.Find ("playerManager").GetComponent<PlayerManager> ();
 
 		jumps_left = max_jumps - 1;
@@ -108,7 +111,6 @@ public class PlayerPhysics : MonoBehaviour {
 	void Update () {
 		//if (playerNumber == 1)
 		//	logState();
-
 		able_to_jump = isAbleToJump();
 		able_to_move = isAbleToMove();
 		able_to_attack = isAbleToAttack ();
@@ -122,9 +124,14 @@ public class PlayerPhysics : MonoBehaviour {
 
 		if (playerInputButton("Jump") && able_to_jump)
 			animator.SetTrigger ("triggerJump");
-		if (playerInputButton("Weapon") && able_to_attack)
-			animator.SetTrigger ("triggerAttack");
 
+		if (playerInputButton ("Weapon") && able_to_attack) {
+			animator.SetTrigger ("triggerAttack");
+			weapon_state.SetTrigger("input");
+			attack_start=Time.time;
+			direction_action=direction;
+			weapon.transform.localEulerAngles=new Vector3(0,0,getAngle(direction_action,new Vector2(1,0)));
+		}
 		//updates direction
 		direction_input = directionFromInput ();
 		checkSlide (); //only changes "horizontal_direction" if sliding
@@ -274,13 +281,10 @@ public class PlayerPhysics : MonoBehaviour {
 		}
 	}
 
-	public void checkAttack(){
+	public void checkAttack(){/*
 		if (animator.GetCurrentAnimatorStateInfo(0).IsName("startAttack")) {
-			attack_start=Time.time;
-			direction_action=direction;
-			weapon.SetActive(true);
-			body.gravityScale=0;
-			weapon.transform.localEulerAngles=new Vector3(0,0,getAngle(direction_action,new Vector2(1,0)));
+
+
 
 		}
 
@@ -298,6 +302,7 @@ public class PlayerPhysics : MonoBehaviour {
 			body.gravityScale=5;
 			body.velocity = direction_parry;
 		}
+		*/
 	}
 
 	public float getAngle (Vector2 a, Vector2 b){
@@ -305,10 +310,15 @@ public class PlayerPhysics : MonoBehaviour {
 	}
 
 	public void isHit(){
+
+	}
+	public void isHurt(){
 		manager.dealWithDeath (playerNumber-1);
 	}
 	public void isParried(Vector2 dir_parry){
-		animator.SetTrigger ("parried");
-		direction_parry = dir_parry * parry_speed;
+		animator.SetTrigger ("stopAttack");
+		//direction_parry = dir_parry * parry_speed;
 	}
+
+
 }

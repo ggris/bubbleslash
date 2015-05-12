@@ -8,13 +8,9 @@ public class WeaponBox : MonoBehaviour {
 		player = this.transform.parent.parent.parent.gameObject;
 
 	}
-	
-	// Update is called once per frame
-	void Update () {
 
-	}
 	void OnTriggerEnter2D (Collider2D other){
-		if (player.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("attack")) {
+		/*if (player.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("attack")) {
 			GameObject obj = other.gameObject;
 			if (obj.name == "body") {
 				obj = obj.transform.parent.parent.gameObject;
@@ -31,12 +27,15 @@ public class WeaponBox : MonoBehaviour {
 				}
 			}
 			if (obj.tag == "weapon") {
-				/*
-			obj = obj.transform.parent.parent.parent.gameObject;
-			Vector2 direction = (obj.transform.position-player.transform.position).normalized;
-			obj.GetComponent<PlayerPhysics>().isParried(direction);
-			player.GetComponent<PlayerPhysics>().isParried(-direction);
-			*/
+			}
+		}*/
+
+		GameObject objectHit = other.gameObject;
+		if (objectHit.name == "body") {
+			GameObject ennemyHit = objectHit.transform.parent.parent.gameObject;
+			if (ennemyHit.GetComponent<PlayerPhysics>().playerNumber != player.GetComponent<PlayerPhysics>().playerNumber){
+				//ennemyHit.transform.Find("weapon").GetComponent<Animator>().SetTrigger("hit");
+				ennemyHit.transform.Find("weapon").GetComponent<WeaponBehaviour>().getHit(player);
 			}
 		}
 	}
