@@ -21,9 +21,13 @@ public class PlayerPhysics : MonoBehaviour {
 
 	public float max_falling_speed;
 	public float max_horizontal_speed;
+	public float max_sliding_speed;
 	
 	public float attack_cd;
 	private float attack_start;
+
+	public float parry_speed;
+	public float dash_speed;
 
 	//ables
 	public int max_jumps;
@@ -44,18 +48,12 @@ public class PlayerPhysics : MonoBehaviour {
 	private Vector2 direction;
 	private Vector2 direction_input;
 	private Vector2 direction_action;
-	private Vector2 last_velocity;
+	private Vector2 direction_parry;
 	private float horizontal_direction;
 	private GameObject weapon;
 	private PlayerManager manager;
 
 
-
-	//quick under tea
-	public string key_jump;
-	public string key_weapon;
-	public string key_hat;
-	public float dash_speed;
 
 
 
@@ -71,7 +69,6 @@ public class PlayerPhysics : MonoBehaviour {
 		able_to_move = true;
 		able_to_jump = true;
 		attack_start = Time.time;
-		last_velocity = new Vector2 (0, 0);
 	}
 
 	void logState(){
@@ -106,8 +103,6 @@ public class PlayerPhysics : MonoBehaviour {
 
 	}
 
-	void FixedUpdate(){
-	}
 
 	// Update is called once per frame
 	void Update () {
@@ -141,7 +136,7 @@ public class PlayerPhysics : MonoBehaviour {
 
 		checkJump ();
 
-
+		
 		//max speeds
 		checkMaxSpeeds ();
 
@@ -205,8 +200,6 @@ public class PlayerPhysics : MonoBehaviour {
 			}
 			else {
 				body.AddForce (-Vector2.right * air_acc * Time.deltaTime);
-				body.AddForce (new Vector2 (-body.velocity.x, 0f) * air_horizontal_drag * Time.deltaTime);
-				body.AddForce (new Vector2 (0f, -body.velocity.y) * air_vertical_drag * Time.deltaTime);
 			}
 		}
 		if (direction_input.x > 0 && able_to_move) {
@@ -215,6 +208,13 @@ public class PlayerPhysics : MonoBehaviour {
 			}
 			else {
 				body.AddForce (Vector2.right * air_acc * Time.deltaTime);
+			}
+		}
+		if (able_to_move) {
+			if (is_grounded){
+				body.AddForce (new Vector2 (-body.velocity.x, 0f) * ground_horizontal_drag * Time.deltaTime);
+			}
+			else {
 				body.AddForce (new Vector2 (-body.velocity.x, 0f) * air_horizontal_drag * Time.deltaTime);
 				body.AddForce (new Vector2 (0f, -body.velocity.y) * air_vertical_drag * Time.deltaTime);
 			}
@@ -261,6 +261,9 @@ public class PlayerPhysics : MonoBehaviour {
 		if (animator.GetCurrentAnimatorStateInfo(0).IsName("falling"))
 		    if (body.velocity.y < -max_falling_speed) 
 				body.velocity=new Vector2(body.velocity.x,-max_falling_speed);
+		if (animator.GetCurrentAnimatorStateInfo(0).IsName("sliding"))
+			if (body.velocity.y < -max_sliding_speed) 
+				body.velocity=new Vector2(body.velocity.x,-max_sliding_speed);
 		if (! animator.GetCurrentAnimatorStateInfo (0).IsName ("attack")) {
 			if (body.velocity.x < -max_horizontal_speed) {
 				body.velocity = new Vector2 (-max_horizontal_speed, body.velocity.y);
@@ -276,7 +279,6 @@ public class PlayerPhysics : MonoBehaviour {
 			attack_start=Time.time;
 			direction_action=direction;
 			weapon.SetActive(true);
-			last_velocity=body.velocity;
 			body.gravityScale=0;
 			weapon.transform.localEulerAngles=new Vector3(0,0,getAngle(direction_action,new Vector2(1,0)));
 
@@ -291,6 +293,11 @@ public class PlayerPhysics : MonoBehaviour {
 			body.gravityScale=5;
 			body.velocity=new Vector2 (0,0);
 		}
+		if (animator.GetCurrentAnimatorStateInfo(0).IsName("parried")){
+			weapon.SetActive(false);
+			body.gravityScale=5;
+			body.velocity = direction_parry;
+		}
 	}
 
 	public float getAngle (Vector2 a, Vector2 b){
@@ -300,5 +307,8 @@ public class PlayerPhysics : MonoBehaviour {
 	public void isHit(){
 		manager.dealWithDeath (playerNumber-1);
 	}
-
+	public void isParried(Vector2 dir_parry){
+		animator.SetTrigger ("parried");
+		direction_parry = dir_parry * parry_speed;
+	}
 }
