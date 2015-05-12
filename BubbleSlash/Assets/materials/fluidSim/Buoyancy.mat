@@ -162,11 +162,11 @@ Material:
       data:
         first:
           name: _Sigma
-        second: 1
+        second: 100
       data:
         first:
           name: _Kappa
-        second: 1
+        second: 100
     m_Colors:
       data:
         first:
