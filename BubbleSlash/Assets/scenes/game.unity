@@ -194,9 +194,25 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6190042, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
+      propertyPath: m_UsedByEffector
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 11446784, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
-      propertyPath: push_air_speed
-      value: 10
+      propertyPath: playerNumber
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 21278852, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 21278852, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 21278852, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
+      propertyPath: m_Color.b
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
@@ -361,34 +377,6 @@ Prefab:
     - target: {fileID: 110914, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
       propertyPath: m_Name
       value: player 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 407774, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 21278852, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 21278852, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
-      propertyPath: m_Color.g
-      value: .0482757092
-      objectReference: {fileID: 0}
-    - target: {fileID: 21278852, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11446784, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
-      propertyPath: key_jump
-      value: left ctrl
-      objectReference: {fileID: 0}
-    - target: {fileID: 11446784, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
-      propertyPath: key_weapon
-      value: left alt
-      objectReference: {fileID: 0}
-    - target: {fileID: 11446784, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
-      propertyPath: playerNumber
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
