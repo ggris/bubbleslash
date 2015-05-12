@@ -294,7 +294,6 @@ public class PlayerPhysics : MonoBehaviour {
 			body.velocity=new Vector2 (0,0);
 		}
 		if (animator.GetCurrentAnimatorStateInfo(0).IsName("parried")){
-
 			weapon.SetActive(false);
 			body.gravityScale=5;
 			body.velocity = direction_parry;
@@ -311,6 +310,5 @@ public class PlayerPhysics : MonoBehaviour {
 	public void isParried(Vector2 dir_parry){
 		animator.SetTrigger ("parried");
 		direction_parry = dir_parry * parry_speed;
-
 	}
 }
