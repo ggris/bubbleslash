@@ -483,15 +483,18 @@ MonoBehaviour:
   ground_acc: 10000
   air_acc: 2000
   jump_speed: 20
-  push_air_speed: 15
+  push_air_speed: 10
   wall_jump_speed: 20
   push_wall_speed: 10
-  ground_horizontal_drag: 0
-  air_horizontal_drag: 0
+  ground_horizontal_drag: 100
+  air_horizontal_drag: 100
   air_vertical_drag: 0
   max_falling_speed: 20
-  max_horizontal_speed: 15
+  max_horizontal_speed: 20
+  max_sliding_speed: 5
   attack_cd: 1
+  parry_speed: 10
+  dash_speed: 20
   max_jumps: 3
   jumps_left: 0
   max_attacks: 0
@@ -502,10 +505,6 @@ MonoBehaviour:
   able_to_move: 1
   able_to_jump: 0
   able_to_attack: 0
-  key_jump: space
-  key_weapon: n
-  key_hat: 
-  dash_speed: 30
 --- !u!114 &11482570
 MonoBehaviour:
   m_ObjectHideFlags: 1
