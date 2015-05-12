@@ -37,6 +37,27 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
+          name: _Velocity
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Temperature
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Density
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
           name: _ParallaxMap
         second:
           m_Texture: {fileID: 0}
@@ -77,27 +98,6 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Velocity
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Temperature
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Density
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -111,6 +111,22 @@ Material:
         first:
           name: _DstBlend
         second: 0
+      data:
+        first:
+          name: _T0
+        second: 1
+      data:
+        first:
+          name: _TimeStep
+        second: .00200000009
+      data:
+        first:
+          name: _Sigma
+        second: 1000
+      data:
+        first:
+          name: _Kappa
+        second: 1000
       data:
         first:
           name: _Parallax
@@ -151,22 +167,6 @@ Material:
         first:
           name: _Metallic
         second: 0
-      data:
-        first:
-          name: _TimeStep
-        second: .00200000009
-      data:
-        first:
-          name: _T0
-        second: 1
-      data:
-        first:
-          name: _Sigma
-        second: 1000
-      data:
-        first:
-          name: _Kappa
-        second: 4000
     m_Colors:
       data:
         first:

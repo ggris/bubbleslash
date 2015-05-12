@@ -38,14 +38,10 @@ ZTest Always Cull Off ZWrite Off Fog { Mode Off } //Rendering settings
    float4 orgCol = tex2D(_MainTex, i.uv);
    float bloodCol = tex2D(_Blood, i.uv);
    bloodCol = max(2 * bloodCol -1, 0);
+  
+   bloodCol = saturate(bloodCol);
    
-   bloodCol *= bloodCol;
-   bloodCol *= bloodCol;
-   bloodCol *= bloodCol;
-   clamp(bloodCol, 0, 1);
-   
-   
-   return orgCol * (1 - bloodCol) + bloodCol*_BloodColor;
+   return orgCol * (1 - bloodCol) + bloodCol/(1+2*bloodCol)*_BloodColor;
   }
   ENDCG
  }

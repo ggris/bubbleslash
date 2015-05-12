@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Advect
-  m_Shader: {fileID: 4800000, guid: 8121ef5abea6640b789851b5202836ad, type: 3}
+  m_Name: SubGrad
+  m_Shader: {fileID: 4800000, guid: 39d2441f24d284a7a93cb2d95b198229, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: -1
@@ -31,27 +31,6 @@ Material:
       data:
         first:
           name: _DetailNormalMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Velocity
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Source
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Obstacles
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
@@ -111,18 +90,6 @@ Material:
         first:
           name: _DstBlend
         second: 0
-      data:
-        first:
-          name: _TimeStep
-        second: .00200000009
-      data:
-        first:
-          name: _InverseGridScale
-        second: 1
-      data:
-        first:
-          name: _Dissipation
-        second: .00999999978
       data:
         first:
           name: _Parallax
