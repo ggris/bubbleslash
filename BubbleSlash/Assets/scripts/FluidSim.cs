@@ -15,7 +15,7 @@ public class FluidSim : MonoBehaviour {
 	public Vector2 source_pos_;
 	public float source_temperature_ = 0.0f;
 	public float source_density_ = 1.0f;
-	public RenderTexture obstacles_, initial_density_, initial_velocity_;
+	public float source_velocity = 1.0f;
 	public Material advect_mat_, buoyancy_mat_, source_mat_, divergence_mat_, jacoby_mat_, substract_gradient_;
 	public int jacobi_itts_ = 1;
 	public bool snap_ = true;
@@ -25,7 +25,7 @@ public class FluidSim : MonoBehaviour {
 	float inverse_size_;
 	
 	RenderTexture[] density_, velocity_, temperature_, pressure_;
-	RenderTexture divergence_;
+	RenderTexture divergence_, obstacles_;
 	
 	// Use this for initialization
 	void Start () {
@@ -54,6 +54,11 @@ public class FluidSim : MonoBehaviour {
 		divergence_.filterMode = FilterMode.Point;
 		divergence_.wrapMode = TextureWrapMode.Clamp;
 		divergence_.Create();
+
+		obstacles_ = new RenderTexture(resolution_, resolution_, 0, RenderTextureFormat.RFloat);
+		obstacles_.filterMode = FilterMode.Point;
+		divergence_.wrapMode = TextureWrapMode.Clamp;
+		obstacles_.Create();
 		
 		post_material.SetTexture ("_Blood", density_ [0]);
 		
@@ -80,9 +85,6 @@ public class FluidSim : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown ("o")) {
-			snap_ = true;
-		}
 		
 		// Advect
 		advect (velocity_[0], velocity_ [0], velocity_ [1], dissipation_);
@@ -97,8 +99,11 @@ public class FluidSim : MonoBehaviour {
 		swapBuffer (velocity_);
 		
 		// Source
-		source(temperature_[0], source_temperature_);
-		source(density_[0], source_density_);
+		if (Input.GetKeyDown ("o")) {
+			source(temperature_[0], new Vector3(source_temperature_,source_temperature_,source_temperature_));
+			source(density_[0], new Vector3(source_density_,source_density_,source_density_));
+			source (velocity_[0], new Vector3(source_velocity, 0, 0));
+		}
 		
 		// Divergence field
 		
@@ -130,6 +135,7 @@ public class FluidSim : MonoBehaviour {
 			Graphics.Blit (source, density_ [0], post_material);
 			Graphics.Blit (source, temperature_ [0], post_material);
 			Graphics.Blit (source, pressure_ [0], post_material);
+			Graphics.Blit (source, obstacles_, post_material);
 			snap_ = false;
 		}
 		
@@ -155,10 +161,10 @@ public class FluidSim : MonoBehaviour {
 		Graphics.Blit(null, dest, buoyancy_mat_);
 	}
 	
-	void source(RenderTexture dest, float val)
+	void source(RenderTexture dest, Vector3 val)
 	{
 		source_mat_.SetVector("_Point", source_pos_);
-		source_mat_.SetVector("_FillColor", new Vector3(val,val,val));
+		source_mat_.SetVector("_FillColor", val);
 		
 		Graphics.Blit(null, dest, source_mat_);
 		
