@@ -115,6 +115,11 @@ public class PlayerPhysics : MonoBehaviour {
 		able_to_move = isAbleToMove();
 		able_to_attack = isAbleToAttack ();
 
+		//updates direction
+		direction_input = directionFromInput ();
+		checkSlide (); //only changes "horizontal_direction" if sliding
+		direction = realDirection (direction_input);
+
 		//set animation values
 		animator.SetFloat ("inputX", direction_input.x);
 		animator.SetFloat ("inputY", direction_input.y);
@@ -132,10 +137,7 @@ public class PlayerPhysics : MonoBehaviour {
 			direction_action=direction;
 			weapon.transform.localEulerAngles=new Vector3(0,0,getAngle(direction_action,new Vector2(1,0)));
 		}
-		//updates direction
-		direction_input = directionFromInput ();
-		checkSlide (); //only changes "horizontal_direction" if sliding
-		direction = realDirection (direction_input);
+
 		//controls
 		checkAttack ();
 
@@ -147,6 +149,9 @@ public class PlayerPhysics : MonoBehaviour {
 		//max speeds
 		checkMaxSpeeds ();
 
+		if (transform.position.y < manager.death_altitude) {
+			manager.dealWithDeath(playerNumber -1);
+		}
 
 	}
 

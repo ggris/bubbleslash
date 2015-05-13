@@ -986,6 +986,7 @@ MonoBehaviour:
   - {fileID: 1521256586}
   - {fileID: 1834841411}
   min_distance_spawn: 1
+  death_altitude: 0
 --- !u!4 &1387551348
 Transform:
   m_ObjectHideFlags: 0

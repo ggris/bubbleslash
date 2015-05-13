@@ -7,7 +7,7 @@ public class PlayerManager : MonoBehaviour {
 	public Transform[] spawn_points;
 	public GameObject [] players;
 	public float min_distance_spawn;
-
+	public float death_altitude;
 	private int [] score;
 
 	// Use this for initialization
