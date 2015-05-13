@@ -118,15 +118,15 @@ Material:
       data:
         first:
           name: _TimeStep
-        second: .00200000009
+        second: 1
       data:
         first:
           name: _Sigma
-        second: 1000
+        second: 0
       data:
         first:
           name: _Kappa
-        second: 1000
+        second: 0
       data:
         first:
           name: _Parallax

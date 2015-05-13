@@ -42,8 +42,13 @@ Blend SrcAlpha OneMinusSrcAlpha
    bloodCol = max(2 * bloodCol -1, 0);
   
    bloodCol = saturate(bloodCol);
+   if (bloodCol > 0.7)
+ 		bloodCol = 1;
+	else if (bloodCol > 0.3)
+		bloodCol = 0.7;
+	else bloodCol = 0;
    
-   float4 outColor = _BloodColor / (1+2*bloodCol);
+   float4 outColor = _BloodColor / (1+bloodCol);
    outColor[3] = bloodCol;
    
    //return orgCol * (1 - bloodCol) + bloodCol/(1+2*bloodCol)*_BloodColor;

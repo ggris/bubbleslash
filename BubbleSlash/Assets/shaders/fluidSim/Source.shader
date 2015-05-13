@@ -42,9 +42,9 @@ Properties {
 			    
 			    if(d < _Radius) 
 			    {
-			        float a = (_Radius - d) * 0.5;
-        			a = min(a, 1.0);
-			        result = float4(_FillColor, a);
+			        float a = (_Radius - d) * 2;
+        			//a = min(a, 1.0);
+			        result = float4(_FillColor, 1);
 			    } 
 			  
 			  	return result;

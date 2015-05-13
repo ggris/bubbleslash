@@ -31,10 +31,6 @@ public class FluidSim : MonoBehaviour {
 	void Start () {
 		inverse_size_ = 1.0f / resolution_;
 		
-		advect_mat_.SetFloat("_InverseSize", inverse_size_);
-		advect_mat_.SetFloat("_TimeStep", time_step_);
-		advect_mat_.SetTexture("_Obstacles", obstacles_);
-		
 		buoyancy_mat_.SetFloat("_AmbientTemperature", ambient_temperature_);
 		buoyancy_mat_.SetFloat("_TimeStep", time_step_);
 		buoyancy_mat_.SetFloat("_Sigma", smoke_buoyancy_);
@@ -88,25 +84,25 @@ public class FluidSim : MonoBehaviour {
 		
 		// Advect
 		advect (velocity_[0], velocity_ [0], velocity_ [1], dissipation_);
-		advect (velocity_[0], temperature_ [0], temperature_ [1], dissipation_);
+		//advect (velocity_[0], temperature_ [0], temperature_ [1], dissipation_);
 		advect (velocity_[0], density_ [0], density_ [1], dissipation_);
 		swapBuffer (velocity_);
-		swapBuffer (temperature_);
+		//swapBuffer (temperature_);
 		swapBuffer (density_);
 		
 		// Buoyancy
-		buoyancy (velocity_ [0], temperature_ [0], density_ [0], velocity_ [1]);
-		swapBuffer (velocity_);
+		//buoyancy (velocity_ [0], temperature_ [0], density_ [0], velocity_ [1]);
+		//swapBuffer (velocity_);
 		
 		// Source
 		if (Input.GetKeyDown ("o")) {
-			source(temperature_[0], new Vector3(source_temperature_,source_temperature_,source_temperature_));
+			//source(temperature_[0], new Vector3(source_temperature_,source_temperature_,source_temperature_));
 			source(density_[0], new Vector3(source_density_,source_density_,source_density_));
-			source (velocity_[0], new Vector3(source_velocity, 0, 0));
+			source (velocity_[0], new Vector3(0, source_velocity, 0));
 		}
 		
 		// Divergence field
-		
+/*
 		divergence(velocity_[0], divergence_);
 		
 		// Clear texture
@@ -122,28 +118,19 @@ public class FluidSim : MonoBehaviour {
 
 		subGrad(velocity_[0], pressure_[0], velocity_[1]);
 		
-		swapBuffer(velocity_);
+		swapBuffer(velocity_);*/	
 		
 	}
 	
 	public Material post_material;
-	// Called by the camera to apply the image effect
-	void OnRenderImage (RenderTexture source, RenderTexture destination)
-	{
-		if (snap_) {
-			Graphics.Blit (source, velocity_ [0], post_material);
-			Graphics.Blit (source, density_ [0], post_material);
-			Graphics.Blit (source, temperature_ [0], post_material);
-			Graphics.Blit (source, pressure_ [0], post_material);
-			Graphics.Blit (source, obstacles_, post_material);
-			snap_ = false;
-		}
-		
-		Graphics.Blit (source, destination, post_material);
-	}
 	
 	void advect(RenderTexture velocity, RenderTexture source, RenderTexture dest, float dissipation)
 	{
+		
+		advect_mat_.SetFloat("_InverseSize", inverse_size_);
+		advect_mat_.SetFloat("_TimeStep", time_step_);
+		advect_mat_.SetTexture("_Obstacles", obstacles_);
+
 		advect_mat_.SetFloat("_Dissipation", dissipation);
 		advect_mat_.SetTexture("_Velocity", velocity);
 		advect_mat_.SetTexture("_Source", source);
@@ -182,12 +169,12 @@ public class FluidSim : MonoBehaviour {
 	
 	void jacobi(RenderTexture pressure, RenderTexture divergence, RenderTexture dest)
 	{
-		
+		float alpha = cell_size_ * cell_size_;
 		jacoby_mat_.SetTexture("_Pressure", pressure);
 		jacoby_mat_.SetTexture("_Divergence", divergence);
 		jacoby_mat_.SetVector("_InverseSize", new Vector2(inverse_size_, inverse_size_));
-		jacoby_mat_.SetFloat("_Alpha", -cell_size_*cell_size_);
-		jacoby_mat_.SetFloat("_RBeta", 0.25f);
+		jacoby_mat_.SetFloat("_Alpha", alpha);
+		jacoby_mat_.SetFloat("_RBeta", 1/(4+alpha));
 		
 		Graphics.Blit(null, dest, jacoby_mat_);
 	}

@@ -47,13 +47,9 @@ SubShader
 			
 			    float4 result = float4(0,0,0,0);
 			    
-			    float solid = tex2D(_Obstacles, coords.uv).x;
-			    if(true) {
-			   	
-			    	float2 u = tex2D(_Velocity, coords.uv).xy;
-			    	float2 pos = coords.uv - (u * _InverseGridScale * _TimeStep);
-			   		result = (1.0 - _Dissipation) * tex2D(_Source, pos);
-			   	}
+			   	float2 u = tex2D(_Velocity, coords.uv).xy;
+			   	float2 pos = coords.uv - u * _InverseGridScale;
+			   	result = (1.0 - _Dissipation) * tex2D(_Source, pos);
 			    
 			    return result;
 			}
