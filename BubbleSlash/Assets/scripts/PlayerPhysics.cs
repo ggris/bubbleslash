@@ -120,7 +120,7 @@ public class PlayerPhysics : MonoBehaviour {
 		checkSlide (); //only changes "horizontal_direction" if sliding
 		direction = realDirection (direction_input);
 
-		//set animation values
+		//set animator parameters values
 		animator.SetFloat ("inputX", direction_input.x);
 		animator.SetFloat ("inputY", direction_input.y);
 		animator.SetFloat ("speedX", body.velocity.x);
