@@ -111,9 +111,7 @@ public class PlayerPhysics : MonoBehaviour {
 	void Update () {
 		//if (playerNumber == 1)
 		//	logState();
-		able_to_jump = isAbleToJump();
-		able_to_move = isAbleToMove();
-		able_to_attack = isAbleToAttack ();
+		//able_to_jump = isAbleToJump();
 
 		//updates direction
 		direction_input = directionFromInput ();
@@ -127,10 +125,13 @@ public class PlayerPhysics : MonoBehaviour {
 		animator.SetBool ("isOnFeet", is_grounded);
 		animator.SetBool ("isOnHand", is_touching_left || is_touching_right);
 
-		if (playerInputButton("Jump") && able_to_jump)
+		if (playerInputButton("Jump") && isAbleToJump())
 			animator.SetTrigger ("triggerJump");
 
-		if (playerInputButton ("Weapon") && able_to_attack) {
+		if (playerInputButton("Hat") && isInputFree())
+			animator.SetTrigger("inputHat");
+		
+		if (playerInputButton ("Weapon") && isAbleToAttack() && isInputFree()) {
 			animator.SetTrigger ("triggerAttack");
 			weapon_state.SetTrigger("input");
 			attack_start=Time.time;
@@ -197,8 +198,10 @@ public class PlayerPhysics : MonoBehaviour {
 		return (ans && (jumps_left > 0)) || animator.GetCurrentAnimatorStateInfo(0).IsName("sliding");
 	}
 
-	public bool isAbleToMove(){
-		return !animator.GetCurrentAnimatorStateInfo (0).IsTag ("weapon");
+	bool isInputFree(){
+		return animator.GetCurrentAnimatorStateInfo (0).IsName ("idle")
+			|| animator.GetCurrentAnimatorStateInfo(0).IsName("walking")
+				|| animator.GetCurrentAnimatorStateInfo(0).IsName("falling"); 
 	}
 
 	public bool isAbleToAttack(){
@@ -206,7 +209,7 @@ public class PlayerPhysics : MonoBehaviour {
 	}
 
 	public void checkMove(){
-		if (direction_input.x < 0 && able_to_move) {
+		if (direction_input.x < 0 && isInputFree()) {
 			if (is_grounded){
 				body.AddForce (-Vector2.right * ground_acc * Time.deltaTime);
 			}
@@ -214,7 +217,7 @@ public class PlayerPhysics : MonoBehaviour {
 				body.AddForce (-Vector2.right * air_acc * Time.deltaTime);
 			}
 		}
-		if (direction_input.x > 0 && able_to_move) {
+		if (direction_input.x > 0 && isInputFree()) {
 			if (is_grounded){
 				body.AddForce (Vector2.right * ground_acc * Time.deltaTime);
 			}
@@ -222,7 +225,7 @@ public class PlayerPhysics : MonoBehaviour {
 				body.AddForce (Vector2.right * air_acc * Time.deltaTime);
 			}
 		}
-		if (able_to_move) {
+		if (isInputFree()) {
 			if (is_grounded){
 				body.AddForce (new Vector2 (-body.velocity.x, 0f) * ground_horizontal_drag * Time.deltaTime);
 			}
@@ -245,7 +248,7 @@ public class PlayerPhysics : MonoBehaviour {
 
 	public void checkJump (){
 
-		if (playerInputButton("Jump") && able_to_jump) {
+		if (playerInputButton("Jump") && isAbleToJump()) {
 
 			if (animator.GetCurrentAnimatorStateInfo(0).IsName("sliding")){
 				body.velocity = new Vector2 (horizontal_direction * push_wall_speed, wall_jump_speed);
