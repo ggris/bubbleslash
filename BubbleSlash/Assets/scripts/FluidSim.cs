@@ -2,7 +2,9 @@
 using System.Collections;
 
 public class FluidSim : MonoBehaviour {
-	
+
+	public Vector2 speed;
+
 	[Range(1,1024)]
 	public int resolution_ = 64;
 	[Range(0.001f,10.0f)]
@@ -23,6 +25,8 @@ public class FluidSim : MonoBehaviour {
 	public float cell_size_ = 1.0f;
 
 	float inverse_size_;
+
+	public Material post_material;
 	
 	RenderTexture[] density_, velocity_, temperature_, pressure_;
 	RenderTexture divergence_, obstacles_;
@@ -57,6 +61,10 @@ public class FluidSim : MonoBehaviour {
 		obstacles_.Create();
 		
 		post_material.SetTexture ("_Blood", density_ [0]);
+		Material post_mat_copy = new Material (post_material);
+		GetComponent<SpriteRenderer> ().material = post_mat_copy;
+
+		//source ();
 		
 	}
 	
@@ -100,19 +108,6 @@ public class FluidSim : MonoBehaviour {
 		//buoyancy (velocity_ [0], temperature_ [0], density_ [0], velocity_ [1]);
 		//swapBuffer (velocity_);
 		
-		// Source
-		if (Input.GetKeyDown ("o")) {
-			Graphics.SetRenderTarget (density_ [0]);
-			GL.Clear (false, true, new Color (0, 0, 0, 0));		
-			Graphics.SetRenderTarget (null);
-			Graphics.SetRenderTarget (velocity_ [0]);
-			GL.Clear (false, true, new Color (0, 0, 0, 0));		
-			Graphics.SetRenderTarget (null);
-			//source(temperature_[0], new Vector3(source_temperature_,source_temperature_,source_temperature_));
-			source(density_[0], new Vector3(source_density_,source_density_,source_density_));
-			source (velocity_[0], new Vector3(0, source_velocity, 0));
-		}
-		
 		// Divergence field
 
 		divergence(velocity_[0], divergence_);
@@ -133,8 +128,13 @@ public class FluidSim : MonoBehaviour {
 		swapBuffer(velocity_);
 		
 	}
-	
-	public Material post_material;
+
+	void source()
+	{
+		//source(temperature_[0], new Vector3(source_temperature_,source_temperature_,source_temperature_));
+		source(density_[0], new Vector3(source_density_,source_density_,source_density_));
+		source (velocity_[0], new Vector3(speed.x, speed.y, 0));
+	}
 	
 	void advect(RenderTexture velocity, RenderTexture source, RenderTexture dest, float dissipation)
 	{

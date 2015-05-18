@@ -62,7 +62,7 @@ SubShader
 			    
 			    float du = _InverseGridScale;
 			   	
-			   	int l=2;
+			   	int l=3;
 			   	for (int i=-l; i<=l; i++)
 			   	{
 			   		for (int j=-l; j<=l; j++)
