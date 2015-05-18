@@ -48,8 +48,8 @@ Blend SrcAlpha OneMinusSrcAlpha
 //		bloodCol = 0.7;
 //	else bloodCol = 0;
    
-   float4 outColor = _BloodColor / (1+boodDens);
-   outColor[3] = boodDens;
+   float4 outColor = _BloodColor / (1	+boodDens);
+   outColor[3] = boodDens*2;
    
    //return orgCol * (1 - bloodCol) + bloodCol/(1+2*bloodCol)*_BloodColor;
    return outColor;
