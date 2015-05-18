@@ -66,11 +66,17 @@ public class FluidSim : MonoBehaviour {
 		buffer[0].filterMode = filter;
 		buffer[0].wrapMode = TextureWrapMode.Clamp;
 		buffer[0].Create();
+		Graphics.SetRenderTarget (buffer [0]);
+		GL.Clear (false, true, new Color (0, 0, 0, 0));		
+		Graphics.SetRenderTarget (null);
 		
 		buffer[1] = new RenderTexture(resolution_, resolution_, 0, format);
 		buffer[1].filterMode = filter;
 		buffer[1].wrapMode = TextureWrapMode.Clamp;
 		buffer[1].Create();
+		Graphics.SetRenderTarget (buffer [1]);
+		GL.Clear (false, true, new Color (0, 0, 0, 0));		
+		Graphics.SetRenderTarget (null);
 	}
 	
 	void swapBuffer (RenderTexture[] buffer) {
@@ -83,9 +89,9 @@ public class FluidSim : MonoBehaviour {
 	void Update () {
 		
 		// Advect
+		advect (velocity_[0], density_ [0], density_ [1], dissipation_);
 		advect (velocity_[0], velocity_ [0], velocity_ [1], dissipation_);
 		//advect (velocity_[0], temperature_ [0], temperature_ [1], dissipation_);
-		advect (velocity_[0], density_ [0], density_ [1], dissipation_);
 		swapBuffer (velocity_);
 		//swapBuffer (temperature_);
 		swapBuffer (density_);
@@ -96,13 +102,19 @@ public class FluidSim : MonoBehaviour {
 		
 		// Source
 		if (Input.GetKeyDown ("o")) {
+			Graphics.SetRenderTarget (density_ [0]);
+			GL.Clear (false, true, new Color (0, 0, 0, 0));		
+			Graphics.SetRenderTarget (null);
+			Graphics.SetRenderTarget (velocity_ [0]);
+			GL.Clear (false, true, new Color (0, 0, 0, 0));		
+			Graphics.SetRenderTarget (null);
 			//source(temperature_[0], new Vector3(source_temperature_,source_temperature_,source_temperature_));
 			source(density_[0], new Vector3(source_density_,source_density_,source_density_));
 			source (velocity_[0], new Vector3(0, source_velocity, 0));
 		}
 		
 		// Divergence field
-/*
+
 		divergence(velocity_[0], divergence_);
 		
 		// Clear texture
@@ -118,7 +130,7 @@ public class FluidSim : MonoBehaviour {
 
 		subGrad(velocity_[0], pressure_[0], velocity_[1]);
 		
-		swapBuffer(velocity_);*/	
+		swapBuffer(velocity_);
 		
 	}
 	

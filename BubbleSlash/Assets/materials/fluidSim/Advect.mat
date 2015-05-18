@@ -158,11 +158,11 @@ Material:
       data:
         first:
           name: _InverseGridScale
-        second: 1
+        second: .00999999978
       data:
         first:
           name: _Dissipation
-        second: .0399999991
+        second: .0199999996
     m_Colors:
       data:
         first:

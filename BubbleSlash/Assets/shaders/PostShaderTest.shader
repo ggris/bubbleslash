@@ -38,18 +38,18 @@ Blend SrcAlpha OneMinusSrcAlpha
   float4 frag (v2f i) : COLOR{
    float4 orgCol = tex2D(_MainTex, i.uv);
    orgCol[3] = 0;
-   float bloodCol = tex2D(_Blood, i.uv);
-   bloodCol = max(2 * bloodCol -1, 0);
+   float boodDens = tex2D(_Blood, i.uv);
+   boodDens = max( boodDens - 0.1, 0);
   
-   bloodCol = saturate(bloodCol);
-   if (bloodCol > 0.7)
- 		bloodCol = 1;
-	else if (bloodCol > 0.3)
-		bloodCol = 0.7;
-	else bloodCol = 0;
+   boodDens = saturate(boodDens);
+//   if (bloodCol > 0.7)
+// 		bloodCol = 1;
+//	else if (bloodCol > 0.3)
+//		bloodCol = 0.7;
+//	else bloodCol = 0;
    
-   float4 outColor = _BloodColor / (1+bloodCol);
-   outColor[3] = bloodCol;
+   float4 outColor = _BloodColor / (1+boodDens);
+   outColor[3] = boodDens;
    
    //return orgCol * (1 - bloodCol) + bloodCol/(1+2*bloodCol)*_BloodColor;
    return outColor;
