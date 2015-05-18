@@ -54,8 +54,8 @@ public class PlayerPhysics : MonoBehaviour {
 	private GameObject weapon;
 	private Animator weapon_state;
 	private PlayerManager manager;
-
-
+	private GameObject hat;
+	public string hat_name;
 
 
 
@@ -72,6 +72,9 @@ public class PlayerPhysics : MonoBehaviour {
 		able_to_move = true;
 		able_to_jump = true;
 		attack_start = Time.time;
+
+		hat = transform.Find (hat_name).gameObject;
+		hat.GetComponent<HatAbstractClass> ().applyPassiveEffect ();
 	}
 
 	void logState(){
@@ -128,7 +131,7 @@ public class PlayerPhysics : MonoBehaviour {
 		if (playerInputButton("Jump") && isAbleToJump())
 			animator.SetTrigger ("triggerJump");
 
-		if (playerInputButton("Hat") && isInputFree())
+		if (playerInputButton("Hat") && isInputFree() && hat.GetComponent<HatAbstractClass>().hasSpecialState())
 			animator.SetTrigger("inputHat");
 		
 		if (playerInputButton ("Weapon") && isAbleToAttack() && isInputFree()) {

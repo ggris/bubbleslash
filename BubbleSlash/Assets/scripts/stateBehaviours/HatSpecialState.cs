@@ -5,7 +5,7 @@ public class HatSpecialState : StateMachineBehaviour {
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-		animator.gameObject.transform.Find ("hat").GetComponent<Animator> ().SetTrigger ("input");
+		animator.gameObject.transform.Find (animator.gameObject.GetComponent<PlayerPhysics>().hat_name).GetComponent<Animator> ().SetTrigger ("input");
 	}
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
