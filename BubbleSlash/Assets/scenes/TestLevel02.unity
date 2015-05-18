@@ -1579,7 +1579,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1279518288}
-  - 95: {fileID: 1279518286}
   m_Layer: 0
   m_Name: animation
   m_TagString: Untagged
@@ -1587,23 +1586,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!95 &1279518286
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1279518285}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!4 &1279518288
 Transform:
   m_ObjectHideFlags: 0
@@ -1612,7 +1594,7 @@ Transform:
   m_GameObject: {fileID: 1279518285}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 245123420}
   - {fileID: 1628841625}
@@ -2433,7 +2415,7 @@ Prefab:
       objectReference: {fileID: 1752347965}
     - target: {fileID: 11497346, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11465812, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
       propertyPath: m_Enabled
@@ -2557,6 +2539,7 @@ MonoBehaviour:
   able_to_attack: 0
   direction_action: {x: 0, y: 0}
   direction_parry: {x: 0, y: 0}
+  horizontal_direction: 0
   hat_name: speedHat
 --- !u!50 &1752347969
 Rigidbody2D:

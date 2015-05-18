@@ -50,7 +50,7 @@ public class PlayerPhysics : MonoBehaviour {
 	private Vector2 direction_input;
 	public Vector2 direction_action;
 	public Vector2 direction_parry;
-	private float horizontal_direction;
+	public float horizontal_direction;
 	private GameObject weapon;
 	private Animator weapon_state;
 	private PlayerManager manager;
@@ -127,6 +127,11 @@ public class PlayerPhysics : MonoBehaviour {
 		animator.SetFloat ("speedX", body.velocity.x);
 		animator.SetBool ("isOnFeet", is_grounded);
 		animator.SetBool ("isOnHand", is_touching_left || is_touching_right);
+
+		//quick under tee
+		//TODO
+		if(playerNumber==1)
+		transform.Find("animation").localScale = new Vector3(horizontal_direction, transform.localScale.y,transform.localScale.z);
 
 		if (playerInputButton("Jump") && isAbleToJump())
 			animator.SetTrigger ("triggerJump");
