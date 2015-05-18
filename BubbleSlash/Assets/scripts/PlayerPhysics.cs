@@ -54,8 +54,8 @@ public class PlayerPhysics : MonoBehaviour {
 	private GameObject weapon;
 	private Animator weapon_state;
 	private PlayerManager manager;
-
-
+	private GameObject hat;
+	public string hat_name;
 
 
 
@@ -72,6 +72,9 @@ public class PlayerPhysics : MonoBehaviour {
 		able_to_move = true;
 		able_to_jump = true;
 		attack_start = Time.time;
+
+		hat = transform.Find (hat_name).gameObject;
+		hat.GetComponent<HatAbstractClass> ().applyPassiveEffect ();
 	}
 
 	void logState(){
@@ -111,31 +114,34 @@ public class PlayerPhysics : MonoBehaviour {
 	void Update () {
 		//if (playerNumber == 1)
 		//	logState();
-		able_to_jump = isAbleToJump();
-		able_to_move = isAbleToMove();
-		able_to_attack = isAbleToAttack ();
+		//able_to_jump = isAbleToJump();
 
-		//set animation values
+		//updates direction
+		direction_input = directionFromInput ();
+		checkSlide (); //only changes "horizontal_direction" if sliding
+		direction = realDirection (direction_input);
+
+		//set animator parameters values
 		animator.SetFloat ("inputX", direction_input.x);
 		animator.SetFloat ("inputY", direction_input.y);
 		animator.SetFloat ("speedX", body.velocity.x);
 		animator.SetBool ("isOnFeet", is_grounded);
 		animator.SetBool ("isOnHand", is_touching_left || is_touching_right);
 
-		if (playerInputButton("Jump") && able_to_jump)
+		if (playerInputButton("Jump") && isAbleToJump())
 			animator.SetTrigger ("triggerJump");
 
-		if (playerInputButton ("Weapon") && able_to_attack) {
+		if (playerInputButton("Hat") && isInputFree() && hat.GetComponent<HatAbstractClass>().hasSpecialState())
+			animator.SetTrigger("inputHat");
+		
+		if (playerInputButton ("Weapon") && isAbleToAttack() && isInputFree()) {
 			animator.SetTrigger ("triggerAttack");
 			weapon_state.SetTrigger("input");
 			attack_start=Time.time;
 			direction_action=direction;
 			weapon.transform.localEulerAngles=new Vector3(0,0,getAngle(direction_action,new Vector2(1,0)));
 		}
-		//updates direction
-		direction_input = directionFromInput ();
-		checkSlide (); //only changes "horizontal_direction" if sliding
-		direction = realDirection (direction_input);
+
 		//controls
 		checkAttack ();
 
@@ -147,6 +153,9 @@ public class PlayerPhysics : MonoBehaviour {
 		//max speeds
 		checkMaxSpeeds ();
 
+		if (transform.position.y < manager.death_altitude) {
+			manager.dealWithDeath(playerNumber -1);
+		}
 
 	}
 
@@ -192,8 +201,10 @@ public class PlayerPhysics : MonoBehaviour {
 		return (ans && (jumps_left > 0)) || animator.GetCurrentAnimatorStateInfo(0).IsName("sliding");
 	}
 
-	public bool isAbleToMove(){
-		return !animator.GetCurrentAnimatorStateInfo (0).IsTag ("weapon");
+	bool isInputFree(){
+		return animator.GetCurrentAnimatorStateInfo (0).IsName ("idle")
+			|| animator.GetCurrentAnimatorStateInfo(0).IsName("walking")
+				|| animator.GetCurrentAnimatorStateInfo(0).IsName("falling"); 
 	}
 
 	public bool isAbleToAttack(){
@@ -201,7 +212,7 @@ public class PlayerPhysics : MonoBehaviour {
 	}
 
 	public void checkMove(){
-		if (direction_input.x < 0 && able_to_move) {
+		if (direction_input.x < 0 && isInputFree()) {
 			if (is_grounded){
 				body.AddForce (-Vector2.right * ground_acc * Time.deltaTime);
 			}
@@ -209,7 +220,7 @@ public class PlayerPhysics : MonoBehaviour {
 				body.AddForce (-Vector2.right * air_acc * Time.deltaTime);
 			}
 		}
-		if (direction_input.x > 0 && able_to_move) {
+		if (direction_input.x > 0 && isInputFree()) {
 			if (is_grounded){
 				body.AddForce (Vector2.right * ground_acc * Time.deltaTime);
 			}
@@ -217,7 +228,7 @@ public class PlayerPhysics : MonoBehaviour {
 				body.AddForce (Vector2.right * air_acc * Time.deltaTime);
 			}
 		}
-		if (able_to_move) {
+		if (isInputFree()) {
 			if (is_grounded){
 				body.AddForce (new Vector2 (-body.velocity.x, 0f) * ground_horizontal_drag * Time.deltaTime);
 			}
@@ -240,7 +251,7 @@ public class PlayerPhysics : MonoBehaviour {
 
 	public void checkJump (){
 
-		if (playerInputButton("Jump") && able_to_jump) {
+		if (playerInputButton("Jump") && isAbleToJump()) {
 
 			if (animator.GetCurrentAnimatorStateInfo(0).IsName("sliding")){
 				body.velocity = new Vector2 (horizontal_direction * push_wall_speed, wall_jump_speed);
