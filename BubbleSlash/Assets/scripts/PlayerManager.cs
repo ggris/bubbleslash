@@ -32,6 +32,7 @@ public class PlayerManager : MonoBehaviour {
 		int i = indice;
 		int j =Random.Range(0,spawn_points.Length-1);
 
+
 		players [i] = GameObject.Instantiate (player_prefab, spawn_points [j].position, new Quaternion (0, 0, 0, 0)) as GameObject;
 		players [i].GetComponent<PlayerPhysics> ().playerNumber = i + 1;
 		players [i].gameObject.GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);

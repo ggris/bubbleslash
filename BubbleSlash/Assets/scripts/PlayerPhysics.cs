@@ -76,7 +76,8 @@ public class PlayerPhysics : MonoBehaviour {
 		able_to_move = true;
 		able_to_jump = true;
 		attack_start = Time.time;
-
+		is_touching_left = false;
+		is_touching_right = false;
 		hat = transform.Find (hat_name).gameObject;
 		hat.GetComponent<HatAbstractClass> ().applyPassiveEffect ();
 	}
