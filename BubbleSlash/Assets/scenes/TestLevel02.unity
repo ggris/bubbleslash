@@ -575,10 +575,6 @@ Transform:
 GameObject:
   m_PrefabParentObject: {fileID: 110914, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
   m_PrefabInternal: {fileID: 1758477199}
---- !u!4 &649495007 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 407774, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
-  m_PrefabInternal: {fileID: 1758477199}
 --- !u!1 &654800740
 GameObject:
   m_ObjectHideFlags: 0
@@ -1553,6 +1549,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11497346, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
+      propertyPath: players.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 437202, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1588,7 +1588,7 @@ Prefab:
     - target: {fileID: 11497346, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
       propertyPath: players.Array.data[0]
       value: 
-      objectReference: {fileID: 649495007}
+      objectReference: {fileID: 0}
     - target: {fileID: 11497346, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
       propertyPath: players.Array.data[1]
       value: 
