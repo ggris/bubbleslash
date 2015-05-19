@@ -1599,11 +1599,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11465812, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11497346, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
       propertyPath: speed
-      value: .00999999978
+      value: .0199999996
+      objectReference: {fileID: 0}
+    - target: {fileID: 11465812, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
+      propertyPath: post_material
+      value: 
+      objectReference: {fileID: 2100000, guid: 95aabaed9b60e406cbdf9d9617dd1aaa, type: 2}
+    - target: {fileID: 11465812, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
+      propertyPath: speed_
+      value: .100000001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
