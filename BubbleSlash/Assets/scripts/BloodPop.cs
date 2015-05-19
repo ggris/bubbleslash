@@ -13,10 +13,14 @@ public class BloodPop : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown ("o")) {
-			GameObject blood = Instantiate (blood_, transform.position, transform.rotation) as GameObject;
-			blood.GetComponent<FluidSim>().speed=new Vector2(6*Random.value-3,6*Random.value-3);
-			blood.GetComponent<FluidSim>().Invoke("source",0);
+			//For test purposes, to work on blood rendering easily
+			displayBlood (transform.position, new Vector2(6*Random.value-3,6*Random.value-3));
 		}
 	
+	}
+	public void displayBlood(Vector3 pos, Vector2 speed){
+		GameObject blood = Instantiate (blood_, pos, new Quaternion (0, 0, 0, 0)) as GameObject;
+		blood.GetComponent<FluidSim> ().speed = speed;
+		blood.GetComponent<FluidSim> ().Invoke ("source", 0);
 	}
 }

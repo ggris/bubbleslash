@@ -130,7 +130,6 @@ public class PlayerPhysics : MonoBehaviour {
 
 		//quick under tee
 		//TODO
-		if(playerNumber==1)
 		transform.Find("animation").localScale = new Vector3(horizontal_direction, transform.localScale.y,transform.localScale.z);
 
 		if (playerInputButton("Jump") && isAbleToJump())
