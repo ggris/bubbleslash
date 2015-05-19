@@ -9,27 +9,34 @@ public class PlayerManager : MonoBehaviour {
 	public float min_distance_spawn;
 	public float death_altitude;
 	private int [] score;
+	private CameraTracking camera_tracking;
 
-	// Use this for initialization
 	void Start () {
 		score = new int[players.Length];
+		camera_tracking = (CameraTracking)FindObjectOfType (typeof(CameraTracking));
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
-	
 	}
+
+	private int indice;
 
 	public void dealWithDeath(int i){
 		score [i] -= 1;
-		spawn (i);
+		Destroy(players [i]);
+		indice = i; //needed for passing arguments to invoked method
+		Invoke("spawn",0.5f);
 	}
 
-	public void spawn(int i){
+	public void spawn(){
+		int i = indice;
 		int j =Random.Range(0,spawn_points.Length-1);
-		players [i].transform.position = spawn_points [j].position;
+
+		players [i] = GameObject.Instantiate (player_prefab, spawn_points [j].position, new Quaternion (0, 0, 0, 0)) as GameObject;
+		players [i].GetComponent<PlayerPhysics> ().playerNumber = i + 1;
 		players [i].gameObject.GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
-		players [i].gameObject.GetComponent<Animator> ().SetTrigger ("stopAttack");
+
+		camera_tracking.resetPlayers ();
 	}
 
 	void OnGUI(){

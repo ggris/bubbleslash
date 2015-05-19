@@ -57,7 +57,11 @@ public class PlayerPhysics : MonoBehaviour {
 	private GameObject hat;
 	public string hat_name;
 
-
+	void OnDestroy(){
+		CameraTracking cam = (CameraTracking)FindObjectOfType (typeof(CameraTracking));
+		if (cam!=null)
+			cam.resetPlayers ();
+	}
 
 	void Start () {
 		body = GetComponent<Rigidbody2D> ();
