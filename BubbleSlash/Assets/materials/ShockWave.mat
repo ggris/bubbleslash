@@ -81,7 +81,7 @@ Material:
       data:
         first:
           name: _Radius
-        second: .0594102107
+        second: 10.0235968
       data:
         first:
           name: _Cutoff
@@ -97,7 +97,7 @@ Material:
       data:
         first:
           name: _Sigma
-        second: .200000003
+        second: .100000001
       data:
         first:
           name: _Parallax
@@ -141,7 +141,7 @@ Material:
       data:
         first:
           name: _Amplitude
-        second: .00999999978
+        second: .00200000009
     m_Colors:
       data:
         first:
@@ -158,4 +158,4 @@ Material:
       data:
         first:
           name: _Center
-        second: {r: -.143754855, g: .154429764, b: .344219655, a: 0}
+        second: {r: .775072932, g: .452721238, b: 10, a: 0}
