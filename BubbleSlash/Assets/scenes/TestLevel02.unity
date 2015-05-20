@@ -1553,10 +1553,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 11497346, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
-      propertyPath: players.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 437202, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1589,42 +1585,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 11497346, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
-      propertyPath: players.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 11497346, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
-      propertyPath: players.Array.data[1]
-      value: 
-      objectReference: {fileID: 1752347965}
-    - target: {fileID: 11497346, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11465812, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11497346, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
-      propertyPath: speed
-      value: .0199999996
-      objectReference: {fileID: 0}
-    - target: {fileID: 11465812, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
-      propertyPath: post_material
-      value: 
-      objectReference: {fileID: 2100000, guid: 95aabaed9b60e406cbdf9d9617dd1aaa, type: 2}
-    - target: {fileID: 11465812, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
-      propertyPath: speed_
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 11465812, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
-      propertyPath: shockwave_material_
-      value: 
-      objectReference: {fileID: 2100000, guid: 95aabaed9b60e406cbdf9d9617dd1aaa, type: 2}
-    - target: {fileID: 11465812, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
-      propertyPath: max_time_
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
   m_IsPrefabParent: 0
@@ -1635,10 +1595,6 @@ Transform:
 --- !u!1 &1752347964 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 110914, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
-  m_PrefabInternal: {fileID: 1053827855}
---- !u!4 &1752347965 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 407774, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
   m_PrefabInternal: {fileID: 1053827855}
 --- !u!1001 &1758477199
 Prefab:
