@@ -36,26 +36,24 @@
             float _Amplitude;
             
             float deform(float x) {
-            	float result = x;
             	float y = x/_Radius;
             	y -= 1;
             	y *= y;
-            	float deform = exp(-y/_Sigma/_Sigma)/_Sigma;
-            	return result + deform*_Amplitude;
+            	float sigma = _Sigma/(_Sigma*2+_Radius);
+            	float deform = exp(-y/sigma/sigma)/sigma/(_Sigma+_Radius);
+            	return deform*_Amplitude;
             }
 
             fixed4 frag (v2f i) : COLOR{
             	float2 u = i.uv - _Center;
             	float l = length(u);
             	float d = deform(l);
-            	float2 v = _Center + u*d/l;
+            	float2 v = _Center + u*(l-d)/l;
             
                 fixed4 orgCol = tex2D(_MainTex, v);
-
-                float avg = (orgCol.r + orgCol.g + orgCol.b)/3.0;
-                fixed4 col = fixed4(avg+0.2, avg+0.1, avg, 1);
-
-                return orgCol;
+                fixed4 shock = fixed4(d/l*0.5, d/l, d/l, 0);
+				
+                return orgCol*(d*0.1+l)/l + shock*0.2;
             }
             ENDCG
         }
