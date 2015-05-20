@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class PlayerManager : MonoBehaviour {
 
+	public PlayerSettings[] settings;
 	public GameObject player_prefab;
 	public Transform[] spawn_points;
 	public GameObject [] players;

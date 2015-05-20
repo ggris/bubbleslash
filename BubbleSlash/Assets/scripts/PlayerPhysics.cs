@@ -141,7 +141,7 @@ public class PlayerPhysics : MonoBehaviour {
 		if (playerInputButton("Hat") && isInputFree() && hat.GetComponent<HatAbstractClass>().hasSpecialState())
 			animator.SetTrigger("inputHat");
 		
-		if (playerInputButton ("Weapon") && isAbleToAttack() && isInputFree()) {
+		if (playerInputButton ("Weapon") && isAbleToAttack() && (isInputFree()|| (canAttackOnHat() && isOnHat()))) {
 			animator.SetTrigger ("triggerAttack");
 			weapon_state.SetTrigger("input");
 			attack_start=Time.time;
@@ -210,7 +210,15 @@ public class PlayerPhysics : MonoBehaviour {
 				|| animator.GetCurrentAnimatorStateInfo(0).IsName("falling");
 		return (ans && (jumps_left > 0)) || animator.GetCurrentAnimatorStateInfo(0).IsName("sliding");
 	}
-
+	bool isAttacking (){
+		return animator.GetCurrentAnimatorStateInfo (0).IsName ("attack");
+	}
+	bool isOnHat(){
+		return animator.GetCurrentAnimatorStateInfo (0).IsName ("hatSpecialState");
+	}
+	bool canAttackOnHat(){
+		return hat.GetComponent<HatAbstractClass>().canAttack();
+	}
 	bool isInputFree(){
 		return animator.GetCurrentAnimatorStateInfo (0).IsName ("idle")
 			|| animator.GetCurrentAnimatorStateInfo(0).IsName("walking")

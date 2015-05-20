@@ -12,5 +12,6 @@ public abstract class HatAbstractClass : MonoBehaviour {
 	public virtual void onSpecialStateEnter(){}
 	public virtual void onSpecialStateExit(){}
 	public virtual bool hasSpecialState(){return false;}
+	public virtual bool canAttack(){return true;}
 
 }
