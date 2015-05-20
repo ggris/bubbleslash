@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 164564}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -.180000007, y: -1.04999995, z: 0}
-  m_LocalScale: {x: 8, y: 8, z: 1}
+  m_LocalScale: {x: 12, y: 12, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -44,12 +44,12 @@ MonoBehaviour:
   speed: {x: 2.70000005, y: 2.93000007}
   resolution_: 128
   time_step_: .100000001
-  dissipation_: .0199999996
+  dissipation_: 0
   ambient_temperature_: 0
-  smoke_buoyancy_: 0
+  smoke_buoyancy_: 1
   smoke_weight_: 0
   source_pos_: {x: .5, y: .5}
-  source_temperature_: 0
+  source_temperature_: 4
   source_density_: 10
   source_velocity: .5
   advect_mat_: {fileID: 2100000, guid: 77b1368782b38425a88762fba317f068, type: 2}
@@ -60,7 +60,7 @@ MonoBehaviour:
   substract_gradient_: {fileID: 2100000, guid: 3881ff0ff4b784625bdf64a84fae599e, type: 2}
   jacobi_itts_: 12
   snap_: 0
-  grad_scale_: .300000012
+  grad_scale_: .5
   cell_size_: .400000006
   post_material: {fileID: 2100000, guid: c348ca3013e8044659d7ba91f21b2718, type: 2}
 --- !u!114 &11491738
