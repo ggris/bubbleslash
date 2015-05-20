@@ -1,8 +1,8 @@
 ﻿Shader "Custom/Post/ShockWave" {
     Properties {
         _MainTex ("", 2D) = "white" {}
-        _Center ("Center", Vector) = (0.5,0.5,0,0)
-        _Radius ("Radius", Float) = 0.2
+        //_Center ("Center", Vector) = (0.5,0.5,0,0)
+        //_Radius ("Radius", Float) = 0.2
         _Sigma ("Variance", Float) = 0.2
         _Amplitude ("Amplitude", Float) = 0.01
     }
@@ -30,8 +30,8 @@
             }
 
             sampler2D _MainTex;
-            float2 _Center;
-            float _Radius;
+            uniform float2 _Center;
+            uniform float _Radius;
             float _Sigma;
             float _Amplitude;
             

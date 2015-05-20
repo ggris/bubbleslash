@@ -1,7 +1,7 @@
 ﻿Shader "Custom/PostShaderTest" {
 Properties {
  _MainTex ("", 2D) = "white" {}
- _Blood ("Blood", 2D) = "black" {} 
+ _Blood ("", 2D) = "white" {}
  _BloodColor ("Blood color", Color) = (1,0,0,0)
 }
  
@@ -31,7 +31,7 @@ Blend SrcAlpha OneMinusSrcAlpha
   }
     
   sampler2D _MainTex;
-  sampler2D _Blood;
+  uniform sampler2D _Blood;
   float4 _BloodColor;
     
   //Our Fragment Shader

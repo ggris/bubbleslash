@@ -81,7 +81,7 @@ Material:
       data:
         first:
           name: _Radius
-        second: 1.05402935
+        second: .854282022
       data:
         first:
           name: _Cutoff
@@ -158,4 +158,4 @@ Material:
       data:
         first:
           name: _Center
-        second: {r: .362745941, g: .619853258, b: 10, a: 0}
+        second: {r: .516748667, g: .507332325, b: 10, a: 0}

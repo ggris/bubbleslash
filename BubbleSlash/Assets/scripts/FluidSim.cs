@@ -132,7 +132,7 @@ public class FluidSim : MonoBehaviour {
 	void source()
 	{
 		//source(temperature_[0], new Vector3(source_temperature_,source_temperature_,source_temperature_));
-		source(density_[0], new Vector3(source_density_,source_density_,source_density_));
+		source (density_[0], new Vector3(source_density_,source_density_,source_density_));
 		source (velocity_[0], new Vector3(speed.x, speed.y, 0));
 	}
 	
