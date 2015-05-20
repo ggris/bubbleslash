@@ -38,6 +38,7 @@ public class PlayerManager : MonoBehaviour {
 		players [i] = GameObject.Instantiate (player_prefab, t.position, new Quaternion (0, 0, 0, 0)) as GameObject;
 		players [i].GetComponent<PlayerPhysics> ().playerNumber = i + 1;
 		players [i].gameObject.GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
+		SetColor (i);
 		camera_tracking.resetPlayers ();
 	}
 
@@ -52,7 +53,23 @@ public class PlayerManager : MonoBehaviour {
 		else 
 			return spawn_points[Random.Range(0,spawn_points.Length-1)];
 	}
+	void SetColor(int i){
+		string color;
+		switch (i) {
+		case 1:
+			color = "red";
+			break;
+		default :
+			color = "blue";
+			break;
+		}
+		Object [] sprites = UnityEditor.AssetDatabase.LoadAllAssetRepresentationsAtPath("Assets/sprites/playerSpriteSheet_"+color+".png");
 
+		players [i].transform.Find ("animation").Find ("body").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites [0];
+		players [i].transform.Find ("animation").Find ("eye").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites[1];
+		players [i].transform.Find ("animation").Find ("weapon_trans").Find ("weapon").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites[2];
+
+	}
 
 	void OnGUI(){
 		for (int i=0; i <players.Length; i++) {
