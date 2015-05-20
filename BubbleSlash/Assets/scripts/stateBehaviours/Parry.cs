@@ -12,7 +12,8 @@ public class Parry : StateMachineBehaviour {
 		Vector2 playerToEnnemy = ennemy.transform.position 
 								- player.transform.position;
 		playerToEnnemy.Normalize ();
-		//Vec2 ennemyProj = player.GetComponent<PlayerPhysics> ().parry_speed;
+
+		GameObject.FindObjectOfType<ShockWave> ().pop ((player.transform.position+ennemy.transform.position)/2);
 		Vector2 playerProj = - playerToEnnemy.normalized * ennemy.GetComponent<PlayerPhysics> ().parry_speed;
 		Vector2 ennemyProj = playerToEnnemy.normalized * player.GetComponent<PlayerPhysics> ().parry_speed;
 		//Debug.Log (ennemy.name + " got parried by " + player.name + " at speed : " + playerProj);
