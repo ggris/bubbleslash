@@ -37,14 +37,18 @@ Properties {
 			float4 frag(v2f coords) : COLOR
 			{
 			    float d = distance(_Point, coords.uv);
+			    float2 u = coords.uv - _Point;
 			    
 			    float4 result = float4(0,0,0,0);
 			    
 			    if(d < _Radius) 
 			    {
-			        float a = (_Radius - d) * 2;
+			        float a = (_Radius - d)*10;
         			//a = min(a, 1.0);
-			        result = float4(_FillColor, 1);
+        			//if (_FillColor.y>0.1)
+			        //	result = float4(_FillColor + 4*cross(_FillColor, float3(0, 0, dot(u,_FillColor.xy))),1);
+			        //else
+			        	result = float4(_FillColor, 1);
 			    } 
 			  
 			  	return result;

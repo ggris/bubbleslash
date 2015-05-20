@@ -12,7 +12,7 @@ public class ShockWave : MonoBehaviour
 	private float time_;
 
 	void Start () {
-		time_ = Time.time + max_time_; // No Shockwave on start.
+		time_ = Time.time - max_time_; // No Shockwave on start.
 		internal_material_ = new Material (shockwave_material_);
 	}
 	

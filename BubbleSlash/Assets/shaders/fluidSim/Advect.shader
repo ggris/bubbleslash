@@ -71,8 +71,6 @@ SubShader
 			   		}
 			   	}
 			   	
-			   	//result = saturate(result);
-			   	
 			   	result *= (1.0 - _Dissipation);
 			    
 			    return result;

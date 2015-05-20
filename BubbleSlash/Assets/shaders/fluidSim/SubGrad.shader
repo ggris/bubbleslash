@@ -35,14 +35,29 @@
 			{
 			
 			    // Find neighboring pressure:
-			    float pN = tex2D(_Pressure, coords.uv + float2(0, _InverseSize.y)).x;
-			    float pS = tex2D(_Pressure, coords.uv + float2(0, -_InverseSize.y)).x;
-			    float pE = tex2D(_Pressure, coords.uv + float2(_InverseSize.x, 0)).x;
-			    float pW = tex2D(_Pressure, coords.uv + float2(-_InverseSize.x, 0)).x;
+			    float2 delta = _InverseSize*0.8;
+			    float pN = tex2D(_Pressure, coords.uv + float2(0, delta.y)).x;
+			    float pS = tex2D(_Pressure, coords.uv + float2(0, -delta.y)).x;
+			    float pE = tex2D(_Pressure, coords.uv + float2(delta.x, 0)).x;
+			    float pW = tex2D(_Pressure, coords.uv + float2(-delta.x, 0)).x;
+			
+				float d = 0.4;
+				float p = 0.5;
+				if (pN < d) pN=p;
+				if (pS < d) pS=p;
+				if (pE < d) pE=p;
+				if (pW < d) pW=p;
+				 d = 2;
+				 p = 4;
+				if (pN > d) pN=p;
+				if (pS > d) pS=p;
+				if (pE > d) pE=p;
+				if (pW > d) pW=p;
 			
 			    // Enforce the free-slip boundary condition:
 			    float2 oldV = tex2D(_Velocity, coords.uv).xy;
 			    float2 grad = float2(pE - pW, pN - pS) * _GradScale;
+			    grad *= abs(grad);
 			    float2 newV = oldV - grad;
 			    
 			    return float4(newV,0,1);  

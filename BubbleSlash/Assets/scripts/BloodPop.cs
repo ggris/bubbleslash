@@ -14,7 +14,7 @@ public class BloodPop : MonoBehaviour {
 	void Update () {
 		if (Input.GetKeyDown ("o")) {
 			//For test purposes, to work on blood rendering easily
-			displayBlood (transform.position, new Vector2(6*Random.value-3,6*Random.value-3));
+			displayBlood (transform.position, new Vector2(3,0));
 		}
 	
 	}

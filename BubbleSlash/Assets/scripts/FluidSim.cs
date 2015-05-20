@@ -123,7 +123,10 @@ public class FluidSim : MonoBehaviour {
 			swapBuffer(pressure_);
 		}
 
-		subGrad(velocity_[0], pressure_[0], velocity_[1]);
+		//subGrad(velocity_[0], pressure_[0], velocity_[1]);
+		//swapBuffer(velocity_);
+
+		subGrad(velocity_[0], density_[0], velocity_[1]);
 		
 		swapBuffer(velocity_);
 		
@@ -133,7 +136,7 @@ public class FluidSim : MonoBehaviour {
 	{
 		//source(temperature_[0], new Vector3(source_temperature_,source_temperature_,source_temperature_));
 		source (density_[0], new Vector3(source_density_,source_density_,source_density_));
-		source (velocity_[0], new Vector3(speed.x, speed.y, 0));
+		source (velocity_[0], new Vector3(speed.x+ Random.value*source_velocity, speed.y + Random.value*source_velocity, 0));
 	}
 	
 	void advect(RenderTexture velocity, RenderTexture source, RenderTexture dest, float dissipation)
