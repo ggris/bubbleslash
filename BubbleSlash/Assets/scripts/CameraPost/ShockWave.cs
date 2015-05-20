@@ -24,7 +24,7 @@ public class ShockWave : MonoBehaviour
 		
 	}
 
-	void pop(Vector3 center)
+	public void pop(Vector3 center)
 	{
 		time_ = Time.time;
 		center_ = center;
