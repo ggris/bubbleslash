@@ -106,8 +106,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   min_zoom: 20
   max_zoom: 4
-  acceleration_: 1
-  damp_: .800000012
+  acceleration_: .100000001
+  damp_: .100000001
 --- !u!124 &12431566
 Behaviour:
   m_ObjectHideFlags: 1

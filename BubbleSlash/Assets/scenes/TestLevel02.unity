@@ -1585,14 +1585,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 11497346, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
-      propertyPath: acceleration_
-      value: .200000003
-      objectReference: {fileID: 0}
-    - target: {fileID: 11497346, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
-      propertyPath: damp_
-      value: .400000006
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
   m_IsPrefabParent: 0
