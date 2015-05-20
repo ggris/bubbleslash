@@ -35,20 +35,20 @@
 			{
 			
 			    // Find neighboring pressure:
-			    float2 delta = _InverseSize*0.8;
+			    float2 delta = _InverseSize*0.7;
 			    float pN = tex2D(_Pressure, coords.uv + float2(0, delta.y)).x;
 			    float pS = tex2D(_Pressure, coords.uv + float2(0, -delta.y)).x;
 			    float pE = tex2D(_Pressure, coords.uv + float2(delta.x, 0)).x;
 			    float pW = tex2D(_Pressure, coords.uv + float2(-delta.x, 0)).x;
 			
-				float d = 0.4;
-				float p = 0.5;
+				float d = 0.1;
+				float p = 0.8;
 				if (pN < d) pN=p;
 				if (pS < d) pS=p;
 				if (pE < d) pE=p;
 				if (pW < d) pW=p;
 				 d = 2;
-				 p = 4;
+				 p = 2;
 				if (pN > d) pN=p;
 				if (pS > d) pS=p;
 				if (pE > d) pE=p;
@@ -59,6 +59,8 @@
 			    float2 grad = float2(pE - pW, pN - pS) * _GradScale;
 			    grad *= abs(grad);
 			    float2 newV = oldV - grad;
+			    newV *= 1.02;
+			    newV.y -= 0.02;
 			    
 			    return float4(newV,0,1);  
 			}

@@ -43,12 +43,7 @@ Properties {
 			    
 			    if(d < _Radius) 
 			    {
-			        float a = (_Radius - d)*10;
-        			//a = min(a, 1.0);
-        			//if (_FillColor.y>0.1)
-			        //	result = float4(_FillColor + 4*cross(_FillColor, float3(0, 0, dot(u,_FillColor.xy))),1);
-			        //else
-			        	result = float4(_FillColor, 1);
+			        result = float4(_FillColor, 1);
 			    } 
 			  
 			  	return result;

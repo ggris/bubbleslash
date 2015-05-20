@@ -39,14 +39,12 @@ Blend SrcAlpha OneMinusSrcAlpha
    float4 orgCol = tex2D(_MainTex, i.uv);
    orgCol[3] = 0;
    float boodDens = tex2D(_Blood, i.uv);
+   float2 smooth_border = cos((i.uv-0.5)*4);
+   boodDens*= smooth_border.x*smooth_border.y;	
    boodDens = max( boodDens - 0.1, 0);
   
+  
    boodDens = saturate(boodDens);
-//   if (bloodCol > 0.7)
-// 		bloodCol = 1;
-//	else if (bloodCol > 0.3)
-//		bloodCol = 0.7;
-//	else bloodCol = 0;
    
    float4 outColor = _BloodColor / (1	+boodDens);
    outColor[3] = boodDens*2;
