@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerManager : MonoBehaviour {
 
@@ -20,25 +21,37 @@ public class PlayerManager : MonoBehaviour {
 	}
 
 	private int indice;
+	private Vector3 position_death;
 
 	public void dealWithDeath(int i){
 		score [i] -= 1;
-		Destroy(players [i]);
+		position_death = players [i].transform.position;
 		indice = i; //needed for passing arguments to invoked method
+		Destroy(players [i]);
 		Invoke("spawn",0.5f);
 	}
 
 	public void spawn(){
 		int i = indice;
-		int j =Random.Range(0,spawn_points.Length-1);
-
-
-		players [i] = GameObject.Instantiate (player_prefab, spawn_points [j].position, new Quaternion (0, 0, 0, 0)) as GameObject;
+		Transform t = findRandomSpawnPoint (i, position_death);
+		players [i] = GameObject.Instantiate (player_prefab, t.position, new Quaternion (0, 0, 0, 0)) as GameObject;
 		players [i].GetComponent<PlayerPhysics> ().playerNumber = i + 1;
 		players [i].gameObject.GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
-
 		camera_tracking.resetPlayers ();
 	}
+
+	Transform findRandomSpawnPoint(int i, Vector3 pos){
+		List<Transform> far_enough_spawn_points = new List<Transform>();
+		foreach (Transform t in spawn_points) {
+			if ((t.position-pos).magnitude > min_distance_spawn)
+				far_enough_spawn_points.Add(t);
+		}
+		if (far_enough_spawn_points.Count > 0) 
+			return far_enough_spawn_points [Random.Range (0, far_enough_spawn_points.Count - 1)];
+		else 
+			return spawn_points[Random.Range(0,spawn_points.Length-1)];
+	}
+
 
 	void OnGUI(){
 		for (int i=0; i <players.Length; i++) {
