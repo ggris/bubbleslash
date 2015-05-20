@@ -117,9 +117,7 @@ public class PlayerPhysics : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		//if (playerNumber == 1)
-		//	logState();
-		//able_to_jump = isAbleToJump();
+
 
 		//updates direction
 		direction_input = directionFromInput ();
@@ -134,7 +132,7 @@ public class PlayerPhysics : MonoBehaviour {
 		animator.SetBool ("isOnHand", is_touching_left || is_touching_right);
 
 		//quick under tee
-		//TODO
+
 		transform.Find("animation").localScale = new Vector3(horizontal_direction, transform.localScale.y,transform.localScale.z);
 
 		if (playerInputButton("Jump") && isAbleToJump())
@@ -183,8 +181,11 @@ public class PlayerPhysics : MonoBehaviour {
 
 		ans.Normalize ();
 
-		if(ans.x!=0)
-			horizontal_direction=ans.x;
+		if (ans.x < 0) 
+			horizontal_direction = -1;
+
+		if (ans.x > 0) 
+			horizontal_direction = 1;
 
 		return ans;
 	}
