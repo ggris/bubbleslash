@@ -118,11 +118,11 @@ Material:
       data:
         first:
           name: _TimeStep
-        second: 1
+        second: .100000001
       data:
         first:
           name: _Sigma
-        second: 0
+        second: 1
       data:
         first:
           name: _Kappa

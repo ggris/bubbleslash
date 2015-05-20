@@ -99,9 +99,9 @@ public class FluidSim : MonoBehaviour {
 		// Advect
 		advect (velocity_[0], density_ [0], density_ [1], dissipation_);
 		advect (velocity_[0], velocity_ [0], velocity_ [1], dissipation_);
-		//advect (velocity_[0], temperature_ [0], temperature_ [1], dissipation_);
+		advect (velocity_[0], temperature_ [0], temperature_ [1], dissipation_);
 		swapBuffer (velocity_);
-		//swapBuffer (temperature_);
+		swapBuffer (temperature_);
 		swapBuffer (density_);
 		
 		// Buoyancy
@@ -134,7 +134,7 @@ public class FluidSim : MonoBehaviour {
 
 	void source()
 	{
-		//source(temperature_[0], new Vector3(source_temperature_,source_temperature_,source_temperature_));
+		source(temperature_[0], new Vector3(source_temperature_,source_temperature_,source_temperature_));
 		source (density_[0], new Vector3(source_density_,source_density_,source_density_));
 		source (velocity_[0], new Vector3(speed.x+ Random.value*source_velocity, speed.y + Random.value*source_velocity, 0));
 	}
