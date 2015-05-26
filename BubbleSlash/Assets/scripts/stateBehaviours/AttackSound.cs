@@ -1,19 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Hurt : StateMachineBehaviour {
+public class AttackSound : StateMachineBehaviour {
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-		GameObject ennemy = animator.gameObject.GetComponent<WeaponBehaviour> ().ennemy;
-		GameObject player = animator.gameObject.GetComponent<WeaponBehaviour> ().player;
-		
-		Vector2 bloodspeed = ennemy.GetComponent<PlayerPhysics> ().direction_action*2;
-	
-
-		GameObject.Find("bloodManager").GetComponent<BloodPop>().displayBlood(player.transform.position,bloodspeed);
-		animator.gameObject.GetComponent<WeaponBehaviour> ().player.GetComponent<PlayerPhysics> ().isHurt ();
-
+		animator.gameObject.GetComponent<AudioSource> ().pitch = Random.Range (0.4f, 1.6f);
+		animator.gameObject.GetComponent<AudioSource> ().Play ();
 	}
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

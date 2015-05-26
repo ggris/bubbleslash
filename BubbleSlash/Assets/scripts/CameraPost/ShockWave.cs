@@ -28,6 +28,7 @@ public class ShockWave : MonoBehaviour
 	{
 		time_ = Time.time;
 		center_ = center;
+		GetComponent<AudioSource> ().Play ();
 	}
 
 	float getRadius (float delta_t)

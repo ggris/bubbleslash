@@ -107,7 +107,7 @@ MonoBehaviour:
   min_zoom: 20
   max_zoom: 4
   acceleration_: .100000001
-  damp_: .100000001
+  damp_: .0500000007
 --- !u!124 &12431566
 Behaviour:
   m_ObjectHideFlags: 1

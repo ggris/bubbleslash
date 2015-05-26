@@ -1,4 +1,4 @@
-﻿Shader "Custom/PostShaderTest" {
+﻿Shader "Custom/Blood" {
 Properties {
  _MainTex ("", 2D) = "white" {}
  _Blood ("", 2D) = "white" {}
@@ -6,8 +6,7 @@ Properties {
 }
  
 SubShader {
- 
-ZTest Always Cull Off ZWrite Off Fog { Mode Off } //Rendering settings
+ZTest Off Cull Off ZWrite Off Fog { Mode Off } //Rendering settings
 Blend SrcAlpha OneMinusSrcAlpha 
  
  Pass{
@@ -36,8 +35,6 @@ Blend SrcAlpha OneMinusSrcAlpha
     
   //Our Fragment Shader
   float4 frag (v2f i) : COLOR{
-   float4 orgCol = tex2D(_MainTex, i.uv);
-   orgCol[3] = 0;
    float boodDens = tex2D(_Blood, i.uv);
    float2 smooth_border = cos((i.uv-0.5)*4);
    boodDens*= smooth_border.x*smooth_border.y;	
