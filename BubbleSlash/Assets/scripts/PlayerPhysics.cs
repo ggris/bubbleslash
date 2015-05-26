@@ -57,6 +57,11 @@ public class PlayerPhysics : MonoBehaviour {
 	private GameObject hat;
 	public string hat_name;
 
+	//"state"
+	public float wound_length;
+	private bool is_wounded;
+
+
 	void OnDestroy(){
 		CameraTracking cam = (CameraTracking)FindObjectOfType (typeof(CameraTracking));
 		if (cam!=null)
@@ -150,7 +155,6 @@ public class PlayerPhysics : MonoBehaviour {
 		}
 
 		//controls
-		checkAttack ();
 
 		checkMove ();
 
@@ -310,46 +314,36 @@ public class PlayerPhysics : MonoBehaviour {
 		}
 	}
 
-	public void checkAttack(){/*
-		if (animator.GetCurrentAnimatorStateInfo(0).IsName("startAttack")) {
 
-
-
-		}
-
-		if (animator.GetCurrentAnimatorStateInfo(0).IsName("attack")){
-			body.velocity= direction_action * dash_speed;
-		}
-
-		if (animator.GetCurrentAnimatorStateInfo(0).IsName("endAttack")){
-			weapon.SetActive(false);
-			body.gravityScale=5;
-			body.velocity=new Vector2 (0,0);
-		}
-		if (animator.GetCurrentAnimatorStateInfo(0).IsName("parried")){
-			weapon.SetActive(false);
-			body.gravityScale=5;
-			body.velocity = direction_parry;
-		}
-		*/
-	}
 
 	public float getAngle (Vector2 a, Vector2 b){
 		return Vector2.Angle (a, b) * -1 * Mathf.Sign (Vector3.Cross (new Vector3 (a.x, a.y, 0), new Vector3 (b.x, b.y, 0)).z);
 	}
 
-	public void isHit(){
 
-	}
 	public void isHurt(){
-		manager.dealWithDeath (playerNumber-1);
+		if (is_wounded) {
+			manager.dealWithDeath (playerNumber-1);
+			CancelInvoke("stopWound");
+		}
+		else {
+			is_wounded = true;
+			Invoke("startWound",0f);
+			Invoke("stopWound",wound_length);
+		}
 	}
 	public void isParried(Vector2 dir_parry){
 		direction_parry = dir_parry;
 		animator.SetTrigger ("parried");
-
-
 	}
 
+	public void startWound(){
+
+		gameObject.transform.Find ("animation").Find ("small blood").gameObject.GetComponent<ParticleSystem> ().Play ();
+	}
+	public void stopWound(){
+		gameObject.transform.Find ("animation").Find("small blood").gameObject.GetComponent<ParticleSystem> ().Stop ();
+		is_wounded = false;
+	}
 
 }
