@@ -63,7 +63,7 @@ public class PlayerManager : MonoBehaviour {
 			color = "blue";
 			break;
 		}
-		Object [] sprites = UnityEditor.AssetDatabase.LoadAllAssetRepresentationsAtPath("Assets/sprites/playerSpriteSheet_"+color+".png");
+		Object [] sprites = Resources.LoadAll<Sprite>("sprites/playerSpriteSheet_"+color);
 
 		players [i].transform.Find ("animation").Find ("body").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites [0];
 		players [i].transform.Find ("animation").Find ("eye").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites[1];
