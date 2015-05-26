@@ -132,8 +132,8 @@ public class PlayerPhysics : MonoBehaviour {
 		animator.SetBool ("isOnHand", is_touching_left || is_touching_right);
 
 		//quick under tee
-
-		transform.Find("animation").localScale = new Vector3(horizontal_direction, transform.localScale.y,transform.localScale.z);
+		Transform transform_animation = transform.Find ("animation");
+		transform_animation.localScale = new Vector3(horizontal_direction, transform_animation.localScale.y,transform_animation.localScale.z);
 
 		if (playerInputButton("Jump") && isAbleToJump())
 			animator.SetTrigger ("triggerJump");
