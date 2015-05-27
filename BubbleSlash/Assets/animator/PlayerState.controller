@@ -1130,7 +1130,7 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_Motion: {fileID: 0}
+  m_Motion: {fileID: 7400000, guid: 78fa19817a978ba4d8446c2eb710edbc, type: 2}
   m_Tag: 
 --- !u!1102 &110207574
 AnimatorState:
@@ -1270,6 +1270,23 @@ AnimatorState:
   m_Mirror: 0
   m_Motion: {fileID: 7400000, guid: 0b9e9fffe14759f469c2be415f6b3c17, type: 2}
   m_Tag: 
+--- !u!1102 &110284668
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: slide
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_Motion: {fileID: 7400000, guid: 78fa19817a978ba4d8446c2eb710edbc, type: 2}
+  m_Tag: 
 --- !u!1102 &110286728
 AnimatorState:
   serializedVersion: 5
@@ -1402,6 +1419,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 110219284}
     m_Position: {x: 192, y: -312, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 110284668}
+    m_Position: {x: 227, y: -247, z: 0}
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: 110730422}
