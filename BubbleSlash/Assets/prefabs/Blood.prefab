@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: {x: 2.70000005, y: 2.93000007}
-  resolution_: 256
+  resolution_: 128
   time_step_: .100000001
   dissipation_: .00999999978
   ambient_temperature_: 0

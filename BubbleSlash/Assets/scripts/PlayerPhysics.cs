@@ -127,9 +127,14 @@ public class PlayerPhysics : MonoBehaviour {
 
 
 		//updates direction
-		direction_input = directionFromInput ();
-		checkSlide (); //only changes "horizontal_direction" if sliding
-		direction = realDirection (direction_input);
+		if (isAttacking ()) {
+			direction = direction_action;
+		}
+		else {
+			direction_input = directionFromInput ();
+			checkSlide (); //only changes "horizontal_direction" if sliding
+			direction = realDirection (direction_input);
+		}
 
 		//set animator parameters values
 		animator.SetFloat ("inputX", direction_input.x);
@@ -138,11 +143,6 @@ public class PlayerPhysics : MonoBehaviour {
 		animator.SetBool ("isOnFeet", is_grounded);
 		animator.SetBool ("isOnHand", is_touching_left || is_touching_right);
 
-		//quick under tee
-		Transform tr_animation = transform.Find ("animation");
-		tr_animation.localScale = new Vector3(horizontal_direction, tr_animation.localScale.y,tr_animation.localScale.z);
-		Transform tr_blood = tr_animation.Find ("small blood");
-		tr_blood.eulerAngles = new Vector3 (tr_blood.eulerAngles.x, -horizontal_direction*90, tr_blood.eulerAngles.z);
 
 
 		if (playerInputButton("Jump") && isAbleToJump())
@@ -150,7 +150,7 @@ public class PlayerPhysics : MonoBehaviour {
 
 		if (playerInputButton("Hat") && isInputFree() && hat.GetComponent<HatAbstractClass>().hasSpecialState())
 			animator.SetTrigger("inputHat");
-		
+
 		if (playerInputButton ("Weapon") && isAbleToAttack() && (isInputFree()|| (canAttackOnHat() && isOnHat()))) {
 			animator.SetTrigger ("triggerAttack");
 			weapon_state.SetTrigger("input");
@@ -165,9 +165,24 @@ public class PlayerPhysics : MonoBehaviour {
 
 		checkJump ();
 
-		
 		//max speeds
 		checkMaxSpeeds ();
+
+		//animation
+		//quick under tee
+		Transform tr_animation = transform.Find ("animation");
+
+		if (isAttacking ()) {
+			float a = getAngle (direction_action, horizontal_direction * Vector2.right);
+			tr_animation.eulerAngles = new Vector3 (0,0, a);
+		} 
+		else {
+			tr_animation.eulerAngles = new Vector3 (0, 0, 0);
+
+			tr_animation.localScale = new Vector3(horizontal_direction, tr_animation.localScale.y,tr_animation.localScale.z);
+			Transform tr_blood = tr_animation.Find ("small blood");
+			tr_blood.eulerAngles = new Vector3 (tr_blood.eulerAngles.x, -horizontal_direction*90, tr_blood.eulerAngles.z);
+		}
 
 		if (transform.position.y < manager.death_altitude) {
 			manager.dealWithDeath(playerNumber -1);
