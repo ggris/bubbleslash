@@ -141,8 +141,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 455012}
-  - 61: {fileID: 6125964}
   - 114: {fileID: 11418970}
+  - 60: {fileID: 6031042}
   m_Layer: 9
   m_Name: box
   m_TagString: weapon
@@ -285,8 +285,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 104022}
-  m_LocalRotation: {x: -.270597994, y: .65328145, z: .65328145, w: -.270598263}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalRotation: {x: .270598054, y: .65328151, z: .270598114, w: -.653281391}
+  m_LocalPosition: {x: -.200000003, y: .100000001, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 469550}
@@ -514,8 +514,8 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
---- !u!61 &6125964
-BoxCollider2D:
+--- !u!60 &6031042
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -525,8 +525,11 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Points:
+    m_Paths:
+    - - {x: -.497585624, y: .505583704}
+      - {x: .52122879, y: -.000836491585}
+      - {x: -.49904412, y: -.514268637}
 --- !u!61 &6142996
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -705,6 +708,7 @@ MonoBehaviour:
   attack_cd: .699999988
   parry_speed: 20
   dash_speed: 30
+  wound_length: 8
   max_jumps: 2
   jumps_left: 0
   max_attacks: 0
@@ -719,7 +723,6 @@ MonoBehaviour:
   direction_parry: {x: 0, y: 0}
   horizontal_direction: 0
   hat_name: testHat
-  wound_length: 10
 --- !u!114 &11456830
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -933,7 +936,7 @@ ParticleSystem:
         rgba: 4294967295
       maxColor:
         serializedVersion: 2
-        rgba: 2969567318
+        rgba: 2315255872
       minMaxState: 0
     startSize:
       scalar: .300000012
@@ -1001,14 +1004,14 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
       minMaxState: 0
-    gravityModifier: 0
+    gravityModifier: 1
     inheritVelocity: 0
     maxNumParticles: 1000
   ShapeModule:
     serializedVersion: 2
     enabled: 1
     type: 4
-    radius: .100000001
+    radius: .00999999978
     angle: 7.52150869
     length: 5
     boxX: 1
@@ -1101,7 +1104,7 @@ ParticleSystem:
   RotationModule:
     enabled: 0
     curve:
-      scalar: .785398185
+      scalar: .785398126
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1373,7 +1376,7 @@ ParticleSystem:
       minMaxState: 0
     inWorldSpace: 0
   ForceModule:
-    enabled: 1
+    enabled: 0
     x:
       scalar: 0
       maxCurve:
@@ -1654,7 +1657,7 @@ ParticleSystem:
   RotationBySpeedModule:
     enabled: 0
     curve:
-      scalar: .785398185
+      scalar: .785398126
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1693,10 +1696,10 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4294967295
+          rgba: 4278190335
         key1:
           serializedVersion: 2
-          rgba: 4294967295
+          rgba: 4278190335
         key2:
           serializedVersion: 2
           rgba: 0
@@ -1840,11 +1843,11 @@ ParticleSystemRenderer:
   m_MaxParticleSize: .5
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
-  m_LengthScale: 2
+  m_LengthScale: 5
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_SortMode: 0
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}

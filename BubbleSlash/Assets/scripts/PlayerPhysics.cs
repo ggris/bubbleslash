@@ -29,6 +29,8 @@ public class PlayerPhysics : MonoBehaviour {
 	public float parry_speed;
 	public float dash_speed;
 
+	public float wound_length;
+
 	//ables
 	public int max_jumps;
 	public int jumps_left;
@@ -58,7 +60,7 @@ public class PlayerPhysics : MonoBehaviour {
 	public string hat_name;
 
 	//"state"
-	public float wound_length;
+
 	private bool is_wounded;
 
 
@@ -137,8 +139,11 @@ public class PlayerPhysics : MonoBehaviour {
 		animator.SetBool ("isOnHand", is_touching_left || is_touching_right);
 
 		//quick under tee
-		Transform transform_animation = transform.Find ("animation");
-		transform_animation.localScale = new Vector3(horizontal_direction, transform_animation.localScale.y,transform_animation.localScale.z);
+		Transform tr_animation = transform.Find ("animation");
+		tr_animation.localScale = new Vector3(horizontal_direction, tr_animation.localScale.y,tr_animation.localScale.z);
+		Transform tr_blood = tr_animation.Find ("small blood");
+		tr_blood.eulerAngles = new Vector3 (tr_blood.eulerAngles.x, -horizontal_direction*90, tr_blood.eulerAngles.z);
+
 
 		if (playerInputButton("Jump") && isAbleToJump())
 			animator.SetTrigger ("triggerJump");
