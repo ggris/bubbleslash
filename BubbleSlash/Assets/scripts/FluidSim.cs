@@ -37,8 +37,9 @@ public class FluidSim : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		camera_ = GetComponent<Camera> ();
-		camera_.aspect = 1.0f;
+
+		//camera_.Render ();
+		//Graphics.Blit (camera_.targetTexture, obstacles_);
 
 		t_ = Time.time;
 
@@ -65,9 +66,14 @@ public class FluidSim : MonoBehaviour {
 		divergence_.Create();
 
 		obstacles_ = new RenderTexture(resolution_, resolution_, 0, RenderTextureFormat.RFloat);
-		obstacles_.filterMode = FilterMode.Point;
+		obstacles_.filterMode = FilterMode.Bilinear;
 		divergence_.wrapMode = TextureWrapMode.Clamp;
 		obstacles_.Create();
+		
+		camera_ = GetComponent<Camera> ();
+		camera_.aspect = 1.0f;
+		camera_.targetTexture = obstacles_;
+		camera_.Render ();
 
 		Material post_mat_copy = new Material (post_material);
 		post_mat_copy.SetTexture ("_Blood", density_[0]);
@@ -105,7 +111,6 @@ public class FluidSim : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		camera_.Render ();
-		Graphics.Blit (camera_.targetTexture, obstacles_);
 
 		if (t_ > Time.time)
 			sourceAdd ();
@@ -222,6 +227,7 @@ public class FluidSim : MonoBehaviour {
 	{
 		substract_gradient_.SetTexture("_Velocity", velocity);
 		substract_gradient_.SetTexture("_Pressure", pressure);
+		substract_gradient_.SetTexture("_Obstacles", obstacles_);
 		substract_gradient_.SetFloat("_GradScale", grad_scale_);
 		substract_gradient_.SetVector("_InverseSize", new Vector2(inverse_size_, inverse_size_));
 		

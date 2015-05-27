@@ -60,7 +60,7 @@ SubShader
 			
 			    float4 result = float4(0,0,0,0);
 			    
-			    float4 obs = tex2D(_Obstacles, coords.uv);
+			    float obs = tex2D(_Obstacles, coords.uv).x;
 			    
 			    float du = _InverseGridScale;
 			   	float2 u = tex2D(_Velocity, coords.uv).xy;
@@ -83,6 +83,9 @@ SubShader
 			   	
 			   	result *= (1.0 - _Dissipation);
 			    
+			    if (obs !=0)
+			    	result *= 0.6;
+			    	
 			    return result;
 			}
 			

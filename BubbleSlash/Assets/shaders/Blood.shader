@@ -33,27 +33,38 @@ Blend SrcAlpha OneMinusSrcAlpha
   sampler2D _MainTex;
   uniform sampler2D _Blood;
   float4 _BloodColor;
+  
+  float filterDens(float dens, float smooth)
+  {
+  	float result = dens;
+    result*= smooth;
+    result -= 0.01;
+    result = saturate(result);
+    result *= result;
+    result *= 1.6;
+  	return result;
+  }
     
   //Our Fragment Shader
   float4 frag (v2f i) : COLOR{
    float boodDens = tex2D(_Blood, i.uv);
    float4 texval = tex2D(_MainTex, i.uv);
    
+   float2 smooth_border = cos((i.uv-0.5)*2.9);
+   float smooth = smooth_border.x * smooth_border.y;
+   
    float du = 0.01;
-   float U = tex2D(_Blood, i.uv + float2(0,du));
-   float L = tex2D(_Blood, i.uv + float2(0,du));
-   float2 grad = float2(boodDens-L , U - boodDens);
+   float U = filterDens(tex2D(_Blood, i.uv + float2(0,du)), smooth);
+   float L = filterDens(tex2D(_Blood, i.uv + float2(0,du)), smooth);
    float2 light = float2(1, -2);
    
-   float2 smooth_border = cos((i.uv-0.5)*2.9);
-   boodDens*= smooth_border.x*smooth_border.y;	
-   boodDens = max( boodDens - 0.1, 0);
-  
-  
-   boodDens = saturate(boodDens);
+   boodDens = filterDens(boodDens, smooth);
    
-   float4 outColor = _BloodColor / (1	+boodDens);
-   //outColor += clamp(dot(light, grad) * 0.01, -0.2, 0.2);
+   float4 outColor = _BloodColor *1.2/ (1	+ boodDens);
+   float2 grad = float2(boodDens-L , U - boodDens);
+   float spec = dot(light, grad)*0.01;
+   outColor += clamp(spec , -0.05, 0.6);
+   saturate(outColor);
    outColor[3] = boodDens * 2;
    
    //return orgCol * (1 - bloodCol) + bloodCol/(1+2*bloodCol)*_BloodColor;
