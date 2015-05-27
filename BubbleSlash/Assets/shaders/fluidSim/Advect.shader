@@ -60,14 +60,24 @@ SubShader
 			
 			    float4 result = float4(0,0,0,0);
 			    
+			    float4 obs = tex2D(_Obstacles, coords.uv);
+			    
 			    float du = _InverseGridScale;
+			   	float2 u = tex2D(_Velocity, coords.uv).xy;
+			   	u += tex2D(_Velocity, coords.uv + float2(du, du)).xy;
+			   	u += tex2D(_Velocity, coords.uv + float2(-du, du)).xy;
+			   	u += tex2D(_Velocity, coords.uv + float2(-du, -du)).xy;
+			   	u += tex2D(_Velocity, coords.uv + float2(du, -du)).xy;
 			   	
-			   	int l=3;
+			   	u /= 5;
+			   	u *= _InverseGridScale;
+			   	
+			   	int l=2;
 			   	for (int i=-l; i<=l; i++)
 			   	{
 			   		for (int j=-l; j<=l; j++)
 			   		{
-			   		result += contrib(coords, float2(i*du, j*du), du);
+			   		result += contrib(coords, float2(i*du, j*du) - u, du);
 			   		}
 			   	}
 			   	

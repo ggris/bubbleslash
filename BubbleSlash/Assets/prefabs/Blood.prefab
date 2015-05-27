@@ -12,7 +12,8 @@ GameObject:
   - 114: {fileID: 11429134}
   - 114: {fileID: 11491738}
   - 82: {fileID: 8268122}
-  m_Layer: 0
+  - 20: {fileID: 2045302}
+  m_Layer: 1
   m_Name: Blood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,11 +27,43 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 164564}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.180000007, y: -1.04999995, z: -4}
+  m_LocalPosition: {x: -.114946485, y: -2.25832844, z: -4}
   m_LocalScale: {x: 12, y: 12, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!20 &2045302
+Camera:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 164564}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 1, g: 0, b: 0, a: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: .300000012
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 1
+  orthographic size: 6
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 8400000, guid: c6e79a535d22940cca63b7ebcbe422ab, type: 2}
+  m_TargetDisplay: 0
+  m_HDR: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: .0219999999
 --- !u!82 &8268122
 AudioSource:
   m_ObjectHideFlags: 1
@@ -40,10 +73,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 41d5802fdecdf44df9b6e019f2f24fc3, type: 3}
+  m_audioClip: {fileID: 8300000, guid: bbee82b8a5b344dcbb47bac9717f24d6, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 3
   Loop: 0
   Mute: 0
   Priority: 128
@@ -94,7 +127,7 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - time: 0
-      value: 1
+      value: 1.10000002
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -112,16 +145,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: {x: 2.70000005, y: 2.93000007}
-  resolution_: 128
+  resolution_: 256
   time_step_: .100000001
-  dissipation_: 0
+  dissipation_: .00999999978
   ambient_temperature_: 0
   smoke_buoyancy_: 1
   smoke_weight_: 0
   source_pos_: {x: .5, y: .5}
-  source_temperature_: 4
-  source_density_: 10
-  source_velocity: .5
+  source_temperature_: 1
+  source_density_: 4
+  source_velocity: 1
   advect_mat_: {fileID: 2100000, guid: 77b1368782b38425a88762fba317f068, type: 2}
   buoyancy_mat_: {fileID: 2100000, guid: 8f9b31ee40ffe4e57927ba8c920f3646, type: 2}
   source_mat_: {fileID: 2100000, guid: 7aa83d9db0f524e618ee27e2bca9e62e, type: 2}
@@ -132,6 +165,7 @@ MonoBehaviour:
   snap_: 0
   grad_scale_: .5
   cell_size_: .400000006
+  source_time_: .100000001
   post_material: {fileID: 2100000, guid: c348ca3013e8044659d7ba91f21b2718, type: 2}
 --- !u!114 &11491738
 MonoBehaviour:
@@ -168,7 +202,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 3a492af4a9086ae44b4a1ebeacffb5b5, type: 3}
   m_Color: {r: 0, g: .79411763, b: .0711967424, a: 1}
 --- !u!1001 &100100000

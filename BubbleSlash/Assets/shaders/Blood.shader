@@ -6,8 +6,9 @@ Properties {
 }
  
 SubShader {
-ZTest Off Cull Off ZWrite Off Fog { Mode Off } //Rendering settings
-Blend SrcAlpha OneMinusSrcAlpha 
+ZTest Always Cull Back ZWrite On Fog { Mode Off } //Rendering settings
+Tags { "Queue" = "Transparent" }
+Blend SrcAlpha OneMinusSrcAlpha
  
  Pass{
   CGPROGRAM
@@ -36,7 +37,15 @@ Blend SrcAlpha OneMinusSrcAlpha
   //Our Fragment Shader
   float4 frag (v2f i) : COLOR{
    float boodDens = tex2D(_Blood, i.uv);
-   float2 smooth_border = cos((i.uv-0.5)*4);
+   float4 texval = tex2D(_MainTex, i.uv);
+   
+   float du = 0.01;
+   float U = tex2D(_Blood, i.uv + float2(0,du));
+   float L = tex2D(_Blood, i.uv + float2(0,du));
+   float2 grad = float2(boodDens-L , U - boodDens);
+   float2 light = float2(1, -2);
+   
+   float2 smooth_border = cos((i.uv-0.5)*2.9);
    boodDens*= smooth_border.x*smooth_border.y;	
    boodDens = max( boodDens - 0.1, 0);
   
@@ -44,7 +53,8 @@ Blend SrcAlpha OneMinusSrcAlpha
    boodDens = saturate(boodDens);
    
    float4 outColor = _BloodColor / (1	+boodDens);
-   outColor[3] = boodDens*2;
+   //outColor += clamp(dot(light, grad) * 0.01, -0.2, 0.2);
+   outColor[3] = boodDens * 2;
    
    //return orgCol * (1 - bloodCol) + bloodCol/(1+2*bloodCol)*_BloodColor;
    return outColor;

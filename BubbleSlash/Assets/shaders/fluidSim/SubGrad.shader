@@ -41,18 +41,12 @@
 			    float pE = tex2D(_Pressure, coords.uv + float2(delta.x, 0)).x;
 			    float pW = tex2D(_Pressure, coords.uv + float2(-delta.x, 0)).x;
 			
-				float d = 0.1;
-				float p = 0.8;
+				float d = 2;
+				float p = 2.2;
 				if (pN < d) pN=p;
 				if (pS < d) pS=p;
 				if (pE < d) pE=p;
 				if (pW < d) pW=p;
-				 d = 2;
-				 p = 2;
-				if (pN > d) pN=p;
-				if (pS > d) pS=p;
-				if (pE > d) pE=p;
-				if (pW > d) pW=p;
 			
 			    // Enforce the free-slip boundary condition:
 			    float2 oldV = tex2D(_Velocity, coords.uv).xy;

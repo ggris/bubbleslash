@@ -24,15 +24,24 @@ public class FluidSim : MonoBehaviour {
 	public float grad_scale_ = 1.0f;
 	public float cell_size_ = 1.0f;
 
+	public float source_time_ = 0.1f;	
+	float t_;
+
 	float inverse_size_;
 
 	public Material post_material;
 	
 	RenderTexture[] density_, velocity_, temperature_, pressure_;
 	RenderTexture divergence_, obstacles_;
+	Camera camera_;
 	
 	// Use this for initialization
 	void Start () {
+		camera_ = GetComponent<Camera> ();
+		camera_.aspect = 1.0f;
+
+		t_ = Time.time;
+
 		inverse_size_ = 1.0f / resolution_;
 		
 		buoyancy_mat_.SetFloat("_AmbientTemperature", ambient_temperature_);
@@ -59,9 +68,9 @@ public class FluidSim : MonoBehaviour {
 		obstacles_.filterMode = FilterMode.Point;
 		divergence_.wrapMode = TextureWrapMode.Clamp;
 		obstacles_.Create();
-		
-		post_material.SetTexture ("_Blood", density_ [0]);
+
 		Material post_mat_copy = new Material (post_material);
+		post_mat_copy.SetTexture ("_Blood", density_[0]);
 		GetComponent<SpriteRenderer> ().material = post_mat_copy;
 
 		//source ();
@@ -95,6 +104,11 @@ public class FluidSim : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		camera_.Render ();
+		Graphics.Blit (camera_.targetTexture, obstacles_);
+
+		if (t_ > Time.time)
+			sourceAdd ();
 		
 		// Advect
 		advect (velocity_[0], density_ [0], density_ [1], dissipation_);
@@ -133,6 +147,16 @@ public class FluidSim : MonoBehaviour {
 	}
 
 	void source()
+	{
+		t_ = Time.time + source_time_;
+		/*
+		source(temperature_[0], new Vector3(source_temperature_,source_temperature_,source_temperature_));
+		source (density_[0], new Vector3(source_density_,source_density_,source_density_));
+		source (velocity_[0], new Vector3(speed.x+ Random.value*source_velocity, speed.y + Random.value*source_velocity, 0));
+	*/
+	}
+
+	void sourceAdd()
 	{
 		source(temperature_[0], new Vector3(source_temperature_,source_temperature_,source_temperature_));
 		source (density_[0], new Vector3(source_density_,source_density_,source_density_));
