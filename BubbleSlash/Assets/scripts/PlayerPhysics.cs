@@ -87,6 +87,8 @@ public class PlayerPhysics : MonoBehaviour {
 		is_touching_right = false;
 		hat = transform.Find (hat_name).gameObject;
 		hat.GetComponent<HatAbstractClass> ().applyPassiveEffect ();
+
+		//transform.Find ("animation").Find ("smoke").gameObject.GetComponent<ParticleSystem> ().Play ();
 	}
 
 	void logState(){
@@ -168,7 +170,7 @@ public class PlayerPhysics : MonoBehaviour {
 		//max speeds
 		checkMaxSpeeds ();
 
-		//animation
+		//animation, small blood and smoke
 		//quick under tee
 		Transform tr_animation = transform.Find ("animation");
 
@@ -184,6 +186,16 @@ public class PlayerPhysics : MonoBehaviour {
 			tr_blood.eulerAngles = new Vector3 (tr_blood.eulerAngles.x, -horizontal_direction*90, tr_blood.eulerAngles.z);
 		}
 
+		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("walking")) {
+			Transform tr_smoke = tr_animation.Find ("smoke");
+			tr_smoke.gameObject.GetComponent<ParticleSystem>().Play();
+			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, -horizontal_direction*90, tr_smoke.eulerAngles.z);
+		} else {
+			tr_animation.Find("smoke").gameObject.GetComponent<ParticleSystem>().Clear();
+			tr_animation.Find("smoke").gameObject.GetComponent<ParticleSystem>().Stop();
+		}
+
+		//death on fall
 		if (transform.position.y < manager.death_altitude) {
 			manager.dealWithDeath(playerNumber -1);
 		}
