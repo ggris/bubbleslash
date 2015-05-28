@@ -55,7 +55,7 @@
 			    float obsW = tex2D(_Obstacles, coords.uv + float2(-delta.x, 0)).x;
 			    float obs = tex2D(_Obstacles, coords.uv).x;
 			
-				p=3;
+				p=2;
 				pN = obsN != 0 ? p : pN;
 				pS = obsS != 0 ? p : pS;
 				pE = obsE != 0 ? p : pE;
