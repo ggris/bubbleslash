@@ -20,20 +20,21 @@ public class PlayerManager : MonoBehaviour {
 
 	void Update () {
 	}
-
+	/*
 	private int indice;
 	private Vector3 position_death;
-
+	*/
 	public void dealWithDeath(int i){
 		score [i] -= 1;
-		position_death = players [i].transform.position;
-		indice = i; //needed for passing arguments to invoked method
 		Destroy(players [i]);
-		Invoke("spawn",0.5f);
-	}
+		StartCoroutine (spawnLater (i, players [i].transform.position, 0.5f));
 
-	public void spawn(){
-		int i = indice;
+	}
+	public IEnumerator spawnLater(int i, Vector3 position_death, float delayTime){
+		yield return new WaitForSeconds(delayTime);
+		spawn (i, position_death);
+	}
+	public void spawn(int i, Vector3 position_death){
 		Transform t = findRandomSpawnPoint (i, position_death);
 		players [i] = GameObject.Instantiate (player_prefab, t.position, new Quaternion (0, 0, 0, 0)) as GameObject;
 		players [i].GetComponent<PlayerPhysics> ().playerNumber = i + 1;
