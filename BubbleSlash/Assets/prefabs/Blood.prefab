@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: {x: 2.70000005, y: 2.93000007}
-  resolution_: 128
+  resolution_: 256
   time_step_: .100000001
   dissipation_: .00999999978
   ambient_temperature_: 0
@@ -166,6 +166,7 @@ MonoBehaviour:
   grad_scale_: .5
   cell_size_: .400000006
   source_time_: .100000001
+  static_time_: 3
   post_material: {fileID: 2100000, guid: c348ca3013e8044659d7ba91f21b2718, type: 2}
 --- !u!114 &11491738
 MonoBehaviour:
@@ -178,7 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65a5c10467cf4478d9bdb48d3a443160, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime_: 2
+  lifetime_: 3
 --- !u!212 &21272940
 SpriteRenderer:
   m_ObjectHideFlags: 1

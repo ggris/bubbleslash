@@ -1,13 +1,4 @@
 ﻿Shader "FluidSim/Advect" {
-Properties {
- 	_Velocity ("Velocity", 2D) = "white" {}
- 	_Source ("Qty to advect", 2D) = "white" {}
- 	_Obstacles ("Obstacles", 2D) = "white" {}
- 	
-	_InverseGridScale ("1 / grid scale", Float) = 0.01
-	_TimeStep ("Time step", Float) = 1.0
-	_Dissipation ("Dissipation", Range (0.0, 1.0)) = 0.0
-}
 
 SubShader 
 	{
@@ -27,13 +18,14 @@ SubShader
     			float2  uv : TEXCOORD0;
 			};
 			
-			sampler2D _Velocity;
-			sampler2D _Source;
-			sampler2D _Obstacles;
+			uniform sampler2D _Velocity;
+			uniform sampler2D _Source;
+			uniform sampler2D _Obstacles;
 
-			float _InverseGridScale;
-			float _TimeStep;
-			float _Dissipation;
+			uniform float _InverseGridScale;
+			uniform float _TimeStep;
+			uniform float _Dissipation;
+			uniform float _ObstacleDissipation;
 
 			v2f vert(appdata_base v)
 			{
@@ -43,11 +35,11 @@ SubShader
     			return coords;
 			}
 			
-			float4 contrib(v2f coords, float2 dPos, float R)
+			float4 contrib(v2f coords, float2 dPos, float R, float delta)
 			{
 				float4 result = float4(0,0,0,0);
 				
-			   	float2 u = tex2D(_Velocity, coords.uv + dPos).xy * _InverseGridScale;
+			   	float2 u = tex2D(_Velocity, coords.uv + dPos).xy * _InverseGridScale / delta;
 			   	float2 v = float2(R, R) - abs( dPos + u );
 			   	float r = v.x*v.y;
 			   	if (v.x>0 && v.y>0)
@@ -62,6 +54,11 @@ SubShader
 			    
 			    float obs = tex2D(_Obstacles, coords.uv).x;
 			    
+			    float delta = 1;
+			    
+			    if (obs !=0)
+			    	delta = 2;
+			    
 			    float du = _InverseGridScale;
 			   	float2 u = tex2D(_Velocity, coords.uv).xy;
 			   	u += tex2D(_Velocity, coords.uv + float2(du, du)).xy;
@@ -70,21 +67,22 @@ SubShader
 			   	u += tex2D(_Velocity, coords.uv + float2(du, -du)).xy;
 			   	
 			   	u /= 5;
-			   	u *= _InverseGridScale;
+			   	u *= _InverseGridScale / delta;
 			   	
 			   	int l=2;
 			   	for (int i=-l; i<=l; i++)
 			   	{
 			   		for (int j=-l; j<=l; j++)
 			   		{
-			   		result += contrib(coords, float2(i*du, j*du) - u, du);
+			   		result += contrib(coords, float2(i*du, j*du) - u, du, delta);
 			   		}
 			   	}
 			   	
-			   	result *= (1.0 - _Dissipation);
-			    
 			    if (obs !=0)
-			    	result *= 0.6;
+			    	result *= (1.0 - _ObstacleDissipation);
+			    else
+			    	result *= (1.0 - _Dissipation);
+			    
 			    	
 			    return result;
 			}

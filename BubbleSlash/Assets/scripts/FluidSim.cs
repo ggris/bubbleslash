@@ -25,9 +25,12 @@ public class FluidSim : MonoBehaviour {
 	public float cell_size_ = 1.0f;
 
 	public float source_time_ = 0.1f;	
-	float t_;
+	public float static_time_ = 2.0f;
+	float start_time_;
+	float last_time_;
 
 	float inverse_size_;
+	float delta_;
 
 	public Material post_material;
 	
@@ -41,7 +44,8 @@ public class FluidSim : MonoBehaviour {
 		//camera_.Render ();
 		//Graphics.Blit (camera_.targetTexture, obstacles_);
 
-		t_ = Time.time;
+		start_time_ = Time.time + static_time_;
+		last_time_ = Time.time;
 
 		inverse_size_ = 1.0f / resolution_;
 		
@@ -110,17 +114,24 @@ public class FluidSim : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (start_time_ + static_time_ > Time.time)
+			SimUpdate ();
+	}
+
+	void SimUpdate () {
 		camera_.Render ();
 
-		if (t_ > Time.time)
+		delta_ = inverse_size_ * (Time.time - last_time_) * 100;
+
+		if (start_time_ + source_time_ > Time.time)
 			sourceAdd ();
 		
 		// Advect
-		advect (velocity_[0], density_ [0], density_ [1], dissipation_);
-		advect (velocity_[0], velocity_ [0], velocity_ [1], dissipation_);
-		advect (velocity_[0], temperature_ [0], temperature_ [1], dissipation_);
+		advect (velocity_[0], density_ [0], density_ [1], dissipation_, 0);
+		advect (velocity_[0], velocity_ [0], velocity_ [1], dissipation_*0.9f, 1.05f);
+		//advect (velocity_[0], temperature_ [0], temperature_ [1], dissipation_);
 		swapBuffer (velocity_);
-		swapBuffer (temperature_);
+		//swapBuffer (temperature_);
 		swapBuffer (density_);
 		
 		// Buoyancy
@@ -128,7 +139,7 @@ public class FluidSim : MonoBehaviour {
 		//swapBuffer (velocity_);
 		
 		// Divergence field
-
+		/*
 		divergence(velocity_[0], divergence_);
 		
 		// Clear texture
@@ -140,20 +151,21 @@ public class FluidSim : MonoBehaviour {
 		{
 			jacobi(pressure_[0], divergence_, pressure_[1]);
 			swapBuffer(pressure_);
-		}
+		}*/
 
 		//subGrad(velocity_[0], pressure_[0], velocity_[1]);
 		//swapBuffer(velocity_);
 
 		subGrad(velocity_[0], density_[0], velocity_[1]);
-		
 		swapBuffer(velocity_);
+
+		last_time_ = Time.time;
 		
 	}
 
 	void source()
 	{
-		t_ = Time.time + source_time_;
+		start_time_ = last_time_ = Time.time;
 		/*
 		source(temperature_[0], new Vector3(source_temperature_,source_temperature_,source_temperature_));
 		source (density_[0], new Vector3(source_density_,source_density_,source_density_));
@@ -168,14 +180,15 @@ public class FluidSim : MonoBehaviour {
 		source (velocity_[0], new Vector3(speed.x+ Random.value*source_velocity, speed.y + Random.value*source_velocity, 0));
 	}
 	
-	void advect(RenderTexture velocity, RenderTexture source, RenderTexture dest, float dissipation)
+	void advect(RenderTexture velocity, RenderTexture source, RenderTexture dest, float dissipation, float obstacle_dissipation)
 	{
 		
-		advect_mat_.SetFloat("_InverseSize", inverse_size_);
+		advect_mat_.SetFloat("_InverseGridScale", delta_);
 		advect_mat_.SetFloat("_TimeStep", time_step_);
 		advect_mat_.SetTexture("_Obstacles", obstacles_);
 
 		advect_mat_.SetFloat("_Dissipation", dissipation);
+		advect_mat_.SetFloat("_ObstacleDissipation", obstacle_dissipation);
 		advect_mat_.SetTexture("_Velocity", velocity);
 		advect_mat_.SetTexture("_Source", source);
 		
@@ -229,7 +242,7 @@ public class FluidSim : MonoBehaviour {
 		substract_gradient_.SetTexture("_Pressure", pressure);
 		substract_gradient_.SetTexture("_Obstacles", obstacles_);
 		substract_gradient_.SetFloat("_GradScale", grad_scale_);
-		substract_gradient_.SetVector("_InverseSize", new Vector2(inverse_size_, inverse_size_));
+		substract_gradient_.SetVector("_InverseSize", new Vector2(delta_, delta_));
 		
 		Graphics.Blit(null, dest, substract_gradient_);
 	}
