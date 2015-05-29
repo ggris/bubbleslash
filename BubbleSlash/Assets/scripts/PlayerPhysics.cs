@@ -22,7 +22,6 @@ public class PlayerPhysics : MonoBehaviour {
 	public float max_falling_speed;
 	public float max_falling_speed_sprint;
 	public float fall_sprint_acc;
-	public float fall_sprint_acc_up;
 	public float max_horizontal_speed;
 	public float max_sliding_speed;
 	
@@ -309,7 +308,6 @@ public class PlayerPhysics : MonoBehaviour {
 	public void checkJump (){
 
 		if (playerInputButton("Jump") && isAbleToJump()) {
-
 			if (animator.GetCurrentAnimatorStateInfo(0).IsName("sliding")){
 				body.velocity = new Vector2 (horizontal_direction * push_wall_speed, wall_jump_speed);
 			}
@@ -336,14 +334,16 @@ public class PlayerPhysics : MonoBehaviour {
 		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("falling")) {
 			float a=directionFromInput ().normalized.y;
 			if (a <0) {
-				if (body.velocity.y<0)
-				{
-					body.velocity = new Vector2 (body.velocity.x, body.velocity.y - a * fall_sprint_acc*Time.deltaTime*body.velocity.y);
-					if (body.velocity.y <-max_falling_speed_sprint)
-						body.velocity = new Vector2 (body.velocity.x, -max_falling_speed_sprint);
+				if (body.velocity.y<5 && body.velocity.y >=-10){
+					body.velocity = new Vector2 (body.velocity.x, -10);
 				}
-				else
-					body.velocity = new Vector2 (body.velocity.x, body.velocity.y + a* fall_sprint_acc_up*Time.deltaTime*body.velocity.y);
+
+				if (body.velocity.y<0 ){
+					body.velocity = new Vector2 (body.velocity.x, body.velocity.y - a * fall_sprint_acc*Time.deltaTime*body.velocity.y);
+				}
+
+				if (body.velocity.y < -max_falling_speed_sprint)
+					body.velocity = new Vector2 (body.velocity.x, -max_falling_speed_sprint);
 			} 
 			else {
 				if (body.velocity.y < -max_falling_speed) 
@@ -395,4 +395,7 @@ public class PlayerPhysics : MonoBehaviour {
 		is_wounded = false;
 	}
 
+	public void OnGUI() {
+		GUI.Box (new Rect (200 + 100*playerNumber, 10, 50, 25), body.velocity.y.ToString());
+	}
 }
