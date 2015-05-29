@@ -796,6 +796,7 @@ MonoBehaviour:
   ground_acc: 10000
   air_acc: 2000
   jump_speed: 20
+  carry_jump_speed: 15
   push_air_speed: 10
   wall_jump_speed: 20
   push_wall_speed: 10
