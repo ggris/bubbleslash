@@ -170,7 +170,6 @@ public class PlayerPhysics : MonoBehaviour {
 		if (playerInputButtonDown ("Weapon") && isAbleToAttack()) {
 			animator.SetTrigger ("triggerAttack");
 			weapon_state.SetTrigger("input");
-			attack_start=Time.time;
 			direction_action=realDirection(directionFromInput());
 			weapon.transform.localEulerAngles=new Vector3(0,0,getAngle(direction_action,new Vector2(1,0)));
 		}
@@ -423,8 +422,8 @@ public class PlayerPhysics : MonoBehaviour {
 		gameObject.transform.Find ("animation").Find("small blood").gameObject.GetComponent<ParticleSystem> ().Stop ();
 		is_wounded = false;
 	}
-
-	public void OnGUI() {
-		GUI.Box (new Rect (200 + 100*playerNumber, 10, 50, 25),horizontal_direction.ToString());
+	
+	public void startAttack(){
+		attack_start=Time.time;
 	}
 }
