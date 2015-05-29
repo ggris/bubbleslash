@@ -606,6 +606,10 @@ Prefab:
       value: 
       objectReference: {fileID: 21300002, guid: 4caf54a8fe8d61b499b30b49488bbc07,
         type: 3}
+    - target: {fileID: 11446784, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
+      propertyPath: max_falling_speed_sprint
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
   m_IsPrefabParent: 0
@@ -891,6 +895,14 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 437202, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
       propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8265352, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8113072, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

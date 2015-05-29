@@ -803,6 +803,9 @@ MonoBehaviour:
   air_horizontal_drag: 100
   air_vertical_drag: 0
   max_falling_speed: 20
+  max_falling_speed_sprint: 25
+  fall_sprint_acc: 20
+  fall_sprint_acc_up: 3
   max_horizontal_speed: 15
   max_sliding_speed: 5
   attack_cd: .699999988
