@@ -134,11 +134,22 @@ public class PlayerPhysics : MonoBehaviour {
 		//updates direction
 		if (isAttacking ()) {
 			direction = direction_action;
+			if (direction_action.x < 0) 
+				horizontal_direction = -1;
+			if (direction_action.x > 0) 
+				horizontal_direction = 1;
 		}
 		else {
-			direction_input = directionFromInput ();
-			checkSlide (); //only changes "horizontal_direction" if sliding
-			direction = realDirection (direction_input);
+			if (!animator.GetCurrentAnimatorStateInfo(0).IsName("hatSpecialState")){
+				direction_input = directionFromInput ();
+				//change horizontal direction if horizontal input is not equal to 0
+				if (direction_input.x < 0) 
+					horizontal_direction = -1;
+				if (direction_input.x > 0) 
+					horizontal_direction = 1;
+				checkSlide (); //only changes "horizontal_direction" if sliding
+				direction = realDirection (direction_input);
+			}
 		}
 
 		//set animator parameters values
@@ -160,7 +171,7 @@ public class PlayerPhysics : MonoBehaviour {
 			animator.SetTrigger ("triggerAttack");
 			weapon_state.SetTrigger("input");
 			attack_start=Time.time;
-			direction_action=direction;
+			direction_action=realDirection(directionFromInput());
 			weapon.transform.localEulerAngles=new Vector3(0,0,getAngle(direction_action,new Vector2(1,0)));
 		}
 
@@ -180,6 +191,7 @@ public class PlayerPhysics : MonoBehaviour {
 		if (isAttacking ()) {
 			float a = getAngle (direction_action, horizontal_direction * Vector2.right);
 			tr_animation.eulerAngles = new Vector3 (0,0, a);
+			tr_animation.localScale = new Vector3(horizontal_direction, tr_animation.localScale.y,tr_animation.localScale.z);
 		} 
 		else {
 			tr_animation.eulerAngles = new Vector3 (0, 0, 0);
@@ -220,11 +232,7 @@ public class PlayerPhysics : MonoBehaviour {
 
 		ans.Normalize ();
 
-		if (ans.x < 0) 
-			horizontal_direction = -1;
 
-		if (ans.x > 0) 
-			horizontal_direction = 1;
 
 		return ans;
 	}
@@ -417,6 +425,6 @@ public class PlayerPhysics : MonoBehaviour {
 	}
 
 	public void OnGUI() {
-		GUI.Box (new Rect (200 + 100*playerNumber, 10, 50, 25), body.velocity.y.ToString());
+		GUI.Box (new Rect (200 + 100*playerNumber, 10, 50, 25),horizontal_direction.ToString());
 	}
 }
