@@ -92,14 +92,13 @@ SubShader
 			
 			    float2 grad = float2(pE - pW, pN - pS) * _GradScale;
 			    grad *= abs(grad);
-			    if (obs !=0)
-			    	grad*=10;
+			    	
 			    result.xy -= grad * _Delta * result.z * 50;
+			    
+			    result.xy += _Gravity * _Delta * result.z * 50;
 			    
 			    if (obs !=0)
 			    	result.xy *= 0.5;
-			    else
-			    	result.xy += _Gravity * _Delta * result.z * 50;
 			    
 			    result.z *=0.99;
 			    
