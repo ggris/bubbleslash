@@ -92,10 +92,6 @@ Material:
         second: 0
       data:
         first:
-          name: _GradScale
-        second: 1
-      data:
-        first:
           name: _Parallax
         second: .0199999996
       data:
@@ -134,6 +130,10 @@ Material:
         first:
           name: _Metallic
         second: 0
+      data:
+        first:
+          name: _GradScale
+        second: 3
     m_Colors:
       data:
         first:
@@ -145,9 +145,9 @@ Material:
         second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
-          name: _Gravity
-        second: {r: 0, g: -9.81000042, b: 0, a: 0}
-      data:
-        first:
           name: _EmissionColorUI
         second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _Gravity
+        second: {r: 0, g: -9.81000042, b: 0, a: 0}
