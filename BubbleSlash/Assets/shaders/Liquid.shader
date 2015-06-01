@@ -66,7 +66,7 @@ SubShader
 			    
 			    float2 origin = getOrigin(IN.uv);
 			    
-				int _PatchR = 4;
+				int _PatchR = 3;
 			   	for (int i=-_PatchR; i<=_PatchR; i++)
 			   	{
 			   		for (int j=-_PatchR; j<=_PatchR; j++)
