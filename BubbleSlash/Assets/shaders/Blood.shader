@@ -47,7 +47,8 @@ Blend SrcAlpha OneMinusSrcAlpha
     
   //Our Fragment Shader
   float4 frag (v2f i) : COLOR{
-   float boodDens = tex2D(_Blood, i.uv);
+   float3 fluid = tex2D(_Blood, i.uv);
+   float boodDens = tex2D(_Blood, i.uv).b;
    float4 texval = tex2D(_MainTex, i.uv);
    
    float2 smooth_border = cos((i.uv-0.5)*2.9);

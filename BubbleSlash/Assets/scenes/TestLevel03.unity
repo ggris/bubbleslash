@@ -2441,13 +2441,13 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8265352, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
-      propertyPath: m_Enabled
-      value: 0
+    - target: {fileID: 11497346, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
+      propertyPath: acceleration_
+      value: .699999988
       objectReference: {fileID: 0}
-    - target: {fileID: 8113072, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
-      propertyPath: m_Enabled
-      value: 0
+    - target: {fileID: 11497346, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
+      propertyPath: damp_
+      value: .600000024
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}

@@ -29,7 +29,6 @@ public class CameraTracking : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//TODO : make the camera tracking with variable number of players
 		if (players.Length>=2){
 			updateMinMax ();
 			updatePosition ();
@@ -61,13 +60,14 @@ public class CameraTracking : MonoBehaviour {
 		delta.x /= my_camera.aspect;
 		float delta_ortho = Mathf.Max (delta.x, delta.y);
 		delta_ortho += max_zoom;
+		delta_ortho /= 2;
+		delta_ortho = moveTowards (delta_ortho, my_camera.orthographicSize);
 		delta_ortho /= my_camera.orthographicSize;
-		delta_ortho = moveTowards (delta_ortho, 1);
 
 		zoom_speed_ *= damp_;
 		zoom_speed_ += delta_ortho;
 
-		my_camera.orthographicSize += zoom_speed_;
+		my_camera.orthographicSize += delta_ortho;
 
 		my_camera.orthographicSize = Mathf.Clamp (my_camera.orthographicSize, max_zoom, min_zoom);
 	}
