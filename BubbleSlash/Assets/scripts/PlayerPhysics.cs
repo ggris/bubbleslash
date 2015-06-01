@@ -11,6 +11,7 @@ public class PlayerPhysics : MonoBehaviour {
 	public float air_acc;
 
 	public float jump_speed;
+	public float carry_jump_speed;
 	public float push_air_speed;
 	public float wall_jump_speed;
 	public float push_wall_speed;
@@ -20,6 +21,8 @@ public class PlayerPhysics : MonoBehaviour {
 	public float air_vertical_drag;
 
 	public float max_falling_speed;
+	public float max_falling_speed_sprint;
+	public float fall_sprint_acc;
 	public float max_horizontal_speed;
 	public float max_sliding_speed;
 	
@@ -131,11 +134,22 @@ public class PlayerPhysics : MonoBehaviour {
 		//updates direction
 		if (isAttacking ()) {
 			direction = direction_action;
+			if (direction_action.x < 0) 
+				horizontal_direction = -1;
+			if (direction_action.x > 0) 
+				horizontal_direction = 1;
 		}
 		else {
-			direction_input = directionFromInput ();
-			checkSlide (); //only changes "horizontal_direction" if sliding
-			direction = realDirection (direction_input);
+			if (!animator.GetCurrentAnimatorStateInfo(0).IsName("hatSpecialState")){
+				direction_input = directionFromInput ();
+				//change horizontal direction if horizontal input is not equal to 0
+				if (direction_input.x < 0) 
+					horizontal_direction = -1;
+				if (direction_input.x > 0) 
+					horizontal_direction = 1;
+				checkSlide (); //only changes "horizontal_direction" if sliding
+				direction = realDirection (direction_input);
+			}
 		}
 
 		//set animator parameters values
@@ -144,20 +158,19 @@ public class PlayerPhysics : MonoBehaviour {
 		animator.SetFloat ("speedX", body.velocity.x);
 		animator.SetBool ("isOnFeet", is_grounded);
 		animator.SetBool ("isOnHand", is_touching_left || is_touching_right);
+		animator.SetBool ("inputJump", playerInputButton ("Jump"));
 
 
-
-		if (playerInputButton("Jump") && isAbleToJump())
+		if (playerInputButtonDown("Jump") && isAbleToJump())
 			animator.SetTrigger ("triggerJump");
 
-		if (playerInputButton("Hat") && isInputFree() && hat.GetComponent<HatAbstractClass>().hasSpecialState())
+		if (playerInputButtonDown("Hat") && isInputFree() && hat.GetComponent<HatAbstractClass>().hasSpecialState())
 			animator.SetTrigger("inputHat");
 
-		if (playerInputButton ("Weapon") && isAbleToAttack() && (isInputFree()|| (canAttackOnHat() && isOnHat()))) {
+		if (playerInputButtonDown ("Weapon") && isAbleToAttack()) {
 			animator.SetTrigger ("triggerAttack");
 			weapon_state.SetTrigger("input");
-			attack_start=Time.time;
-			direction_action=direction;
+			direction_action=realDirection(directionFromInput());
 			weapon.transform.localEulerAngles=new Vector3(0,0,getAngle(direction_action,new Vector2(1,0)));
 		}
 
@@ -177,6 +190,7 @@ public class PlayerPhysics : MonoBehaviour {
 		if (isAttacking ()) {
 			float a = getAngle (direction_action, horizontal_direction * Vector2.right);
 			tr_animation.eulerAngles = new Vector3 (0,0, a);
+			tr_animation.localScale = new Vector3(horizontal_direction, tr_animation.localScale.y,tr_animation.localScale.z);
 		} 
 		else {
 			tr_animation.eulerAngles = new Vector3 (0, 0, 0);
@@ -217,11 +231,7 @@ public class PlayerPhysics : MonoBehaviour {
 
 		ans.Normalize ();
 
-		if (ans.x < 0) 
-			horizontal_direction = -1;
 
-		if (ans.x > 0) 
-			horizontal_direction = 1;
 
 		return ans;
 	}
@@ -236,8 +246,11 @@ public class PlayerPhysics : MonoBehaviour {
 	private float playerInputAxis(string inputName) {
 		return Input.GetAxisRaw("P" + playerNumber + " " + inputName);
 	}
-	private bool playerInputButton(string inputName){
+	private bool playerInputButtonDown(string inputName){
 		return Input.GetButtonDown("P" + playerNumber + " " + inputName);
+	}
+	private bool playerInputButton(string inputName){
+		return Input.GetButton("P" + playerNumber + " " + inputName);
 	}
 
 	public bool isAbleToJump(){
@@ -258,11 +271,17 @@ public class PlayerPhysics : MonoBehaviour {
 	bool isInputFree(){
 		return animator.GetCurrentAnimatorStateInfo (0).IsName ("idle")
 			|| animator.GetCurrentAnimatorStateInfo(0).IsName("walking")
-				|| animator.GetCurrentAnimatorStateInfo(0).IsName("falling"); 
+			|| animator.GetCurrentAnimatorStateInfo(0).IsName("falling")
+			|| animator.GetCurrentAnimatorStateInfo(0).IsName("jumping")
+			|| animator.GetCurrentAnimatorStateInfo(0).IsName("walljumping");
 	}
 
 	public bool isAbleToAttack(){
-		return (Time.time-attack_start >=attack_cd);
+		return 
+			(Time.time - attack_start >= attack_cd) 
+			&& (isInputFree () 
+			    || (canAttackOnHat () && isOnHat ()) 
+			    || animator.GetCurrentAnimatorStateInfo (0).IsName ("sliding"));
 	}
 
 	public void checkMove(){
@@ -304,9 +323,7 @@ public class PlayerPhysics : MonoBehaviour {
 	}
 
 	public void checkJump (){
-
-		if (playerInputButton("Jump") && isAbleToJump()) {
-
+		if (playerInputButtonDown("Jump") && isAbleToJump()) {
 			if (animator.GetCurrentAnimatorStateInfo(0).IsName("sliding")){
 				body.velocity = new Vector2 (horizontal_direction * push_wall_speed, wall_jump_speed);
 			}
@@ -326,13 +343,41 @@ public class PlayerPhysics : MonoBehaviour {
 				}
 			}
 		}
+		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("jumping")) {
+
+			if (body.velocity.y <carry_jump_speed){
+				body.velocity = new Vector2(body.velocity.x, carry_jump_speed);
+			}
+		}
+		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("walljumping")) {
+			
+			if (body.velocity.y <carry_jump_speed){
+				body.velocity = new Vector2(body.velocity.x, carry_jump_speed);
+			}
+		}
 
 	}
 
 	public void checkMaxSpeeds(){
-		if (animator.GetCurrentAnimatorStateInfo(0).IsName("falling"))
-		    if (body.velocity.y < -max_falling_speed) 
-				body.velocity=new Vector2(body.velocity.x,-max_falling_speed);
+		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("falling")) {
+			float a=directionFromInput ().normalized.y;
+			if (a <0) {
+				if (body.velocity.y<5 && body.velocity.y >=-10){
+					body.velocity = new Vector2 (body.velocity.x, -10);
+				}
+
+				if (body.velocity.y<0 ){
+					body.velocity = new Vector2 (body.velocity.x, body.velocity.y - a * fall_sprint_acc*Time.deltaTime*body.velocity.y);
+				}
+
+				if (body.velocity.y < -max_falling_speed_sprint)
+					body.velocity = new Vector2 (body.velocity.x, -max_falling_speed_sprint);
+			} 
+			else {
+				if (body.velocity.y < -max_falling_speed) 
+					body.velocity = new Vector2 (body.velocity.x, -max_falling_speed);
+			}
+		}
 		if (animator.GetCurrentAnimatorStateInfo(0).IsName("sliding"))
 			if (body.velocity.y < -max_sliding_speed) 
 				body.velocity=new Vector2(body.velocity.x,-max_sliding_speed);
@@ -377,5 +422,8 @@ public class PlayerPhysics : MonoBehaviour {
 		gameObject.transform.Find ("animation").Find("small blood").gameObject.GetComponent<ParticleSystem> ().Stop ();
 		is_wounded = false;
 	}
-
+	
+	public void startAttack(){
+		attack_start=Time.time;
+	}
 }

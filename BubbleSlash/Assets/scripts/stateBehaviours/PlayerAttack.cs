@@ -6,6 +6,7 @@ public class PlayerAttack : StateMachineBehaviour {
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 		animator.gameObject.GetComponent<Rigidbody2D> ().gravityScale = 0;
 		animator.gameObject.transform.Find ("weapon/translation").gameObject.SetActive (true);
+		animator.gameObject.GetComponent<PlayerPhysics> ().startAttack (); //cooldown
 
 	}
 
