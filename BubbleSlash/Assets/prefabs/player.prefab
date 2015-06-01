@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 402580}
   - 198: {fileID: 19854506}
   - 199: {fileID: 19991238}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ GameObject:
   - 4: {fileID: 482630}
   - 198: {fileID: 19831740}
   - 199: {fileID: 19928866}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: small blood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 469682}
   - 212: {fileID: 21253224}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 482132}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: weapon_trans
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,7 +194,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 498156}
   - 212: {fileID: 21277234}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +275,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 479386}
   - 212: {fileID: 21216896}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -290,7 +290,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 469550}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: animation
   m_TagString: Untagged
   m_Icon: {fileID: 0}

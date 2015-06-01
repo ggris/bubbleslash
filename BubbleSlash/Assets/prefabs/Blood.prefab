@@ -56,7 +56,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294967039
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -144,29 +144,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f11e42005a64a466ca9c3121a3048c76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: {x: 2.70000005, y: 2.93000007}
-  resolution_: 256
-  time_step_: .100000001
-  dissipation_: .00999999978
-  ambient_temperature_: 0
-  smoke_buoyancy_: 1
-  smoke_weight_: 0
+  resolution_: 512
+  percent_dissipation_: .100000001
   source_pos_: {x: .5, y: .5}
-  source_temperature_: 1
-  source_density_: 4
-  source_velocity: 1
-  advect_mat_: {fileID: 2100000, guid: 77b1368782b38425a88762fba317f068, type: 2}
-  buoyancy_mat_: {fileID: 2100000, guid: 8f9b31ee40ffe4e57927ba8c920f3646, type: 2}
+  source_density_: 8
+  initial_velocity_: {x: 2.70000005, y: 2.93000007}
+  rand_velocity: 2
+  liquid_mat_: {fileID: 2100000, guid: 802b3f66ca50b430f81b8abc93552ed2, type: 2}
   source_mat_: {fileID: 2100000, guid: 7aa83d9db0f524e618ee27e2bca9e62e, type: 2}
-  divergence_mat_: {fileID: 2100000, guid: 9a282212430a1474dbfaa4fb5733d072, type: 2}
-  jacoby_mat_: {fileID: 2100000, guid: 88025c56676d145a291935f2804737b8, type: 2}
-  substract_gradient_: {fileID: 2100000, guid: 3881ff0ff4b784625bdf64a84fae599e, type: 2}
-  jacobi_itts_: 12
-  snap_: 0
-  grad_scale_: .5
-  cell_size_: .400000006
-  source_time_: .100000001
-  static_time_: 3
+  emit_time_: .100000001
+  end_time_: 2
   post_material: {fileID: 2100000, guid: c348ca3013e8044659d7ba91f21b2718, type: 2}
 --- !u!114 &11491738
 MonoBehaviour:

@@ -20,7 +20,7 @@ public class BloodPop : MonoBehaviour {
 	}
 	public void displayBlood(Vector3 pos, Vector2 speed){
 		GameObject blood = Instantiate (blood_, pos + new Vector3(0, 0, -6), new Quaternion (0, 0, 0, 0)) as GameObject;
-		blood.GetComponent<FluidSim> ().speed = speed;
+		blood.GetComponent<FluidSim> ().initial_velocity_ = speed;
 		blood.GetComponent<FluidSim> ().Invoke ("source", 0);
 	}
 }

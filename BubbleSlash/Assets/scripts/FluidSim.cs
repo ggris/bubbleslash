@@ -3,92 +3,66 @@ using System.Collections;
 
 public class FluidSim : MonoBehaviour {
 
-	public Vector2 speed;
 
 	[Range(1,1024)]
 	public int resolution_ = 64;
-	[Range(0.001f,10.0f)]
-	public float time_step_ = 0.02f;
-	[Range(0.0f,1.0f)]
-	public float dissipation_ = 0.005f;
-	public float ambient_temperature_ = 0.0f;
-	public float smoke_buoyancy_ = 1.0f;
-	public float smoke_weight_ = 1.0f;
-	public Vector2 source_pos_;
-	public float source_temperature_ = 0.0f;
+	[Range(0, 100)]
+	public float percent_dissipation_ = 1.0f;
+	public Vector2 source_pos_ = new Vector2(0.5f, 0.5f);
 	public float source_density_ = 1.0f;
-	public float source_velocity = 1.0f;
-	public Material advect_mat_, buoyancy_mat_, source_mat_, divergence_mat_, jacoby_mat_, substract_gradient_;
-	public int jacobi_itts_ = 1;
-	public bool snap_ = true;
-	public float grad_scale_ = 1.0f;
-	public float cell_size_ = 1.0f;
-
-	public float source_time_ = 0.1f;	
-	public float static_time_ = 2.0f;
-	float start_time_;
-	float last_time_;
-
+	public Vector2 initial_velocity_ = new Vector2(0, 0);
+	public float rand_velocity = 1.0f;
+	public Material liquid_mat_, source_mat_;
+	
 	float inverse_size_;
 	float delta_;
 
+	public float emit_time_ = 0.1f;	
+	public float end_time_ = 2.0f;
+	float start_time_;
+	float last_time_;
+
 	public Material post_material;
 	
-	RenderTexture[] density_, velocity_, temperature_, pressure_;
-	RenderTexture divergence_, obstacles_;
-	Camera camera_;
+	RenderTexture[] fluid_;
+	RenderTexture obstacles_;
 	
 	// Use this for initialization
 	void Start () {
 
-		//camera_.Render ();
-		//Graphics.Blit (camera_.targetTexture, obstacles_);
+		// Init member variables
 
-		start_time_ = Time.time + static_time_;
+		start_time_ = Time.time + end_time_;
 		last_time_ = Time.time;
 
 		inverse_size_ = 1.0f / resolution_;
-		
-		buoyancy_mat_.SetFloat("_AmbientTemperature", ambient_temperature_);
-		buoyancy_mat_.SetFloat("_TimeStep", time_step_);
-		buoyancy_mat_.SetFloat("_Sigma", smoke_buoyancy_);
-		buoyancy_mat_.SetFloat("_Kappa", smoke_weight_);
-		
-		velocity_  = new RenderTexture[2];
-		density_  = new RenderTexture[2];
-		temperature_ = new RenderTexture[2];
-		pressure_ = new RenderTexture[2];
-		
-		createBuffer(density_, RenderTextureFormat.RFloat, FilterMode.Bilinear);
-		createBuffer(velocity_, RenderTextureFormat.RGFloat, FilterMode.Bilinear);
-		createBuffer(temperature_, RenderTextureFormat.RFloat, FilterMode.Bilinear);
-		createBuffer(pressure_, RenderTextureFormat.RFloat, FilterMode.Point);
-		
-		divergence_ = new RenderTexture(resolution_, resolution_, 0, RenderTextureFormat.RFloat);
-		divergence_.filterMode = FilterMode.Point;
-		divergence_.wrapMode = TextureWrapMode.Clamp;
-		divergence_.Create();
+
+		// Create fluid computation buffer
+
+		fluid_ = createBuffer(RenderTextureFormat.ARGBFloat, FilterMode.Bilinear);
+
+		// Create and fill obstacles texture
 
 		obstacles_ = new RenderTexture(resolution_, resolution_, 0, RenderTextureFormat.RFloat);
 		obstacles_.filterMode = FilterMode.Bilinear;
-		divergence_.wrapMode = TextureWrapMode.Clamp;
 		obstacles_.Create();
-		
-		camera_ = GetComponent<Camera> ();
-		camera_.aspect = 1.0f;
-		camera_.targetTexture = obstacles_;
-		camera_.Render ();
+
+		Camera camera = GetComponent<Camera> ();
+		camera.aspect = 1.0f;
+		camera.targetTexture = obstacles_;
+		camera.Render ();
+
+		// Creating a copy of the post material to display the fluid.
 
 		Material post_mat_copy = new Material (post_material);
-		post_mat_copy.SetTexture ("_Blood", density_[0]);
+		post_mat_copy.SetTexture ("_Blood", fluid_[0]);
 		GetComponent<SpriteRenderer> ().material = post_mat_copy;
-
-		//source ();
 		
 	}
 	
-	void createBuffer(RenderTexture[] buffer, RenderTextureFormat format, FilterMode filter)
+	RenderTexture[] createBuffer(RenderTextureFormat format, FilterMode filter)
 	{
+		RenderTexture[] buffer = new RenderTexture[2];
 		buffer[0] = new RenderTexture(resolution_, resolution_, 0, format);
 		buffer[0].filterMode = filter;
 		buffer[0].wrapMode = TextureWrapMode.Clamp;
@@ -104,6 +78,8 @@ public class FluidSim : MonoBehaviour {
 		Graphics.SetRenderTarget (buffer [1]);
 		GL.Clear (false, true, new Color (0, 0, 0, 0));		
 		Graphics.SetRenderTarget (null);
+
+		return buffer;
 	}
 	
 	void swapBuffer (RenderTexture[] buffer) {
@@ -114,95 +90,29 @@ public class FluidSim : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (start_time_ + static_time_ > Time.time)
+		if (start_time_ + end_time_ > Time.time)
 			SimUpdate ();
 	}
 
 	void SimUpdate () {
-		camera_.Render ();
-
 		delta_ = inverse_size_ * (Time.time - last_time_) * 100;
-
-		if (start_time_ + source_time_ > Time.time)
-			sourceAdd ();
-		
-		// Advect
-		advect (velocity_[0], density_ [0], density_ [1], dissipation_, 0);
-		advect (velocity_[0], velocity_ [0], velocity_ [1], dissipation_*0.9f, 1.05f);
-		//advect (velocity_[0], temperature_ [0], temperature_ [1], dissipation_);
-		swapBuffer (velocity_);
-		//swapBuffer (temperature_);
-		swapBuffer (density_);
-		
-		// Buoyancy
-		//buoyancy (velocity_ [0], temperature_ [0], density_ [0], velocity_ [1]);
-		//swapBuffer (velocity_);
-		
-		// Divergence field
-		/*
-		divergence(velocity_[0], divergence_);
-		
-		// Clear texture
-		Graphics.SetRenderTarget (pressure_ [0]);
-		GL.Clear (false, true, new Color (0, 0, 0, 0));		
-		Graphics.SetRenderTarget (null);
-		
-		for(int i = 0; i < jacobi_itts_; ++i) 
-		{
-			jacobi(pressure_[0], divergence_, pressure_[1]);
-			swapBuffer(pressure_);
-		}*/
-
-		//subGrad(velocity_[0], pressure_[0], velocity_[1]);
-		//swapBuffer(velocity_);
-
-		subGrad(velocity_[0], density_[0], velocity_[1]);
-		swapBuffer(velocity_);
-
 		last_time_ = Time.time;
 		
+		if (start_time_ + emit_time_ > Time.time)
+			source (fluid_[0], new Vector3(initial_velocity_.x *2 + Random.value*rand_velocity, initial_velocity_.y*2 + Random.value*rand_velocity,source_density_));
+
+		liquid_mat_.SetFloat("_Delta", delta_);
+		liquid_mat_.SetTexture("_Obstacles", obstacles_);
+		liquid_mat_.SetTexture("_UxUyD", fluid_[0]);
+		
+		Graphics.Blit(null, fluid_[1], liquid_mat_);
+		
+		swapBuffer (fluid_);
 	}
 
 	void source()
 	{
 		start_time_ = last_time_ = Time.time;
-		/*
-		source(temperature_[0], new Vector3(source_temperature_,source_temperature_,source_temperature_));
-		source (density_[0], new Vector3(source_density_,source_density_,source_density_));
-		source (velocity_[0], new Vector3(speed.x+ Random.value*source_velocity, speed.y + Random.value*source_velocity, 0));
-	*/
-	}
-
-	void sourceAdd()
-	{
-		source(temperature_[0], new Vector3(source_temperature_,source_temperature_,source_temperature_));
-		source (density_[0], new Vector3(source_density_,source_density_,source_density_));
-		source (velocity_[0], new Vector3(speed.x+ Random.value*source_velocity, speed.y + Random.value*source_velocity, 0));
-	}
-	
-	void advect(RenderTexture velocity, RenderTexture source, RenderTexture dest, float dissipation, float obstacle_dissipation)
-	{
-		
-		advect_mat_.SetFloat("_InverseGridScale", delta_);
-		advect_mat_.SetFloat("_TimeStep", time_step_);
-		advect_mat_.SetTexture("_Obstacles", obstacles_);
-
-		advect_mat_.SetFloat("_Dissipation", dissipation);
-		advect_mat_.SetFloat("_ObstacleDissipation", obstacle_dissipation);
-		advect_mat_.SetTexture("_Velocity", velocity);
-		advect_mat_.SetTexture("_Source", source);
-		
-		Graphics.Blit(null, dest, advect_mat_);
-	}
-	
-	void buoyancy(RenderTexture velocity, RenderTexture temperature, RenderTexture density, RenderTexture dest)
-	{
-		
-		buoyancy_mat_.SetTexture("_Velocity", velocity);
-		buoyancy_mat_.SetTexture("_Temperature", temperature);
-		buoyancy_mat_.SetTexture("_Density", density);
-		
-		Graphics.Blit(null, dest, buoyancy_mat_);
 	}
 	
 	void source(RenderTexture dest, Vector3 val)
@@ -212,39 +122,6 @@ public class FluidSim : MonoBehaviour {
 		
 		Graphics.Blit(null, dest, source_mat_);
 		
-	}
-	
-	void divergence(RenderTexture velocity,  RenderTexture dest)
-	{
-		
-		divergence_mat_.SetFloat("_HalfInverseCellSize", 0.5f / cell_size_);
-		divergence_mat_.SetTexture("_Velocity", velocity);
-		divergence_mat_.SetVector("_InverseSize", new Vector2(inverse_size_, inverse_size_));
-		
-		Graphics.Blit(null, dest, divergence_mat_);
-	}
-	
-	void jacobi(RenderTexture pressure, RenderTexture divergence, RenderTexture dest)
-	{
-		float alpha = cell_size_ * cell_size_;
-		jacoby_mat_.SetTexture("_Pressure", pressure);
-		jacoby_mat_.SetTexture("_Divergence", divergence);
-		jacoby_mat_.SetVector("_InverseSize", new Vector2(inverse_size_, inverse_size_));
-		jacoby_mat_.SetFloat("_Alpha", alpha);
-		jacoby_mat_.SetFloat("_RBeta", 1/(4+alpha));
-		
-		Graphics.Blit(null, dest, jacoby_mat_);
-	}
-	
-	void subGrad(RenderTexture velocity, RenderTexture pressure, RenderTexture dest)
-	{
-		substract_gradient_.SetTexture("_Velocity", velocity);
-		substract_gradient_.SetTexture("_Pressure", pressure);
-		substract_gradient_.SetTexture("_Obstacles", obstacles_);
-		substract_gradient_.SetFloat("_GradScale", grad_scale_);
-		substract_gradient_.SetVector("_InverseSize", new Vector2(delta_, delta_));
-		
-		Graphics.Blit(null, dest, substract_gradient_);
 	}
 	
 	
