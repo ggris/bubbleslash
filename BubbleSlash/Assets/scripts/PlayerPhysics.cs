@@ -90,8 +90,6 @@ public class PlayerPhysics : MonoBehaviour {
 		is_touching_right = false;
 		hat = transform.Find (hat_name).gameObject;
 		hat.GetComponent<HatAbstractClass> ().applyPassiveEffect ();
-
-		//transform.Find ("animation").Find ("smoke").gameObject.GetComponent<ParticleSystem> ().Play ();
 	}
 
 	void logState(){
@@ -381,7 +379,7 @@ public class PlayerPhysics : MonoBehaviour {
 		if (animator.GetCurrentAnimatorStateInfo(0).IsName("sliding"))
 			if (body.velocity.y < -max_sliding_speed) 
 				body.velocity=new Vector2(body.velocity.x,-max_sliding_speed);
-		if (! animator.GetCurrentAnimatorStateInfo (0).IsName ("attack")) {
+		if (! animator.GetCurrentAnimatorStateInfo (0).IsName ("attack") && !animator.GetCurrentAnimatorStateInfo (0).IsName ("hatSpecialState")) {
 			if (body.velocity.x < -max_horizontal_speed) {
 				body.velocity = new Vector2 (-max_horizontal_speed, body.velocity.y);
 			}

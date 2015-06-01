@@ -4,6 +4,7 @@ using System.Collections;
 public class TestHatScript : HatAbstractClass {
 
 	override public void onSpecialStateEnter(){
+		timer = 0;
 		player.GetComponent<Rigidbody2D> ().gravityScale = 0;
 		player.GetComponent<Rigidbody2D> ().velocity = new Vector2(0,0);
 	}
