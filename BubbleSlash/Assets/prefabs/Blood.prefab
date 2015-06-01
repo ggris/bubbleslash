@@ -56,7 +56,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967039
+    m_Bits: 4294966527
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -144,16 +144,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f11e42005a64a466ca9c3121a3048c76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resolution_: 512
+  grid_scale_: 256
   percent_dissipation_: .100000001
   source_pos_: {x: .5, y: .5}
-  source_density_: 8
+  source_density_: 5
   initial_velocity_: {x: 2.70000005, y: 2.93000007}
-  rand_velocity: 2
+  rand_velocity: 3
+  velocity_scale_: 4
   liquid_mat_: {fileID: 2100000, guid: 802b3f66ca50b430f81b8abc93552ed2, type: 2}
   source_mat_: {fileID: 2100000, guid: 7aa83d9db0f524e618ee27e2bca9e62e, type: 2}
   emit_time_: .100000001
-  end_time_: 2
+  end_time_: 4
   post_material: {fileID: 2100000, guid: c348ca3013e8044659d7ba91f21b2718, type: 2}
 --- !u!114 &11491738
 MonoBehaviour:

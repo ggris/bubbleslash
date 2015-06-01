@@ -5,13 +5,14 @@ public class FluidSim : MonoBehaviour {
 
 
 	[Range(1,1024)]
-	public int resolution_ = 64;
+	public int grid_scale_ = 64;
 	[Range(0, 100)]
 	public float percent_dissipation_ = 1.0f;
 	public Vector2 source_pos_ = new Vector2(0.5f, 0.5f);
 	public float source_density_ = 1.0f;
 	public Vector2 initial_velocity_ = new Vector2(0, 0);
 	public float rand_velocity = 1.0f;
+	public float velocity_scale_ = 2.0f;
 	public Material liquid_mat_, source_mat_;
 	
 	float inverse_size_;
@@ -35,7 +36,7 @@ public class FluidSim : MonoBehaviour {
 		start_time_ = Time.time + end_time_;
 		last_time_ = Time.time;
 
-		inverse_size_ = 1.0f / resolution_;
+		inverse_size_ = 1.0f / grid_scale_;
 
 		// Create fluid computation buffer
 
@@ -43,7 +44,7 @@ public class FluidSim : MonoBehaviour {
 
 		// Create and fill obstacles texture
 
-		obstacles_ = new RenderTexture(resolution_, resolution_, 0, RenderTextureFormat.RFloat);
+		obstacles_ = new RenderTexture(grid_scale_, grid_scale_, 0, RenderTextureFormat.RFloat);
 		obstacles_.filterMode = FilterMode.Bilinear;
 		obstacles_.Create();
 
@@ -63,7 +64,7 @@ public class FluidSim : MonoBehaviour {
 	RenderTexture[] createBuffer(RenderTextureFormat format, FilterMode filter)
 	{
 		RenderTexture[] buffer = new RenderTexture[2];
-		buffer[0] = new RenderTexture(resolution_, resolution_, 0, format);
+		buffer[0] = new RenderTexture(grid_scale_, grid_scale_, 0, format);
 		buffer[0].filterMode = filter;
 		buffer[0].wrapMode = TextureWrapMode.Clamp;
 		buffer[0].Create();
@@ -71,7 +72,7 @@ public class FluidSim : MonoBehaviour {
 		GL.Clear (false, true, new Color (0, 0, 0, 0));		
 		Graphics.SetRenderTarget (null);
 		
-		buffer[1] = new RenderTexture(resolution_, resolution_, 0, format);
+		buffer[1] = new RenderTexture(grid_scale_, grid_scale_, 0, format);
 		buffer[1].filterMode = filter;
 		buffer[1].wrapMode = TextureWrapMode.Clamp;
 		buffer[1].Create();
@@ -95,13 +96,16 @@ public class FluidSim : MonoBehaviour {
 	}
 
 	void SimUpdate () {
-		delta_ = inverse_size_ * (Time.time - last_time_) * 100;
+		delta_ = (Time.time - last_time_) * 0.01f * velocity_scale_;
 		last_time_ = Time.time;
 		
 		if (start_time_ + emit_time_ > Time.time)
-			source (fluid_[0], new Vector3(initial_velocity_.x *2 + Random.value*rand_velocity, initial_velocity_.y*2 + Random.value*rand_velocity,source_density_));
+			source (fluid_[0], new Vector3((initial_velocity_.x + Random.value*rand_velocity)*velocity_scale_, (initial_velocity_.y + Random.value*rand_velocity)*velocity_scale_,source_density_));
 
 		liquid_mat_.SetFloat("_Delta", delta_);
+		liquid_mat_.SetFloat("_InvGridScale", inverse_size_);
+		liquid_mat_.SetInt("_GridScale", grid_scale_);
+		liquid_mat_.SetFloat("_VelScale", velocity_scale_);
 		liquid_mat_.SetTexture("_Obstacles", obstacles_);
 		liquid_mat_.SetTexture("_UxUyD", fluid_[0]);
 		
