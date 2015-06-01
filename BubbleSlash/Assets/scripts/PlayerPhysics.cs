@@ -46,7 +46,7 @@ public class PlayerPhysics : MonoBehaviour {
 	public bool able_to_move;
 	public bool able_to_jump;
 	public bool able_to_attack;
-	
+	public bool is_hitable;
 
 	//privates
 	private Rigidbody2D body;
@@ -59,8 +59,8 @@ public class PlayerPhysics : MonoBehaviour {
 	private GameObject weapon;
 	private Animator weapon_state;
 	private PlayerManager manager;
-	private GameObject hat;
-	public string hat_name;
+	public GameObject hat;
+
 
 	//"state"
 
@@ -72,14 +72,14 @@ public class PlayerPhysics : MonoBehaviour {
 		if (cam!=null)
 			cam.resetPlayers ();
 	}
-
-	void Start () {
+	void Awake(){
 		body = GetComponent<Rigidbody2D> ();
 		animator = GetComponent<Animator>();
 		weapon = transform.Find("weapon").gameObject;
 		weapon_state = weapon.GetComponent<Animator> ();
 		manager = GameObject.Find ("playerManager").GetComponent<PlayerManager> ();
-
+	}
+	void Start () {
 		jumps_left = max_jumps - 1;
 		is_grounded = false;
 		horizontal_direction = 1;		
@@ -88,8 +88,7 @@ public class PlayerPhysics : MonoBehaviour {
 		attack_start = Time.time;
 		is_touching_left = false;
 		is_touching_right = false;
-		hat = transform.Find (hat_name).gameObject;
-		hat.GetComponent<HatAbstractClass> ().applyPassiveEffect ();
+		is_hitable = true;
 	}
 
 	void logState(){
@@ -162,7 +161,7 @@ public class PlayerPhysics : MonoBehaviour {
 		if (playerInputButtonDown("Jump") && isAbleToJump())
 			animator.SetTrigger ("triggerJump");
 
-		if (playerInputButtonDown("Hat") && isInputFree() && hat.GetComponent<HatAbstractClass>().hasSpecialState())
+		if (playerInputButtonDown("Hat") && isInputFree() && hat.GetComponent<HatAbstractClass>().hasSpecialState() && hat.GetComponent<HatAbstractClass>().isNotInCd())
 			animator.SetTrigger("inputHat");
 
 		if (playerInputButtonDown ("Weapon") && isAbleToAttack()) {

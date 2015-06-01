@@ -4,8 +4,10 @@ using System.Collections.Generic;
 
 public class PlayerManager : MonoBehaviour {
 
-	public PlayerSettings[] settings;
+	public GameObject[] hat_prefabs;
 	public GameObject player_prefab;
+	public PlayerSettings.Hat [] hatChoices;
+
 	public Transform[] spawn_points;
 	public GameObject [] players;
 	public float min_distance_spawn;
@@ -13,17 +15,16 @@ public class PlayerManager : MonoBehaviour {
 	private int [] score;
 	private CameraTracking camera_tracking;
 
+
 	void Start () {
 		score = new int[players.Length];
 		camera_tracking = (CameraTracking)FindObjectOfType (typeof(CameraTracking));
+		spawn (0, spawn_points [0]);
+		spawn (1, spawn_points [1]);
 	}
 
 	void Update () {
 	}
-	/*
-	private int indice;
-	private Vector3 position_death;
-	*/
 	public void dealWithDeath(int i){
 		score [i] -= 1;
 		Destroy(players [i]);
@@ -32,14 +33,20 @@ public class PlayerManager : MonoBehaviour {
 	}
 	public IEnumerator spawnLater(int i, Vector3 position_death, float delayTime){
 		yield return new WaitForSeconds(delayTime);
-		spawn (i, position_death);
-	}
-	public void spawn(int i, Vector3 position_death){
 		Transform t = findRandomSpawnPoint (i, position_death);
+		spawn (i, t);
+	}
+
+
+	public void spawn(int i, Transform t){
 		players [i] = GameObject.Instantiate (player_prefab, t.position, new Quaternion (0, 0, 0, 0)) as GameObject;
 		players [i].GetComponent<PlayerPhysics> ().playerNumber = i + 1;
 		players [i].gameObject.GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
 		SetColor (i);
+
+		GameObject hat_i = GameObject.Instantiate (hat_prefabs [(int)hatChoices[i]], new Vector3 (0, 0, 0), new Quaternion (0, 0, 0, 0)) as GameObject;
+		hat_i.transform.parent = players [i].transform;
+		players [i].GetComponent<PlayerPhysics>().hat= hat_i;
 		camera_tracking.resetPlayers ();
 	}
 

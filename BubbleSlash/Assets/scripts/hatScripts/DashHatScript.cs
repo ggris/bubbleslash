@@ -5,12 +5,18 @@ public class DashHatScript : HatAbstractClass {
 	public float speed = 50f;
 	private Vector2 direction;
 
+	void Start () {
+		Debug.Log (this.gameObject.name + " started");
+		player = gameObject.transform.parent.gameObject;
+		anim = gameObject.GetComponent<Animator> ();
+	}
+
 	override public void onSpecialStateEnter(){
 		timer = 0f;
 		direction = player.GetComponent<PlayerPhysics> ().directionFromInput ();
 		player.GetComponent<Rigidbody2D> ().gravityScale = 0;
 
-		player.GetComponent<Rigidbody2D> ().velocity = speed * direction;
+		player.GetComponent<Rigidbody2D> ().velocity = speed * (direction.normalized);
 	}
 
 	override public void onSpecialStateExit(){

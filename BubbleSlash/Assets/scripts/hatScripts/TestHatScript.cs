@@ -15,4 +15,5 @@ public class TestHatScript : HatAbstractClass {
 	override public bool hasSpecialState(){
 		return true;
 	}
+
 }
