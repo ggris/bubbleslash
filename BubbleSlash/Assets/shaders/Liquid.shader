@@ -83,10 +83,10 @@ SubShader
 			
 				float d = 1.6;
 				float p = 2.4;
-				if (pN < d) pN=p;
-				if (pS < d) pS=p;
-				if (pE < d) pE=p;
-				if (pW < d) pW=p;
+				if (pN < d) pN=p*d/(d+pN);
+				if (pS < d) pS=p*d/(d+pN);
+				if (pE < d) pE=p*d/(d+pN);
+				if (pW < d) pW=p*d/(d+pN);
 			    
 			    float obs = tex2D(_Obstacles, IN.uv).x;
 			
@@ -100,7 +100,7 @@ SubShader
 			    if (obs !=0)
 			    	result.xy *= 0.7;
 			    
-			    result.z *=0.99;
+			    result.z *=0.998;
 			    
 			    return result;
 			}

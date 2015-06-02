@@ -804,7 +804,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 4
 --- !u!4 &1666554028 stripped
 Transform:
   m_PrefabParentObject: {fileID: 496978, guid: 2b19c349648a04966ab6c9679542c630, type: 2}
@@ -847,6 +847,14 @@ Prefab:
     - target: {fileID: 437202, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11497346, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
+      propertyPath: acceleration_
+      value: .0500000007
+      objectReference: {fileID: 0}
+    - target: {fileID: 11497346, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}
+      propertyPath: max_zoom
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2f968f9856522401a91db0ad2e059a83, type: 2}

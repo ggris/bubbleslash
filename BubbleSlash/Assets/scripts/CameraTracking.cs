@@ -60,7 +60,7 @@ public class CameraTracking : MonoBehaviour {
 		delta.x /= my_camera.aspect;
 		float delta_ortho = Mathf.Max (delta.x, delta.y);
 		delta_ortho += max_zoom;
-		delta_ortho /= 2;
+		delta_ortho /= 1.3f;
 		delta_ortho = moveTowards (delta_ortho, my_camera.orthographicSize);
 		delta_ortho /= my_camera.orthographicSize;
 
