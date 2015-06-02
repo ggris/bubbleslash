@@ -12,6 +12,8 @@ public abstract class HatAbstractClass : MonoBehaviour {
 	void Start () {
 		player = gameObject.transform.parent.gameObject;
 		anim = gameObject.GetComponent<Animator> ();
+		applyPassiveEffect ();
+		startHat ();
 	}
 	
 	public virtual void applyPassiveEffect(){}
@@ -21,15 +23,24 @@ public abstract class HatAbstractClass : MonoBehaviour {
 	public virtual bool canAttack(){return true;}
 
 	public virtual void updateHat (){}
+	public virtual void startHat (){}
+
+	public bool isNotInCd(){
+		return !anim.GetCurrentAnimatorStateInfo (0).IsName ("cd");
+	}
 
 	public void Update () {
-		float nextTimer = timer + Time.deltaTime;
-		if (timer < length && nextTimer >length) {
-			anim.SetTrigger("finish");
+		if (hasSpecialState ()) {
+			float nextTimer = timer + Time.deltaTime;
+			if (timer < length && nextTimer > length) {
+				anim.SetTrigger ("finish");
+			}
+			if (timer < length + cd && nextTimer > length + cd) {
+				anim.SetTrigger ("cdover");
+			}
+			timer = nextTimer;
 		}
-		if (timer < length+cd && nextTimer >length+cd) {
-			anim.SetTrigger("cdover");
-		}
-		timer = nextTimer;
+		updateHat ();
+
 	}
 }

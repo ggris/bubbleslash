@@ -5,6 +5,7 @@ public class WeaponBehaviour : MonoBehaviour {
 	public Vector2 ennemyDirection;
 	public GameObject ennemy;
 	public GameObject player;
+
 	// Use this for initialization
 	void Start () {
 		player = gameObject.transform.parent.gameObject;

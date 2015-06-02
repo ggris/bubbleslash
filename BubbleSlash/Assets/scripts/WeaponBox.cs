@@ -10,31 +10,12 @@ public class WeaponBox : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D (Collider2D other){
-		/*if (player.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("attack")) {
-			GameObject obj = other.gameObject;
-			if (obj.name == "body") {
-				obj = obj.transform.parent.parent.gameObject;
-				if (obj.GetComponent<PlayerPhysics> ().playerNumber != player.GetComponent<PlayerPhysics> ().playerNumber) {
-					Animator e_anim = obj.GetComponent<Animator> ();
-					if (e_anim.GetCurrentAnimatorStateInfo (0).IsName ("attack") || e_anim.GetCurrentAnimatorStateInfo (0).IsName ("delayAttack")) {
-						Vector2 direction = (obj.transform.position - player.transform.position).normalized;
-						obj.GetComponent<PlayerPhysics> ().isParried (direction);
-						player.GetComponent<PlayerPhysics> ().isParried (-direction);
-					} else {
-						obj.GetComponent<PlayerPhysics> ().isHit ();
-						Debug.Log (obj.name + " has been killed");
-					}
-				}
-			}
-			if (obj.tag == "weapon") {
-			}
-		}*/
 
 		GameObject objectHit = other.gameObject;
 		if (objectHit.name == "body") {
 			GameObject ennemyHit = objectHit.transform.parent.parent.gameObject;
-			if (ennemyHit.GetComponent<PlayerPhysics>().playerNumber != player.GetComponent<PlayerPhysics>().playerNumber){
-				//ennemyHit.transform.Find("weapon").GetComponent<Animator>().SetTrigger("hit");
+			if (ennemyHit.GetComponent<PlayerPhysics>().playerNumber != player.GetComponent<PlayerPhysics>().playerNumber
+			    && ennemyHit.GetComponent<PlayerPhysics>().is_hitable){
 				ennemyHit.transform.Find("weapon").GetComponent<WeaponBehaviour>().getHit(player);
 			}
 		}

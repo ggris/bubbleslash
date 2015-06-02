@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class PlayerSettings {
-	public enum Hat {testHat, speedHat};
+	public enum Hat {testHat=0, speedHat=1, dashHat=2, dodgeHat=3};
 	public enum Weapon {sword};
 	public Hat hat;
 	public Weapon weapon;
