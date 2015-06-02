@@ -137,6 +137,10 @@ Material:
         first:
           name: _Metallic
         second: .140000001
+      data:
+        first:
+          name: _BaseAlpha
+        second: 0
     m_Colors:
       data:
         first:
