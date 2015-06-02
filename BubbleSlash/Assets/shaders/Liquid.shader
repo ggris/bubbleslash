@@ -81,7 +81,7 @@ SubShader
 			    float pE = tex2D(_UxUyD, IN.uv + float2(k, 0)).z;
 			    float pW = tex2D(_UxUyD, IN.uv + float2(-k, 0)).z;
 			
-				float d = 1.8;
+				float d = 1.6;
 				float p = 2.4;
 				if (pN < d) pN=p;
 				if (pS < d) pS=p;
@@ -98,7 +98,7 @@ SubShader
 			    result.xy += _Gravity * _Delta * result.z * 50;
 			    
 			    if (obs !=0)
-			    	result.xy *= 0.5;
+			    	result.xy *= 0.7;
 			    
 			    result.z *=0.99;
 			    

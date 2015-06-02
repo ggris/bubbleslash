@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Blood
-  m_Shader: {fileID: 4800000, guid: 45415797253934f2d90844fcc3dadb9c, type: 3}
+  m_Shader: {fileID: 4800000, guid: 20309ec88d4484e078e0e29bbb394732, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: -1
@@ -108,7 +108,7 @@ Material:
       data:
         first:
           name: _Glossiness
-        second: .5
+        second: .689999998
       data:
         first:
           name: _BumpScale
@@ -136,7 +136,7 @@ Material:
       data:
         first:
           name: _Metallic
-        second: 0
+        second: .140000001
     m_Colors:
       data:
         first:
@@ -145,7 +145,7 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
+        second: {r: .933823526, g: 0, b: 0, a: .517647088}
       data:
         first:
           name: _EmissionColorUI
