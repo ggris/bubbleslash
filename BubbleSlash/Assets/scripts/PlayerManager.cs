@@ -43,10 +43,11 @@ public class PlayerManager : MonoBehaviour {
 		players [i].GetComponent<PlayerPhysics> ().playerNumber = i + 1;
 		players [i].gameObject.GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
 		SetColor (i);
-
+		SetHatRendering (i);
 		GameObject hat_i = GameObject.Instantiate (hat_prefabs [(int)hatChoices[i]], new Vector3 (0, 0, 0), new Quaternion (0, 0, 0, 0)) as GameObject;
 		hat_i.transform.parent = players [i].transform;
 		players [i].GetComponent<PlayerPhysics>().hat= hat_i;
+
 		camera_tracking.resetPlayers ();
 	}
 
@@ -62,7 +63,7 @@ public class PlayerManager : MonoBehaviour {
 			return spawn_points[Random.Range(0,spawn_points.Length-1)];
 	}
 	void SetColor(int i){
-		string color;
+		/*string color;
 		switch (i) {
 		case 1:
 			color = "red";
@@ -70,13 +71,26 @@ public class PlayerManager : MonoBehaviour {
 		default :
 			color = "blue";
 			break;
-		}
-		Object [] sprites = Resources.LoadAll<Sprite>("sprites/playerSpriteSheet_"+color);
-
+		}*/
+		Object [] sprites = Resources.LoadAll<Sprite>("sprites/playerSpriteSheet_"+"blue");
+		Object weapon = Resources.Load<Sprite> ("sprites/playerSpriteSheet_sword");
 		players [i].transform.Find ("animation").Find ("body").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites [0];
 		players [i].transform.Find ("animation").Find ("eye").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites[1];
-		players [i].transform.Find ("animation").Find ("weapon_trans").Find ("weapon").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites[2];
+		players [i].transform.Find ("animation").Find ("weapon_trans").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites[2];
+		players [i].transform.Find ("animation").Find ("weapon_trans").Find ("weapon").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites[3];
 
+	}
+	void SetHatRendering(int i){
+		PlayerSettings.Hat h = hatChoices[i];
+		GameObject anim = players [i].transform.Find ("animation").gameObject;
+		if (h == PlayerSettings.Hat.dashHat) {
+			anim.transform.FindChild("dodgeHat").gameObject.SetActive(false);
+			anim.transform.FindChild("dashHat").gameObject.SetActive(true);
+		}
+		if (h == PlayerSettings.Hat.dodgeHat) {
+			anim.transform.FindChild("dashHat").gameObject.SetActive(false);
+			anim.transform.FindChild("dodgeHat").gameObject.SetActive(true);
+		}
 	}
 
 	void OnGUI(){

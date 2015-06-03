@@ -150,7 +150,7 @@ MonoBehaviour:
   source_density_: 5
   initial_velocity_: {x: 2.70000005, y: 2.93000007}
   rand_velocity: 3
-  velocity_scale_: 4
+  velocity_scale_: 3
   liquid_mat_: {fileID: 2100000, guid: 802b3f66ca50b430f81b8abc93552ed2, type: 2}
   source_mat_: {fileID: 2100000, guid: 7aa83d9db0f524e618ee27e2bca9e62e, type: 2}
   emit_time_: .100000001

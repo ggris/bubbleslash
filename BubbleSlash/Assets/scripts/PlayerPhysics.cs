@@ -51,7 +51,7 @@ public class PlayerPhysics : MonoBehaviour {
 	//privates
 	private Rigidbody2D body;
 	private Animator animator;
-	private Vector2 direction;
+
 	private Vector2 direction_input;
 	public Vector2 direction_action;
 	public Vector2 direction_parry;
@@ -130,7 +130,7 @@ public class PlayerPhysics : MonoBehaviour {
 
 		//updates direction
 		if (isAttacking ()) {
-			direction = direction_action;
+
 			if (direction_action.x < 0) 
 				horizontal_direction = -1;
 			if (direction_action.x > 0) 
@@ -145,7 +145,6 @@ public class PlayerPhysics : MonoBehaviour {
 				if (direction_input.x > 0) 
 					horizontal_direction = 1;
 				checkSlide (); //only changes "horizontal_direction" if sliding
-				direction = realDirection (direction_input);
 			}
 		}
 
