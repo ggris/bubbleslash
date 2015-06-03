@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="fr-FR">
+
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="styles.css">
+    <title>BubbleSlash</title>
+
+    <body>
+        <header>
+        <h1>BubbleSlash</h1>
+        </header>
+
+        <main>
+        <aside class="about">
+            <article>
+            <h2>A multiplayer fighting game !</h2>
+            <p>This is a 2D side-view fight game in which bubble heroes are fighting using deadly weapons and fantastic hats !</p>
+            </article>
+        </aside>
+        <div class="fantom"></div>
+        <section class="games">
+        <a href="game.htm?10">
+        <article>
+            <h3>2015 June 3 : V10 [Backlog 12]</h3>
+            <p>Awsome blood ! Better smoke. Better sprites. Better shaders. Hats.</p>
+            <p>P1 : XBox controller and z,q,s,d,w,x,c keys</p>
+            <p>P2 : left right arrows to move and space to jump, b to attack</p>
+        </article>
+        </a>
+        <a href="game.htm?9">
+        <article>
+            <h3>2015 June 1 : V9 [Backlog 11]</h3>
+            <p>PBR blood. Dash and dodge hat. Parry takes direction into account.</p>
+            <p>P1 : XBox controller and z,q,s,d,w,x,c keys</p>
+            <p>P2 : left right arrows to move and space to jump, b to attack</p>
+        </article>
+        </a>
+        <a href="game.htm?8">
+        <article>
+            <h3>2015 May 20 : V8 [Backlog 8]</h3>
+            <p>Better blood. Shockwave on parade.</p>
+            <p>P1 : XBox controller and z,q,s,d,w,x,c keys</p>
+            <p>P2 : left right arrows to move and space to jump, b to attack</p>
+        </article>
+        </a>
+        <a href="game.htm?7">
+        <article>
+            <h3>2015 May 19 : V7 [Backlog 7]</h3>
+            <p>Press "o" to throw some blood. "i" to make a shock-wave. Throw blood on death. 0.5s respawn time.</p>
+            <p>P1 : XBox controller and z,q,s,d,w,x,c keys</p>
+            <p>P2 : left right arrows to move and space to jump, b to attack</p>
+        </article>
+        </a>
+        <a href="game.htm?6">
+        <article>
+            <h3>2015 May 18 : V6 [Backlog 6]</h3>
+            <p>Press "o" to throw some blood. First try of an animated character. Simple fast hat modifier and fly hat modifier implemented.</p>
+            <p>P1 : XBox controller and z,q,s,d,w,x,c keys</p>
+            <p>P2 : left right arrows to move and space to jump, b to attack</p>
+        </article>
+        </a>
+        <a href="game.htm?5">
+        <article>
+            <h3>2015 May 12 : V5 [Backlog 4]</h3>
+            <p>Press "o" to see some blood. You can now parry attacks.</p>
+            <p>P1 : XBox controller</p>
+            <p>P2 : left right arrows to move and space to jump, b to attack</p>
+        </article>
+        </a>
+        <a href="game.htm?4">
+        <article>
+            <h3>2015 May 11 : V4 [Backlog 3]</h3>
+            <p>Score, wall slide and jump, attack improved, XBox controller support</p>
+            <p>P1 : XBox controller</p>
+            <p>P2 : left right arrows to move and space to jump, b to attack</p>
+        </article>
+        </a>
+        <a href="game.htm?3">
+        <article>
+            <h3>2015 May 6 : V3 [Backlog 2]</h3>
+            <p>Attack, death, auto pop, better controls</p>
+            <p>P1 : left right arrows to move and space to jump, n to attack</p>
+            <p>P2 : q and d to move and left ctrl to jump, left alt to attack</p>
+        </article>
+        </a>
+        <a href="game.htm?2">
+        <article>
+            <h3>2015 May 5 : V2 [Backlog 1]</h3>
+            <p>2 colored players in a simple test level.</p>
+            <p>P1 : left right arrows to move and space to jump</p>
+            <p>P2 : q and d to move and left ctrl to jump</p>
+        </article>
+        </a>
+        <a href="game.htm?1">
+        <article>
+            <h3>2015 May 4 : V1</h3>
+            <p>Simple cube with improved controls and test post processing red screen.</p>
+        </article>
+        </a>
+        <a href="game.htm?0">
+        <article>
+            <h3>2015 May 4 : V0</h3>
+            <p>Simple cube with basic controls.</p>
+        </article>
+        </a>
+        </section>
+        </main>
+
+        <footer>
+            Created by Victor Lucquin and Guillaume Gris
+        </footer>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-62913401-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    </body>
+
+</html>
+
+
