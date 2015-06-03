@@ -99,8 +99,11 @@ public class FluidSim : MonoBehaviour {
 		delta_ = (Time.time - last_time_) * 0.01f * velocity_scale_;
 		last_time_ = Time.time;
 		
-		if (start_time_ + emit_time_ > Time.time)
-			source (fluid_[0], new Vector3((initial_velocity_.x + Random.value*rand_velocity)*velocity_scale_, (initial_velocity_.y + Random.value*rand_velocity)*velocity_scale_,source_density_));
+		if (start_time_ + emit_time_ > Time.time) {
+			Vector2 velocity = initial_velocity_ + rand_velocity*Random.insideUnitCircle;
+			velocity *= velocity_scale_;
+			source (fluid_ [0], new Vector3 (velocity.x, velocity.y, source_density_));
+		}
 
 		liquid_mat_.SetFloat("_Delta", delta_);
 		liquid_mat_.SetFloat("_InvGridScale", inverse_size_);
