@@ -10,6 +10,7 @@
 		Tags { "RenderType"="Transparent" }
 		Tags { "Queue" = "Transparent" }
 		LOD 200
+		Blend SrcAlpha OneMinusSrcAlpha
 		
 		CGPROGRAM
 		// Physically based Standard lighting model, and enable shadows on all light types
@@ -32,10 +33,11 @@
 			fixed2 r = 2*IN.uv_MainTex - fixed2(1, 1);
 		
 			// Albedo comes from a texture tinted by color
-			fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
-			c.a *= 2 - 2*length(r);
-			o.Normal = fixed3(r.x, r.y, sqrt(1-dot(r, r)));
-			o.Albedo = c.rgb;
+			fixed4 c = _Color;
+			c.a *= 2*(1 - length(r));
+			r /=2;
+			o.Normal = normalize(fixed3(r.x, r.y, sqrt(1-dot(r, r))));
+			o.Albedo = c*2;
 			// Metallic and smoothness come from slider variables
 			o.Metallic = _Metallic;
 			o.Smoothness = _Glossiness;
