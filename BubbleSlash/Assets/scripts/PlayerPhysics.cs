@@ -155,10 +155,18 @@ public class PlayerPhysics : MonoBehaviour {
 		animator.SetBool ("isOnFeet", is_grounded);
 		animator.SetBool ("isOnHand", is_touching_left || is_touching_right);
 		animator.SetBool ("inputJump", playerInputButton ("Jump"));
+		
+		
+		//animation, small blood and smoke
+		//quick under tee
+		Transform tr_animation = transform.Find ("animation");
 
-
-		if (playerInputButtonDown("Jump") && isAbleToJump())
+		if (playerInputButtonDown ("Jump") && isAbleToJump ()) {
 			animator.SetTrigger ("triggerJump");
+			Transform tr_smoke = tr_animation.Find ("smoke");
+			tr_smoke.gameObject.GetComponent<ParticleSystem>().Play();
+			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, 0, tr_smoke.eulerAngles.z);
+		}
 
 		if (playerInputButtonDown("Hat") && isInputFree() && hat.GetComponent<HatAbstractClass>().hasSpecialState() && hat.GetComponent<HatAbstractClass>().isNotInCd())
 			animator.SetTrigger("inputHat");
@@ -179,10 +187,6 @@ public class PlayerPhysics : MonoBehaviour {
 		//max speeds
 		checkMaxSpeeds ();
 
-		//animation, small blood and smoke
-		//quick under tee
-		Transform tr_animation = transform.Find ("animation");
-
 		if (isAttacking ()) {
 			float a = getAngle (direction_action, horizontal_direction * Vector2.right);
 			tr_animation.eulerAngles = new Vector3 (0,0, a);
@@ -201,8 +205,15 @@ public class PlayerPhysics : MonoBehaviour {
 			tr_smoke.gameObject.GetComponent<ParticleSystem>().Play();
 			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, -horizontal_direction*90, tr_smoke.eulerAngles.z);
 		} else {
-			tr_animation.Find("smoke").gameObject.GetComponent<ParticleSystem>().Clear();
-			tr_animation.Find("smoke").gameObject.GetComponent<ParticleSystem>().Stop();
+			//tr_animation.Find("smoke").gameObject.GetComponent<ParticleSystem>().Clear();
+			//tr_animation.Find("smoke").gameObject.GetComponent<ParticleSystem>().loop = false;
+		}
+		
+		if (animator.GetCurrentAnimatorStateInfo(0).IsName("sliding")){
+			Transform tr_smoke = tr_animation.Find ("smoke");
+			tr_smoke.gameObject.GetComponent<ParticleSystem>().Play();
+			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, horizontal_direction*120, tr_smoke.eulerAngles.z);
+
 		}
 
 		//death on fall

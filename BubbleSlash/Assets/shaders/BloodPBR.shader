@@ -64,7 +64,6 @@
 			// Metallic and smoothness come from slider variables
 			o.Metallic = _Metallic;
 			o.Smoothness = _Glossiness;
-			//o.Occlusion = fluid.z;
 			o.Alpha = c.a;
 		}
 		ENDCG

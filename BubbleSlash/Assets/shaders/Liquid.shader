@@ -60,7 +60,7 @@ SubShader
 				return float3(0, 0, 0);
 			}
 			
-			float3 frag(v2f_img IN) : SV_Target	{
+			float4 frag(v2f_img IN) : SV_Target	{
 			
 			    float3 result = float3(0,0,0);
 			    
@@ -83,26 +83,26 @@ SubShader
 			
 				float d = 1.6;
 				float p = 2.4;
-				if (pN < d) pN=p;
-				if (pS < d) pS=p;
-				if (pE < d) pE=p;
-				if (pW < d) pW=p;
+				if (pN < d) pN=d/(p+pN);
+				if (pS < d) pS=d/(p+pS);
+				if (pE < d) pE=d/(p+pE);
+				if (pW < d) pW=d/(p+pW);
 			    
 			    float obs = tex2D(_Obstacles, IN.uv).x;
 			
 			    float2 grad = float2(pE - pW, pN - pS) * _GradScale;
 			    grad *= abs(grad);
 			    	
-			    result.xy -= grad * _Delta * result.z * 50;
+			    result.xy -= grad * _Delta * result.z * 30;
 			    
-			    result.xy += _Gravity * _Delta * result.z * 50;
+			    result.xy += _Gravity * _Delta * result.z * 30;
 			    
 			    if (obs !=0)
 			    	result.xy *= 0.7;
 			    
-			    result.z *=0.99;
+			    result.z *=0.998;
 			    
-			    return result;
+			    return float4(result, 0)	;
 			}
 			
 			ENDCG
