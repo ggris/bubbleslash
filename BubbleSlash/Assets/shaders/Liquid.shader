@@ -60,6 +60,18 @@ SubShader
 				return float3(0, 0, 0);
 			}
 			
+			float pressure(float density) {
+				float d = 0.4;
+				float pM = 1.2;
+				float p = pM-1/d;
+				return density<d ? pM + p*density : density;
+			}
+			
+			float isLiquid(float density) {
+				float d = 0.4;
+				return density<d ? 0 : density;
+			}
+			
 			float4 frag(v2f_img IN) : SV_Target	{
 			
 			    float3 result = float3(0,0,0);
@@ -76,31 +88,25 @@ SubShader
 			   	}
 			    
 			    float k = _InvGridScale * 0.7;
-			    float pN = tex2D(_UxUyD, IN.uv + float2(0, k)).z;
-			    float pS = tex2D(_UxUyD, IN.uv + float2(0, -k)).z;
-			    float pE = tex2D(_UxUyD, IN.uv + float2(k, 0)).z;
-			    float pW = tex2D(_UxUyD, IN.uv + float2(-k, 0)).z;
-			
-				float d = 1.6;
-				float p = 2.4;
-				if (pN < d) pN=d/(p+pN);
-				if (pS < d) pS=d/(p+pS);
-				if (pE < d) pE=d/(p+pE);
-				if (pW < d) pW=d/(p+pW);
+			    float pN = pressure(tex2D(_UxUyD, IN.uv + float2(0, k)).z);
+			    float pS = pressure(tex2D(_UxUyD, IN.uv + float2(0, -k)).z);
+			    float pE = pressure(tex2D(_UxUyD, IN.uv + float2(k, 0)).z);
+			    float pW = pressure(tex2D(_UxUyD, IN.uv + float2(-k, 0)).z);
+			    float p = pressure(result.z);
 			    
 			    float obs = tex2D(_Obstacles, IN.uv).x;
 			
 			    float2 grad = float2(pE - pW, pN - pS) * _GradScale;
 			    grad *= abs(grad);
 			    	
-			    result.xy -= grad * _Delta * result.z * 30;
+			    result.xy -= grad * _Delta / p * 530;
 			    
-			    result.xy += _Gravity * _Delta * result.z * 30;
+			    result.xy += _Gravity * _Delta * isLiquid(result.z) * 70;
 			    
 			    if (obs !=0)
 			    	result.xy *= 0.7;
 			    
-			    result.z *=0.998;
+			    result.z *=0.99;
 			    
 			    return float4(result, 0)	;
 			}

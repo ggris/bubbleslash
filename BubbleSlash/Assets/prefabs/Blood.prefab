@@ -147,14 +147,14 @@ MonoBehaviour:
   grid_scale_: 256
   percent_dissipation_: .100000001
   source_pos_: {x: .5, y: .5}
-  source_density_: 7
+  source_density_: 6
   initial_velocity_: {x: 2.70000005, y: 2.93000007}
   rand_velocity: 3
   velocity_scale_: 3
   liquid_mat_: {fileID: 2100000, guid: 802b3f66ca50b430f81b8abc93552ed2, type: 2}
   source_mat_: {fileID: 2100000, guid: 7aa83d9db0f524e618ee27e2bca9e62e, type: 2}
-  emit_time_: .129999995
-  end_time_: 4
+  emit_time_: .0700000003
+  end_time_: 5
   post_material: {fileID: 2100000, guid: c348ca3013e8044659d7ba91f21b2718, type: 2}
 --- !u!114 &11491738
 MonoBehaviour:
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65a5c10467cf4478d9bdb48d3a443160, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime_: 8
+  lifetime_: 5
 --- !u!212 &21272940
 SpriteRenderer:
   m_ObjectHideFlags: 1
