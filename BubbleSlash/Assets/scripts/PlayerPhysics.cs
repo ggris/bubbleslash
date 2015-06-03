@@ -202,7 +202,7 @@ public class PlayerPhysics : MonoBehaviour {
 			tr_smoke.gameObject.GetComponent<ParticleSystem>().Play();
 			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, -horizontal_direction*90, tr_smoke.eulerAngles.z);
 		} else {
-			tr_animation.Find("smoke").gameObject.GetComponent<ParticleSystem>().Clear();
+			//tr_animation.Find("smoke").gameObject.GetComponent<ParticleSystem>().Clear();
 			tr_animation.Find("smoke").gameObject.GetComponent<ParticleSystem>().Stop();
 		}
 
