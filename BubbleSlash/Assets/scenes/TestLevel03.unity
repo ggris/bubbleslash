@@ -655,6 +655,9 @@ MonoBehaviour:
   - {fileID: 0}
   min_distance_spawn: 10
   death_altitude: -30
+  colors:
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 1, g: .647058845, b: .647058845, a: 1}
 --- !u!4 &1068383219
 Transform:
   m_ObjectHideFlags: 0
