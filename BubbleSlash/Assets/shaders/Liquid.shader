@@ -83,19 +83,19 @@ SubShader
 			
 				float d = 1.6;
 				float p = 2.4;
-				if (pN < d) pN=p*d/(d+pN);
-				if (pS < d) pS=p*d/(d+pN);
-				if (pE < d) pE=p*d/(d+pN);
-				if (pW < d) pW=p*d/(d+pN);
+				if (pN < d) pN=d/(p+pN);
+				if (pS < d) pS=d/(p+pS);
+				if (pE < d) pE=d/(p+pE);
+				if (pW < d) pW=d/(p+pW);
 			    
 			    float obs = tex2D(_Obstacles, IN.uv).x;
 			
 			    float2 grad = float2(pE - pW, pN - pS) * _GradScale;
 			    grad *= abs(grad);
 			    	
-			    result.xy -= grad * _Delta * result.z * 40;
+			    result.xy -= grad * _Delta * result.z * 30;
 			    
-			    result.xy += _Gravity * _Delta * result.z * 40;
+			    result.xy += _Gravity * _Delta * result.z * 30;
 			    
 			    if (obs !=0)
 			    	result.xy *= 0.7;
