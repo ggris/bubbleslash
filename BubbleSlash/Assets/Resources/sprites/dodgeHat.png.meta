@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 1e7d359f125bea74c9d422e60688ccfa
-timeCreated: 1433333205
+guid: 02a9f41f657c3874a8be9c76684e6799
+timeCreated: 1433237430
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: playerSpriteSheet_blue_0
-    21300002: playerSpriteSheet_blue_1
-    21300004: sword
-    21300006: playerSpriteSheet_blue_3
+    21300000: dodgeHat_0
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -53,45 +50,15 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: playerSpriteSheet_blue_0
+    - name: dodgeHat_0
       rect:
         serializedVersion: 2
-        x: 29
-        y: 222
-        width: 456
-        height: 289
+        x: 114
+        y: 260
+        width: 443
+        height: 86
       alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: playerSpriteSheet_blue_1
-      rect:
-        serializedVersion: 2
-        x: 607
-        y: 421
-        width: 161
-        height: 90
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: sword
-      rect:
-        serializedVersion: 2
-        x: 917
-        y: 178
-        width: 77
-        height: 314
-      alignment: 7
-      pivot: {x: .5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: playerSpriteSheet_blue_3
-      rect:
-        serializedVersion: 2
-        x: 606
-        y: 232
-        width: 152
-        height: 98
-      alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 1e7d359f125bea74c9d422e60688ccfa
-timeCreated: 1433333205
+guid: 41a93045c18dc4d4ba99d14062c11488
+timeCreated: 1433323162
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: playerSpriteSheet_blue_0
-    21300002: playerSpriteSheet_blue_1
-    21300004: sword
-    21300006: playerSpriteSheet_blue_3
+    21300000: playerSpriteSheet_teal_0
+    21300002: playerSpriteSheet_teal_1
+    21300004: playerSpriteSheet_teal_2
+    21300006: playerSpriteSheet_teal_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -53,7 +53,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: playerSpriteSheet_blue_0
+    - name: playerSpriteSheet_teal_0
       rect:
         serializedVersion: 2
         x: 29
@@ -61,9 +61,9 @@ TextureImporter:
         width: 456
         height: 289
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: playerSpriteSheet_blue_1
+    - name: playerSpriteSheet_teal_1
       rect:
         serializedVersion: 2
         x: 607
@@ -71,19 +71,19 @@ TextureImporter:
         width: 161
         height: 90
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: sword
+    - name: playerSpriteSheet_teal_2
       rect:
         serializedVersion: 2
         x: 917
         y: 178
         width: 77
         height: 314
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: playerSpriteSheet_blue_3
+    - name: playerSpriteSheet_teal_3
       rect:
         serializedVersion: 2
         x: 606
@@ -91,7 +91,7 @@ TextureImporter:
         width: 152
         height: 98
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
