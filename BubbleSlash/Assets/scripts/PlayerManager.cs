@@ -9,7 +9,7 @@ public class PlayerManager : MonoBehaviour
 	public GameObject player_prefab;
 	public PlayerSettings.Hat[] hatChoices;
 	public Transform[] spawn_points;
-	public GameObject[] players;
+	public GameObject[] players_;
 	public float min_distance_spawn;
 	public float death_altitude;
 	private int[] score;
@@ -17,10 +17,33 @@ public class PlayerManager : MonoBehaviour
 
 	void Start ()
 	{
-		score = new int[players.Length];
+		players_ = new GameObject[2];
+		score = new int[players_.Length];
 		camera_tracking = (CameraTracking)FindObjectOfType (typeof(CameraTracking));
+		if (Network.isServer)
+			StartOnlineServer ();
+		else if (Network.isClient)
+			StartOnlineClient ();
+		else
+			StartOffline ();
+	}
+
+	void StartOffline ()
+	{
 		spawn (0, spawn_points [0]);
 		spawn (1, spawn_points [1]);
+	}
+
+	void StartOnlineServer ()
+	{
+		Debug.Log ("StartOnlineServer");
+		spawn (0, spawn_points [0]);
+	}
+	
+	void StartOnlineClient ()
+	{
+		Debug.Log ("StartOnlineClient");
+		spawn (0, spawn_points [0]);
 	}
 
 	void Update ()
@@ -30,8 +53,8 @@ public class PlayerManager : MonoBehaviour
 	public void dealWithDeath (int i)
 	{
 		score [i] -= 1;
-		Destroy (players [i]);
-		StartCoroutine (spawnLater (i, players [i].transform.position, 0.5f));
+		Destroy (players_ [i]);
+		StartCoroutine (spawnLater (i, players_ [i].transform.position, 0.5f));
 
 	}
 
@@ -52,29 +75,29 @@ public class PlayerManager : MonoBehaviour
 	
 	public void spawnOffline (int i, Transform t)
 	{
-		players [i] = GameObject.Instantiate (player_prefab, t.position, new Quaternion (0, 0, 0, 0)) as GameObject;
-		players [i].GetComponent<PlayerPhysics> ().playerNumber = i + 1;
-		players [i].gameObject.GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
+		players_ [i] = GameObject.Instantiate (player_prefab, t.position, new Quaternion (0, 0, 0, 0)) as GameObject;
+		players_ [i].GetComponent<PlayerPhysics> ().playerNumber = i + 1;
+		players_ [i].gameObject.GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
 		SetSprites (i);
 		SetColor (i);
 		SetHatRendering (i);
 		GameObject hat_i = GameObject.Instantiate (hat_prefabs [(int)hatChoices [i]], new Vector3 (0, 0, 0), new Quaternion (0, 0, 0, 0)) as GameObject;
-		hat_i.transform.parent = players [i].transform;
-		players [i].GetComponent<PlayerPhysics> ().hat = hat_i;
+		hat_i.transform.parent = players_ [i].transform;
+		players_ [i].GetComponent<PlayerPhysics> ().hat = hat_i;
 		camera_tracking.resetPlayers ();
 	}
 
 	public void spawnOnline (int i, Transform t, int group)
 	{
-		players [i] = Network.Instantiate (player_prefab, t.position, new Quaternion (0, 0, 0, 0), group) as GameObject;
-		players [i].GetComponent<PlayerPhysics> ().playerNumber = i + 1;
-		players [i].gameObject.GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
+		players_ [i] = Network.Instantiate (player_prefab, t.position, new Quaternion (0, 0, 0, 0), group) as GameObject;
+		players_ [i].GetComponent<PlayerPhysics> ().playerNumber = i + 1;
+		players_ [i].gameObject.GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
 		SetSprites (i);
 		SetColor (i);
 		SetHatRendering (i);
 		GameObject hat_i = Network.Instantiate (hat_prefabs [(int)hatChoices [i]], new Vector3 (0, 0, 0), new Quaternion (0, 0, 0, 0), group) as GameObject;
-		hat_i.transform.parent = players [i].transform;
-		players [i].GetComponent<PlayerPhysics> ().hat = hat_i;
+		hat_i.transform.parent = players_ [i].transform;
+		players_ [i].GetComponent<PlayerPhysics> ().hat = hat_i;
 		camera_tracking.resetPlayers ();
 		Debug.Log ("Spawn online");
 	}
@@ -96,25 +119,25 @@ public class PlayerManager : MonoBehaviour
 	{
 		Object [] sprites = Resources.LoadAll<Sprite> ("sprites/playerSpriteSheet_" + "blue");
 		Object weapon = Resources.Load<Sprite> ("sprites/playerSpriteSheet_sword");
-		players [i].transform.Find ("animation").Find ("body").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites [0];
-		players [i].transform.Find ("animation").Find ("eye").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites [1];
-		players [i].transform.Find ("animation").Find ("weapon_trans").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites [2];
-		players [i].transform.Find ("animation").Find ("weapon_trans").Find ("weapon").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites [3];
+		players_ [i].transform.Find ("animation").Find ("body").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites [0];
+		players_ [i].transform.Find ("animation").Find ("eye").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites [1];
+		players_ [i].transform.Find ("animation").Find ("weapon_trans").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites [2];
+		players_ [i].transform.Find ("animation").Find ("weapon_trans").Find ("weapon").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites [3];
 	}
 
 	public Color[] colors;
 
 	void SetColor (int i)
 	{
-		players [i].transform.Find ("animation").Find ("body").gameObject.GetComponent<SpriteRenderer> ().color = colors [i];
-		players [i].transform.Find ("animation").Find ("eye").gameObject.GetComponent<SpriteRenderer> ().color = colors [i];
-		players [i].transform.Find ("animation").Find ("weapon_trans").gameObject.GetComponent<SpriteRenderer> ().color = colors [i];
+		players_ [i].transform.Find ("animation").Find ("body").gameObject.GetComponent<SpriteRenderer> ().color = colors [i];
+		players_ [i].transform.Find ("animation").Find ("eye").gameObject.GetComponent<SpriteRenderer> ().color = colors [i];
+		players_ [i].transform.Find ("animation").Find ("weapon_trans").gameObject.GetComponent<SpriteRenderer> ().color = colors [i];
 	}
 
 	void SetHatRendering (int i)
 	{
 		PlayerSettings.Hat h = hatChoices [i];
-		GameObject anim = players [i].transform.Find ("animation").gameObject;
+		GameObject anim = players_ [i].transform.Find ("animation").gameObject;
 		if (h == PlayerSettings.Hat.dashHat) {
 			anim.transform.FindChild ("dodgeHat").gameObject.SetActive (false);
 			anim.transform.FindChild ("dashHat").gameObject.SetActive (true);
@@ -127,7 +150,7 @@ public class PlayerManager : MonoBehaviour
 
 	void OnGUI ()
 	{
-		for (int i=0; i <players.Length; i++) {
+		for (int i=0; i <players_.Length; i++) {
 			string message = "P" + i + " : " + score [i];
 			GUI.Box (new Rect (50 * i, 10, 50, 25), message);
 		}

@@ -23,7 +23,7 @@ public class OnlineGame : MonoBehaviour
 
 	void LaunchServer ()
 	{
-		Network.incomingPassword = "BubbleSlash";
+		//Network.incomingPassword = "BubbleSlash";
 		bool useNat = !Network.HavePublicAddress ();
 		Network.InitializeServer (32, 25000, useNat);
 		MasterServer.RegisterHost (typeName_, gameName_);
