@@ -5,12 +5,13 @@ public class OnlineGame : MonoBehaviour
 {
 
 	public const string typeName_ = "GGVLBubbleSlash";
-	public const string gameName_ = "kaboom";
+	public string gameName_ = "kaboom";
 	private HostData[] hostList;
 
 	// Use this for initialization
 	void Start ()
 	{
+		hostList = new HostData[0];
 	
 	}
 	
@@ -33,6 +34,14 @@ public class OnlineGame : MonoBehaviour
 		Debug.Log ("Server Initializied");
 	}
 
+	void ConnectRandomServer ()
+	{
+		RefreshHostList ();
+		if (hostList.Length > 0) {
+			JoinServer(hostList[0]);
+		}
+	}
+
 	private void RefreshHostList ()
 	{
 		MasterServer.RequestHostList (typeName_);
@@ -42,7 +51,18 @@ public class OnlineGame : MonoBehaviour
 	{
 		if (msEvent == MasterServerEvent.HostListReceived)
 			hostList = MasterServer.PollHostList ();
-		Debug.Log (hostList);
+	}
+
+	private void JoinServer (HostData hostData)
+	{
+		Network.Connect (hostData);
+		gameName_ = hostData.gameName;
+		Debug.Log ("Server Joined1 : " + gameName_);
+	}
+	
+	void OnConnectedToServer ()
+	{
+		Debug.Log ("Server Joined2 : " + gameName_);
 	}
 
 }
