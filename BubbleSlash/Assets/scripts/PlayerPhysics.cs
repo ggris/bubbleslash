@@ -192,23 +192,23 @@ public class PlayerPhysics : MonoBehaviour
 
 		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("walking")) {
 			Transform tr_smoke = tr_animation.Find ("smoke");
-			tr_smoke.gameObject.GetComponent<ParticleSystem> ().Play ();
-			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, -horizontal_direction * 90, tr_smoke.eulerAngles.z);
-		} else {
-			//tr_animation.Find("smoke").gameObject.GetComponent<ParticleSystem>().Clear();
-			//tr_animation.Find("smoke").gameObject.GetComponent<ParticleSystem>().loop = false;
+			tr_smoke.gameObject.GetComponent<ParticleSystem>().Play();
+			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, -horizontal_direction*90, tr_smoke.eulerAngles.z);
 		}
-		
-		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("sliding")) {
-			Transform tr_smoke = tr_animation.Find ("smoke");
-			tr_smoke.gameObject.GetComponent<ParticleSystem> ().Play ();
-			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, horizontal_direction * 120, tr_smoke.eulerAngles.z);
 
+		if (animator.GetCurrentAnimatorStateInfo(0).IsName("sliding")){
+			Transform tr_smoke = tr_animation.Find ("smoke");
+			tr_smoke.gameObject.GetComponent<ParticleSystem>().Play();
+			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, horizontal_direction*120, tr_smoke.eulerAngles.z);
 		}
 
 		//death on fall
-		if (transform.position.y < manager.death_altitude) {
-			manager.dealWithDeath (playerNumber - 1);
+		if (isLiving ()) {
+
+			if (transform.position.y < -10) {
+				Debug.Log("fall !");
+				StartCoroutine(die ());
+			}
 		}
 
 	}
@@ -287,6 +287,11 @@ public class PlayerPhysics : MonoBehaviour
 			|| animator.GetCurrentAnimatorStateInfo (0).IsName ("falling")
 			|| animator.GetCurrentAnimatorStateInfo (0).IsName ("jumping")
 			|| animator.GetCurrentAnimatorStateInfo (0).IsName ("walljumping");
+	}
+
+	bool isLiving(){
+		return !(animator.GetCurrentAnimatorStateInfo (0).IsName ("dead")
+				|| animator.GetCurrentAnimatorStateInfo (0).IsName ("die"));
 	}
 
 	public bool isAbleToAttack ()
@@ -381,8 +386,8 @@ public class PlayerPhysics : MonoBehaviour
 					body.velocity = new Vector2 (body.velocity.x, -10);
 				}
 
-				if (body.velocity.y < 0) {
-					body.velocity = new Vector2 (body.velocity.x, body.velocity.y - a * fall_sprint_acc * Time.deltaTime * body.velocity.y);
+				if (body.velocity.y<0 ){
+					body.velocity = new Vector2 (body.velocity.x, body.velocity.y - a * fall_sprint_acc*Time.deltaTime*body.velocity.y);
 				}
 
 				if (body.velocity.y < -max_falling_speed_sprint)
@@ -405,17 +410,20 @@ public class PlayerPhysics : MonoBehaviour
 		}
 	}
 
-	public static float getAngle (Vector2 a, Vector2 b)
-	{
+	public static float getAngle (Vector2 a, Vector2 b){
 		return Vector2.Angle (a, b) * -1 * Mathf.Sign (Vector3.Cross (new Vector3 (a.x, a.y, 0), new Vector3 (b.x, b.y, 0)).z);
 	}
 
 	public void isHurt ()
 	{
 		if (is_wounded) {
-			manager.dealWithDeath (playerNumber - 1);
-			CancelInvoke ("stopWound");
-		} else {
+
+			//manager.dealWithDeath (playerNumber-1);
+			StartCoroutine(die ());
+			stopWound();
+			CancelInvoke("stopWound");
+		}
+		else {
 			is_wounded = true;
 			Invoke ("startWound", 0f);
 			Invoke ("stopWound", wound_length);
@@ -428,9 +436,9 @@ public class PlayerPhysics : MonoBehaviour
 		animator.SetTrigger ("parried");
 	}
 
+
 	public void startWound ()
 	{
-
 		gameObject.transform.Find ("animation").Find ("small blood").gameObject.GetComponent<ParticleSystem> ().Play ();
 	}
 
@@ -443,5 +451,28 @@ public class PlayerPhysics : MonoBehaviour
 	public void startAttack ()
 	{
 		attack_start = Time.time;
+	}
+
+	public IEnumerator die(){
+		Debug.Log ("dead !");
+		animator.SetTrigger ("die");
+		is_hitable = false;
+		GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
+		GetComponent<Rigidbody2D> ().gravityScale =0;
+		transform.Find ("animation").gameObject.SetActive (false);
+		yield return new WaitForSeconds (1);
+		respawn (new Vector2(0, 0));
+
+
+	}
+
+	public void respawn(Vector2 pos){
+		animator.SetTrigger ("respawn");
+		is_hitable = true;
+		transform.Find ("animation").gameObject.SetActive (true);
+		gameObject.transform.position = new Vector3 (pos.x, pos.y, 0);
+		GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
+		GetComponent<Rigidbody2D> ().gravityScale =5;
+
 	}
 }
