@@ -192,6 +192,7 @@ public class PlayerPhysics : MonoBehaviour
 
 		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("walking")) {
 			Transform tr_smoke = tr_animation.Find ("smoke");
+<<<<<<< Updated upstream
 			tr_smoke.gameObject.GetComponent<ParticleSystem> ().Play ();
 			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, -horizontal_direction * 90, tr_smoke.eulerAngles.z);
 		} else {
@@ -204,6 +205,16 @@ public class PlayerPhysics : MonoBehaviour
 			tr_smoke.gameObject.GetComponent<ParticleSystem> ().Play ();
 			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, horizontal_direction * 120, tr_smoke.eulerAngles.z);
 
+=======
+			tr_smoke.gameObject.GetComponent<ParticleSystem>().Play();
+			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, -horizontal_direction*90, tr_smoke.eulerAngles.z);
+		}
+
+		if (animator.GetCurrentAnimatorStateInfo(0).IsName("sliding")){
+			Transform tr_smoke = tr_animation.Find ("smoke");
+			tr_smoke.gameObject.GetComponent<ParticleSystem>().Play();
+			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, horizontal_direction*120, tr_smoke.eulerAngles.z);
+>>>>>>> Stashed changes
 		}
 
 		//death on fall
@@ -380,9 +391,14 @@ public class PlayerPhysics : MonoBehaviour
 				if (body.velocity.y < 5 && body.velocity.y >= -10) {
 					body.velocity = new Vector2 (body.velocity.x, -10);
 				}
+<<<<<<< Updated upstream
 
 				if (body.velocity.y < 0) {
 					body.velocity = new Vector2 (body.velocity.x, body.velocity.y - a * fall_sprint_acc * Time.deltaTime * body.velocity.y);
+=======
+				if (body.velocity.y<0 ){
+					body.velocity = new Vector2 (body.velocity.x, body.velocity.y - a * fall_sprint_acc*Time.deltaTime*body.velocity.y);
+>>>>>>> Stashed changes
 				}
 
 				if (body.velocity.y < -max_falling_speed_sprint)
@@ -405,17 +421,18 @@ public class PlayerPhysics : MonoBehaviour
 		}
 	}
 
-	public static float getAngle (Vector2 a, Vector2 b)
-	{
+	public static float getAngle (Vector2 a, Vector2 b){
 		return Vector2.Angle (a, b) * -1 * Mathf.Sign (Vector3.Cross (new Vector3 (a.x, a.y, 0), new Vector3 (b.x, b.y, 0)).z);
 	}
 
 	public void isHurt ()
 	{
 		if (is_wounded) {
-			manager.dealWithDeath (playerNumber - 1);
-			CancelInvoke ("stopWound");
-		} else {
+
+			manager.dealWithDeath (playerNumber-1);
+			CancelInvoke("stopWound");
+		}
+		else {
 			is_wounded = true;
 			Invoke ("startWound", 0f);
 			Invoke ("stopWound", wound_length);
@@ -428,9 +445,9 @@ public class PlayerPhysics : MonoBehaviour
 		animator.SetTrigger ("parried");
 	}
 
+
 	public void startWound ()
 	{
-
 		gameObject.transform.Find ("animation").Find ("small blood").gameObject.GetComponent<ParticleSystem> ().Play ();
 	}
 
@@ -443,5 +460,19 @@ public class PlayerPhysics : MonoBehaviour
 	public void startAttack ()
 	{
 		attack_start = Time.time;
+	}
+
+	public void die(){
+		animator.SetTrigger ("die");
+		is_hitable = false;
+		GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
+	}
+
+	public void respawn(Vector2 pos){
+		animator.SetTrigger ("respawn");
+		is_hitable = true;
+		gameObject.transform.position = new Vector3 (pos.x, pos.y, 0);
+		GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
+
 	}
 }
