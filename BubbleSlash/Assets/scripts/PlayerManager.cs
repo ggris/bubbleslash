@@ -43,7 +43,7 @@ public class PlayerManager : MonoBehaviour
 	void StartOnlineClient ()
 	{
 		Debug.Log ("StartOnlineClient");
-		spawn (0, spawn_points [0]);
+		spawn (1, spawn_points [1]);
 	}
 
 	void Update ()
