@@ -155,7 +155,7 @@ public class PlayerPhysics : MonoBehaviour {
 		animator.SetBool ("isOnFeet", is_grounded);
 		animator.SetBool ("isOnHand", is_touching_left || is_touching_right);
 		animator.SetBool ("inputJump", playerInputButton ("Jump"));
-		
+		animator.SetFloat ("hat", (float)manager.hatChoices [playerNumber - 1]);
 		
 		//animation, small blood and smoke
 		//quick under tee
@@ -193,11 +193,12 @@ public class PlayerPhysics : MonoBehaviour {
 			tr_animation.localScale = new Vector3(horizontal_direction, tr_animation.localScale.y,tr_animation.localScale.z);
 		} 
 		else {
-			tr_animation.eulerAngles = new Vector3 (0, 0, 0);
-
-			tr_animation.localScale = new Vector3(horizontal_direction, tr_animation.localScale.y,tr_animation.localScale.z);
-			Transform tr_blood = tr_animation.Find ("small blood");
-			tr_blood.eulerAngles = new Vector3 (tr_blood.eulerAngles.x, -horizontal_direction*90, tr_blood.eulerAngles.z);
+			if (!isOnHat()){
+				tr_animation.eulerAngles = new Vector3 (0, 0, 0);
+				tr_animation.localScale = new Vector3(horizontal_direction, tr_animation.localScale.y,tr_animation.localScale.z);
+				Transform tr_blood = tr_animation.Find ("small blood");
+				tr_blood.eulerAngles = new Vector3 (tr_blood.eulerAngles.x, -horizontal_direction*90, tr_blood.eulerAngles.z);
+			}
 		}
 
 		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("walking")) {
@@ -400,7 +401,7 @@ public class PlayerPhysics : MonoBehaviour {
 
 
 
-	public float getAngle (Vector2 a, Vector2 b){
+	public static float getAngle (Vector2 a, Vector2 b){
 		return Vector2.Angle (a, b) * -1 * Mathf.Sign (Vector3.Cross (new Vector3 (a.x, a.y, 0), new Vector3 (b.x, b.y, 0)).z);
 	}
 
