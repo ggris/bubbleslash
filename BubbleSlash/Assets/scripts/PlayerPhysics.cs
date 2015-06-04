@@ -421,6 +421,7 @@ public class PlayerPhysics : MonoBehaviour
 			//manager.dealWithDeath (playerNumber-1);
 			StartCoroutine(die ());
 			stopWound();
+			CancelInvoke("stopWound");
 		}
 		else {
 			is_wounded = true;
