@@ -203,8 +203,12 @@ public class PlayerPhysics : MonoBehaviour
 		}
 
 		//death on fall
-		if (transform.position.y < manager.death_altitude) {
-			manager.dealWithDeath (playerNumber - 1);
+		if (isLiving ()) {
+
+			if (transform.position.y < -10) {
+				Debug.Log("fall !");
+				StartCoroutine(die ());
+			}
 		}
 
 	}
@@ -283,6 +287,11 @@ public class PlayerPhysics : MonoBehaviour
 			|| animator.GetCurrentAnimatorStateInfo (0).IsName ("falling")
 			|| animator.GetCurrentAnimatorStateInfo (0).IsName ("jumping")
 			|| animator.GetCurrentAnimatorStateInfo (0).IsName ("walljumping");
+	}
+
+	bool isLiving(){
+		return !(animator.GetCurrentAnimatorStateInfo (0).IsName ("dead")
+				|| animator.GetCurrentAnimatorStateInfo (0).IsName ("die"));
 	}
 
 	public bool isAbleToAttack ()
@@ -410,8 +419,8 @@ public class PlayerPhysics : MonoBehaviour
 		if (is_wounded) {
 
 			//manager.dealWithDeath (playerNumber-1);
-				die ();
-				CancelInvoke("stopWound");
+			StartCoroutine(die ());
+			stopWound();
 		}
 		else {
 			is_wounded = true;
@@ -443,17 +452,26 @@ public class PlayerPhysics : MonoBehaviour
 		attack_start = Time.time;
 	}
 
-	public void die(){
+	public IEnumerator die(){
+		Debug.Log ("dead !");
 		animator.SetTrigger ("die");
 		is_hitable = false;
 		GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
+		GetComponent<Rigidbody2D> ().gravityScale =0;
+		transform.Find ("animation").gameObject.SetActive (false);
+		yield return new WaitForSeconds (1);
+		respawn (new Vector2(0, 0));
+
+
 	}
 
 	public void respawn(Vector2 pos){
 		animator.SetTrigger ("respawn");
 		is_hitable = true;
+		transform.Find ("animation").gameObject.SetActive (true);
 		gameObject.transform.position = new Vector3 (pos.x, pos.y, 0);
 		GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
+		GetComponent<Rigidbody2D> ().gravityScale =5;
 
 	}
 }
