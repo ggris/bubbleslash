@@ -192,20 +192,6 @@ public class PlayerPhysics : MonoBehaviour
 
 		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("walking")) {
 			Transform tr_smoke = tr_animation.Find ("smoke");
-<<<<<<< Updated upstream
-			tr_smoke.gameObject.GetComponent<ParticleSystem> ().Play ();
-			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, -horizontal_direction * 90, tr_smoke.eulerAngles.z);
-		} else {
-			//tr_animation.Find("smoke").gameObject.GetComponent<ParticleSystem>().Clear();
-			//tr_animation.Find("smoke").gameObject.GetComponent<ParticleSystem>().loop = false;
-		}
-		
-		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("sliding")) {
-			Transform tr_smoke = tr_animation.Find ("smoke");
-			tr_smoke.gameObject.GetComponent<ParticleSystem> ().Play ();
-			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, horizontal_direction * 120, tr_smoke.eulerAngles.z);
-
-=======
 			tr_smoke.gameObject.GetComponent<ParticleSystem>().Play();
 			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, -horizontal_direction*90, tr_smoke.eulerAngles.z);
 		}
@@ -214,7 +200,6 @@ public class PlayerPhysics : MonoBehaviour
 			Transform tr_smoke = tr_animation.Find ("smoke");
 			tr_smoke.gameObject.GetComponent<ParticleSystem>().Play();
 			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, horizontal_direction*120, tr_smoke.eulerAngles.z);
->>>>>>> Stashed changes
 		}
 
 		//death on fall
@@ -391,14 +376,9 @@ public class PlayerPhysics : MonoBehaviour
 				if (body.velocity.y < 5 && body.velocity.y >= -10) {
 					body.velocity = new Vector2 (body.velocity.x, -10);
 				}
-<<<<<<< Updated upstream
 
-				if (body.velocity.y < 0) {
-					body.velocity = new Vector2 (body.velocity.x, body.velocity.y - a * fall_sprint_acc * Time.deltaTime * body.velocity.y);
-=======
 				if (body.velocity.y<0 ){
 					body.velocity = new Vector2 (body.velocity.x, body.velocity.y - a * fall_sprint_acc*Time.deltaTime*body.velocity.y);
->>>>>>> Stashed changes
 				}
 
 				if (body.velocity.y < -max_falling_speed_sprint)
@@ -429,8 +409,9 @@ public class PlayerPhysics : MonoBehaviour
 	{
 		if (is_wounded) {
 
-			manager.dealWithDeath (playerNumber-1);
-			CancelInvoke("stopWound");
+			//manager.dealWithDeath (playerNumber-1);
+				die ();
+				CancelInvoke("stopWound");
 		}
 		else {
 			is_wounded = true;
