@@ -146,7 +146,7 @@ public class PlayerPhysics : MonoBehaviour
 		animator.SetBool ("isOnFeet", is_grounded);
 		animator.SetBool ("isOnHand", is_touching_left || is_touching_right);
 		animator.SetBool ("inputJump", playerInputButton ("Jump"));
-		
+		animator.SetFloat ("hat", (float)manager.hatChoices [playerNumber - 1]);
 		
 		//animation, small blood and smoke
 		//quick under tee
@@ -405,7 +405,7 @@ public class PlayerPhysics : MonoBehaviour
 		}
 	}
 
-	public float getAngle (Vector2 a, Vector2 b)
+	public static float getAngle (Vector2 a, Vector2 b)
 	{
 		return Vector2.Angle (a, b) * -1 * Mathf.Sign (Vector3.Cross (new Vector3 (a.x, a.y, 0), new Vector3 (b.x, b.y, 0)).z);
 	}
