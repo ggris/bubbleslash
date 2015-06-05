@@ -21,7 +21,7 @@
                             <nav>
                                 <ul class="nav masthead-nav">
                                     <li class="active"><a href="index">Home</a></li>
-                                    <li><a href="game?10">Play</a></li>
+                                    <li><a href="game?11">Play</a></li>
                                     <li><a href="about">About</a></li>
                                 </ul>
                             </nav>
@@ -38,7 +38,7 @@
 
                                     <p>Play the game right into you web browser.
                                     </p>
-                                        <a href="game?10" class="btn btn-lg btn-default">
+                                        <a href="game?11" class="btn btn-lg btn-default">
                                         Play In browser
                                     </a>
                                 </div>
@@ -52,9 +52,9 @@
                                         <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a href="#">Windows</a></li>
-                                            <li><a href="#">Mac</a></li>
-                                            <li><a href="#">Linux</a></li>
+                                            <li><a href="builds/bubbleslash-win.zip">Windows</a></li>
+                                            <li><a href="builds/bubbleslash-mac.zip">Mac</a></li>
+                                            <li><a href="builds/bubbleslash-linux.zip">Linux</a></li>
                                         </ul>
                                     </div>
                                 </div>
