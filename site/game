@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>BubbleSlash</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="bubbleslash.css">
+
+    </head>
+    <body onload="loadGame()">
+
+        <div class="site-wrapper">
+
+            <div class="site-wrapper-inner">
+
+                <div class="cover-container">
+
+                    <div class="masthead clearfix">
+                        <div class="">
+                            <div class="dropdown">
+                            <h3 class="masthead-brand">BubbleSlash 
+                                <button class="label label-default dropdown-toggle" data-toggle="dropdown">
+                                    V<span id="Version"></span>
+                                <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="game?10">V10</a></li>
+                                    <li><a href="game?9">V9</a></li>
+                                    <li><a href="game?8">V8</a></li>
+                                    <li><a href="game?7">V7</a></li>
+                                    <li><a href="game?6">V6</a></li>
+                                    <li><a href="game?5">V5</a></li>
+                                    <li><a href="game?4">V4</a></li>
+                                    <li><a href="game?3">V3</a></li>
+                                    <li><a href="game?2">V2</a></li>
+                                    <li><a href="game?1">V1</a></li>
+                                    <li><a href="game?0">V0</a></li>
+                                </ul>
+                            </h3>
+
+                            </div>
+                            <nav>
+                                <ul class="nav masthead-nav">
+                                    <li><a href="index">Home</a></li>
+                                    <li class="active"><a href="game?10">Play</a></li>
+                                    <li><a href="about">About</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <div class="inner cover">
+                        <div id="unityPlayer">
+                            <div class="missing">
+                                <a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!">
+                                    <img alt="Unity Web Player. Install now!" src="http://webplayer.unity3d.com/installation/getunity.png" width="193" height="63" />
+                                </a>
+                            </div>
+                            <div class="broken">
+                                <a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now! Restart your browser after install.">
+                                    <img alt="Unity Web Player. Install now! Restart your browser after install." src="http://webplayer.unity3d.com/installation/getunityrestart.png" width="193" height="63" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mastfoot">
+                    <div class="">
+                        <p>Created by Guillaume Gris and Victor Lucquin. </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <script type='text/javascript' src='https://ssl-webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/jquery.min.js'></script>
+        <script type="text/javascript" src="http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject2.js"></script>
+        <script type="text/javascript" src="loader.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    </body>
+</html>

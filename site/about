@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>BubbleSlash</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="bubbleslash.css">
+    </head>
+    <body>
+
+        <div class="site-wrapper">
+
+            <div class="site-wrapper-inner">
+
+                <div class="cover-container">
+
+                    <div class="masthead clearfix">
+                        <div class="inner">
+                            <h3 class="masthead-brand">BubbleSlash</h3>
+                            <nav>
+                                <ul class="nav masthead-nav">
+                                    <li><a href="index">Home</a></li>
+                                    <li><a href="game?10">Play</a></li>
+                                    <li class="active"><a href="about">About</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <div class="inner cover">
+                        <h1 class="cover-heading">Credits</h1>
+                        <p class="lead">Guillaume Gris --- Victor Lucquin</p>
+
+                    </div>
+
+                    <div class="mastfoot">
+                        <div class="inner">
+                            <p>Created by Guillaume Gris and Victor Lucquin. </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    </body>
+</html>

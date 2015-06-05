@@ -40,6 +40,10 @@ body {
   text-shadow: 0 1px 3px rgba(0,0,0,.5);
 }
 
+embed {
+  outline: none;
+}
+
 /* Extra markup and styles for table-esque vertical and horizontal centering */
 .site-wrapper {
   display: table;
@@ -67,6 +71,8 @@ body {
 /*
  * Header
  */
+.masthead {margin-left: auto; margin-right: auto;}
+
 .masthead-brand {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -163,7 +169,7 @@ body {
 @media (min-width: 992px) {
   .masthead,
   .mastfoot,
-  .cover-container {
-    width: 700px;
+  .cover-container{
+    width: 900px;
   }
 }
