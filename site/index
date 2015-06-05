@@ -17,7 +17,7 @@
 
                     <div class="masthead clearfix">
                         <div class="inner">
-                            <h3 class="masthead-brand">BubbleSlash</h3>
+                            <a href="index"><h3 class="masthead-brand">BubbleSlash</h3></a>
                             <nav>
                                 <ul class="nav masthead-nav">
                                     <li class="active"><a href="index">Home</a></li>
@@ -31,7 +31,7 @@
                     <div class="inner cover">
                         <h1 class="cover-heading">Slash them all !</h1>
                         <p class="lead">BubbleSlash is a 2D multiplayer fight game. Fight with your epic bubble and humiliate your opponents.</p>
-
+                        <p> Last release June 1</p>
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-5">

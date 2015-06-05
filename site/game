@@ -19,7 +19,7 @@
                     <div class="masthead clearfix">
                         <div class="">
                             <div class="dropdown">
-                            <h3 class="masthead-brand">BubbleSlash 
+                                <h3 class="masthead-brand"><a href="index">BubbleSlash</a>
                                 <button class="label label-default dropdown-toggle" data-toggle="dropdown">
                                     V<span id="Version"></span>
                                 <span class="caret"></span>
@@ -64,12 +64,12 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
                 <div class="mastfoot">
                     <div class="">
                         <p>Created by Guillaume Gris and Victor Lucquin. </p>
                     </div>
+                </div>
                 </div>
 
             </div>

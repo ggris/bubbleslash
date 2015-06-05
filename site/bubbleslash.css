@@ -6,7 +6,8 @@
 a,
 a:focus,
 a:hover {
-  color: #fff;
+  text-decoration: none;
+  color: #4DF;
 }
 
 /* Custom default button */
@@ -42,6 +43,10 @@ body {
 
 embed {
   outline: none;
+}
+
+.row {
+  margin-top: 5%;
 }
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */

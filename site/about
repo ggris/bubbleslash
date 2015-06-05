@@ -17,7 +17,7 @@
 
                     <div class="masthead clearfix">
                         <div class="inner">
-                            <h3 class="masthead-brand">BubbleSlash</h3>
+                            <a href="index"><h3 class="masthead-brand">BubbleSlash</h3></a>
                             <nav>
                                 <ul class="nav masthead-nav">
                                     <li><a href="index">Home</a></li>
