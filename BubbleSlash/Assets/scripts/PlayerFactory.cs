@@ -23,6 +23,7 @@ public class PlayerFactory : MonoBehaviour {
 
 		player_number = 2;
 		color = Color.green;
+		hat = PlayerSettings.Hat.dodgeHat;
 		pos = new Vector2 (5, 5);
 		createPlayer ();
 	}
