@@ -151,12 +151,19 @@ public class PlayerPhysics : MonoBehaviour
 		//animation, small blood and smoke
 		//quick under tee
 		Transform tr_animation = transform.Find ("animation");
-
+		
 		if (playerInputButtonDown ("Jump") && isAbleToJump ()) {
 			animator.SetTrigger ("triggerJump");
 			Transform tr_smoke = tr_animation.Find ("smoke");
 			tr_smoke.gameObject.GetComponent<ParticleSystem> ().Play ();
 			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, 0, tr_smoke.eulerAngles.z);
+			if (is_grounded){
+				GetComponent<AudioSource>().pitch=2;
+			}
+			else{
+				GetComponent<AudioSource>().pitch=2.5f;
+			}
+			GetComponent<AudioSource>().Play ();
 		}
 
 		if (playerInputButtonDown ("Hat") && isInputFree () && hat.GetComponent<HatAbstractClass> ().hasSpecialState () && hat.GetComponent<HatAbstractClass> ().isNotInCd ())
@@ -344,6 +351,7 @@ public class PlayerPhysics : MonoBehaviour
 	public void checkJump ()
 	{
 		if (playerInputButtonDown ("Jump") && isAbleToJump ()) {
+
 			if (animator.GetCurrentAnimatorStateInfo (0).IsName ("sliding")) {
 				body.velocity = new Vector2 (horizontal_direction * push_wall_speed, wall_jump_speed);
 			} else {
@@ -357,8 +365,11 @@ public class PlayerPhysics : MonoBehaviour
 						else 
 							body.velocity = new Vector2 (body.velocity.x, jump_speed);
 					
-					} else
+					} else{
+
 						body.velocity = new Vector2 (body.velocity.x, jump_speed);
+					}
+
 				}
 			}
 		}
