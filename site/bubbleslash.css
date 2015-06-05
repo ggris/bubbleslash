@@ -10,6 +10,7 @@ a:hover {
 }
 
 /* Custom default button */
+.label-default,
 .btn-default,
 .btn-default:hover,
 .btn-default:focus {
@@ -17,6 +18,10 @@ a:hover {
   text-shadow: none; /* Prevent inheritence from `body` */
   background-color:  #4DF;
   border: 1px solid  #2BD;
+}
+
+.label-default {
+  text-shadow: inherit;
 }
 
 
