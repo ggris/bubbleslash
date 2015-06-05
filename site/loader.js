@@ -1,6 +1,6 @@
 var config = {
-    width: 960, 
-    height: 600,
+    width: Math.min($(document).width() - 100, 900), 
+    height: Math.min($(document).height() - 100, 600),
     params: { enableDebugging:"0" }
 
 };
@@ -42,5 +42,5 @@ function loadGame() {
                 break;
         }
     });
-    u.initPlugin(jQuery("#unityPlayer")[0], "game/bubbleslash-"+version+".unity3d");
+    u.initPlugin(jQuery("#unityPlayer")[0], "embedded/bubbleslash-"+version+".unity3d");
 }
