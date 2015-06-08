@@ -80,6 +80,7 @@ GameObject:
   - 95: {fileID: 9578160}
   - 82: {fileID: 8242680}
   - 114: {fileID: 11400360}
+  - 148: {fileID: 14824592}
   m_Layer: 8
   m_Name: player
   m_TagString: player
@@ -1020,6 +1021,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 11427852}
+--- !u!148 &14824592
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 110914}
+  m_Enabled: 1
+  m_StateSynchronization: 2
+  m_Observed: {fileID: 11446784}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
 --- !u!198 &19831740
 ParticleSystem:
   m_ObjectHideFlags: 1
