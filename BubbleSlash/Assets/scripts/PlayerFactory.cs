@@ -38,6 +38,7 @@ public class PlayerFactory : MonoBehaviour {
 		//factory
 		GameObject player = GameObject.Instantiate (player_prefab, pos, new Quaternion (0, 0, 0, 0)) as GameObject;
 		player.GetComponent<PlayerPhysics> ().playerNumber = player_number;
+		player.GetComponent<PlayerPhysics> ().setHatChoice (hat);
 		setSprites (player);
 		setColor (player, color);
 		setHatRendering (player);
@@ -80,6 +81,6 @@ public class PlayerFactory : MonoBehaviour {
 	void createHat(GameObject player){
 		GameObject hat_ = GameObject.Instantiate (hat_prefabs [(int)hat], new Vector3 (0, 0, 0), new Quaternion (0, 0, 0, 0)) as GameObject;
 		hat_.transform.parent = player.transform;
-		player.GetComponent<PlayerPhysics> ().hat = hat_;
+		player.GetComponent<PlayerPhysics> ().hat_GO = hat_;
 	}
 }

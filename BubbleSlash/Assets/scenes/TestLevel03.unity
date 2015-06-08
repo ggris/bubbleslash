@@ -537,7 +537,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1068383219}
-  - 114: {fileID: 1068383218}
   - 114: {fileID: 1068383220}
   m_Layer: 0
   m_Name: playerManager
@@ -546,36 +545,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1068383218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11458454, guid: 65717740bae3c498da630a21bb1a27b6,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1068383217}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a857596e55ecae49b753059795f3df6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hat_prefabs:
-  - {fileID: 148122, guid: 1edc466c12db3424e9e423d931ab7ea3, type: 2}
-  - {fileID: 175670, guid: b8bf01b96a31ac44eb12806dde13cc2f, type: 2}
-  - {fileID: 155382, guid: 8a51aed5273fe9543ba692aeceb472ce, type: 2}
-  - {fileID: 155840, guid: b2710c4a21c3797479a2281c8a144cce, type: 2}
-  player_prefab: {fileID: 110914, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
-  hatChoices: 0200000003000000
-  spawn_points:
-  - {fileID: 100406991}
-  - {fileID: 632871535}
-  - {fileID: 467398993}
-  - {fileID: 1777502558}
-  players_: []
-  min_distance_spawn: 10
-  death_altitude: -30
-  colors:
-  - {r: 1, g: 1, b: 1, a: 1}
-  - {r: 1, g: .647058845, b: .647058845, a: 1}
 --- !u!4 &1068383219
 Transform:
   m_ObjectHideFlags: 0
