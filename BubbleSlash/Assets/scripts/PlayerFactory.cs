@@ -5,45 +5,41 @@ public class PlayerFactory : MonoBehaviour {
 
 	//player setting
 	public Vector2 pos = new Vector2 (0,0);
+
 	public int player_number=1;
 	PlayerSettings.Hat hat = PlayerSettings.Hat.dashHat;
 	//PlayerSettings.Weapon weapon=PlayerSettings.Weapon.sword;
 	Color color= Color.white;
 
+
 	//prefabs
 	public GameObject[] hat_prefabs;
 	public GameObject player_prefab;
 
-
+	private PlayerManager player_manager = null;
+	
 	// Use this for initialization
 	void Awake () {
-		//for test : player are factored here
-		color = Color.red;
-		player_number = 1;
-		createPlayer();
-
-		player_number = 2;
-		color = Color.green;
-		hat = PlayerSettings.Hat.dodgeHat;
-		pos = new Vector2 (5, 5);
-		createPlayer ();
+		DontDestroyOnLoad (transform.gameObject);
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
+	public void createPlayer() {
+		configurePlayer( GameObject.Instantiate (player_prefab, pos, new Quaternion (0, 0, 0, 0)) as GameObject);
 	}
 
-	void createPlayer(){
-		//factory
-		GameObject player = GameObject.Instantiate (player_prefab, pos, new Quaternion (0, 0, 0, 0)) as GameObject;
-		player.GetComponent<PlayerPhysics> ().playerNumber = player_number;
+	public void createNetworkPlayer() {
+		configurePlayer( Network.Instantiate (player_prefab, pos, new Quaternion (0, 0, 0, 0), 0) as GameObject);
+	}
+
+	void configurePlayer(GameObject player) {
+		getPlayerManager().addPlayer (player);
+		player.SetActive (false);
+		player.GetComponent<PlayerPhysics> ().playerNumber = input_number;
 		player.GetComponent<PlayerPhysics> ().setHatChoice (hat);
 		setSprites (player);
 		setColor (player, color);
 		setHatRendering (player);
 		createHat (player);
-
 		//notify playermanager
 	}
 
@@ -55,8 +51,13 @@ public class PlayerFactory : MonoBehaviour {
 		player.transform.Find ("animation").Find ("weapon_trans").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites [2];
 		player.transform.Find ("animation").Find ("weapon_trans").Find ("weapon").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites [3];
 	}
-	
 
+	PlayerManager getPlayerManager() {
+		if (player_manager == null)
+			player_manager = FindObjectOfType (typeof(PlayerManager)) as PlayerManager;
+
+		return player_manager;
+	}
 	
 	void setColor (GameObject player, Color c)
 	{

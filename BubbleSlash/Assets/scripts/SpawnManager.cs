@@ -6,15 +6,15 @@ public class SpawnManager : MonoBehaviour
 {
 	public float min_spawn_distance_ = 1.0f;
 
-	private Vector2[] spawns_;
+	private Vector2[] respawns_;
 
 	// Use this for initialization
 	void Start ()
 	{
-		Transform[] spawns_transforms = GetComponentsInChildren<Transform> ();
-		spawns_ = new Vector2[spawns_transforms.Length];
-		for (int i = 0; i< spawns_.Length; ++i)
-			spawns_[i] = spawns_transforms[i].position;
+		GameObject[] respawns = GameObject.FindGameObjectsWithTag ("Respawn");
+		respawns_ = new Vector2[respawns.Length];
+		for (int i = 0; i< respawns_.Length; ++i)
+			respawns_[i] = respawns[i].transform.position;
 	}
 	
 	// Update is called once per frame
@@ -23,18 +23,18 @@ public class SpawnManager : MonoBehaviour
 	
 	}
 
-	Vector2 getSpawnPoint (Vector2 player_pos)
+	Vector2 getRespawnPoint (Vector2 player_pos)
 	{
 		List<Vector2> far_enough_spawn_points = new List<Vector2> ();
 		float sqr_max_mag = min_spawn_distance_ * min_spawn_distance_;
-		foreach (Vector2 pos in spawns_) {
+		foreach (Vector2 pos in respawns_) {
 			if ((pos - player_pos).sqrMagnitude > sqr_max_mag)
 				far_enough_spawn_points.Add (pos);
 		}
 		if (far_enough_spawn_points.Count > 0) 
 			return far_enough_spawn_points [Random.Range (0, far_enough_spawn_points.Count - 1)];
 		else 
-			return spawns_ [Random.Range (0, spawns_.Length - 1)];
+			return respawns_ [Random.Range (0, respawns_.Length - 1)];
 	}
 
 }

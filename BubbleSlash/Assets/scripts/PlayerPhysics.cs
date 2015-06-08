@@ -74,6 +74,7 @@ public class PlayerPhysics : MonoBehaviour
 		weapon = transform.Find ("weapon").gameObject;
 		weapon_state = weapon.GetComponent<Animator> ();
 		nview = GetComponent<NetworkView> ();
+		DontDestroyOnLoad (transform.gameObject);
 	}
 
 	void Start ()
@@ -134,7 +135,7 @@ public class PlayerPhysics : MonoBehaviour
 
 	void Update ()
 	{
-		if (nview.isMine)
+		//if (nview.isMine)
 			UpdateLocal ();
 	}
 
