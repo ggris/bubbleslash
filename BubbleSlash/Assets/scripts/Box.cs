@@ -5,28 +5,36 @@ using System.Collections.Generic;
 public class Box : MonoBehaviour {
 
 	public BoxController controller;
-	private List<Collider2D> colls;
+	//private List<Collider2D> colls;
 	void Start () {
-		colls = new List<Collider2D> ();
+		//colls = new List<Collider2D> ();
 	}
 	void Update () {
 
 	}
 	void OnTriggerEnter2D(Collider2D other){
-		if (other.gameObject.tag == "floor"){
-			if (colls.Count==0){
-				controller.SendMessage (this.name + "Enter");
+		//if (!controller.isIgnored (other)) {
+			if (other.gameObject.tag == "floor") {
+
+					controller.enter (GetComponent<Collider2D>(), other);
+
 			}
-			colls.Add (other);
-		}
+		//}
 	}
 	void OnTriggerStay2D(Collider2D other){
+		//if (!controller.isIgnored (other)) {
+			if (other.gameObject.tag == "floor") {
+				controller.stay (GetComponent<Collider2D>(), other);
+			}
+		//}
 	}
 	void OnTriggerExit2D(Collider2D other){
-		if (other.gameObject.tag == "floor") {
-			colls.Remove(other);
-			if(colls.Count==0)
-				controller.SendMessage (this.name + "Exit");
-		}
+		//if (!controller.isIgnored (other)) {
+			if (other.gameObject.tag == "floor") {
+
+				controller.exit (GetComponent<Collider2D>(), other);
+
+			}
+		//}
 	}
 }

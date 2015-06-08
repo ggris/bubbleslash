@@ -118,7 +118,7 @@ public class PlayerManager : MonoBehaviour
 	void SetSprites (int i)
 	{
 		Object [] sprites = Resources.LoadAll<Sprite> ("sprites/playerSpriteSheet_" + "blue");
-		Object weapon = Resources.Load<Sprite> ("sprites/playerSpriteSheet_sword");
+		//Object weapon = Resources.Load<Sprite> ("sprites/playerSpriteSheet_sword");
 		players_ [i].transform.Find ("animation").Find ("body").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites [0];
 		players_ [i].transform.Find ("animation").Find ("eye").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites [1];
 		players_ [i].transform.Find ("animation").Find ("weapon_trans").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites [2];
