@@ -157,13 +157,14 @@ public class PlayerPhysics : MonoBehaviour
 			Transform tr_smoke = tr_animation.Find ("smoke");
 			tr_smoke.gameObject.GetComponent<ParticleSystem> ().Play ();
 			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, 0, tr_smoke.eulerAngles.z);
+			/*
 			if (is_grounded){
 				GetComponent<AudioSource>().pitch=2;
 			}
 			else{
 				GetComponent<AudioSource>().pitch=2.5f;
 			}
-			GetComponent<AudioSource>().Play ();
+			GetComponent<AudioSource>().Play ();*/
 		}
 
 		if (playerInputButtonDown ("Hat") && isInputFree () && hat.GetComponent<HatAbstractClass> ().hasSpecialState () && hat.GetComponent<HatAbstractClass> ().isNotInCd ())
