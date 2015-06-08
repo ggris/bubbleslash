@@ -20,24 +20,25 @@
                         <div class="">
                             <div class="dropdown">
                                 <h3 class="masthead-brand"><a href="index">BubbleSlash</a>
-                                <button class="label label-default dropdown-toggle" data-toggle="dropdown">
-                                    V<span id="Version"></span>
-                                <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="game?10">V10</a></li>
-                                    <li><a href="game?9">V9</a></li>
-                                    <li><a href="game?8">V8</a></li>
-                                    <li><a href="game?7">V7</a></li>
-                                    <li><a href="game?6">V6</a></li>
-                                    <li><a href="game?5">V5</a></li>
-                                    <li><a href="game?4">V4</a></li>
-                                    <li><a href="game?3">V3</a></li>
-                                    <li><a href="game?2">V2</a></li>
-                                    <li><a href="game?1">V1</a></li>
-                                    <li><a href="game?0">V0</a></li>
-                                </ul>
-                            </h3>
+                                    <button class="label label-default dropdown-toggle" data-toggle="dropdown">
+                                        V<span id="Version"></span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="game?11">V11</a></li>
+                                        <li><a href="game?10">V10</a></li>
+                                        <li><a href="game?9">V9</a></li>
+                                        <li><a href="game?8">V8</a></li>
+                                        <li><a href="game?7">V7</a></li>
+                                        <li><a href="game?6">V6</a></li>
+                                        <li><a href="game?5">V5</a></li>
+                                        <li><a href="game?4">V4</a></li>
+                                        <li><a href="game?3">V3</a></li>
+                                        <li><a href="game?2">V2</a></li>
+                                        <li><a href="game?1">V1</a></li>
+                                        <li><a href="game?0">V0</a></li>
+                                    </ul>
+                                </h3>
 
                             </div>
                             <nav>
@@ -65,22 +66,33 @@
                         </div>
                     </div>
 
-                <div class="mastfoot">
-                    <div class="">
-                        <p>Created by Guillaume Gris and Victor Lucquin. </p>
+                    <div class="mastfoot">
+                        <div class="">
+                            <p>Created by Guillaume Gris and Victor Lucquin. </p>
+                        </div>
                     </div>
-                </div>
                 </div>
 
             </div>
 
         </div>
 
-
         <script type='text/javascript' src='https://ssl-webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/jquery.min.js'></script>
         <script type="text/javascript" src="http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject2.js"></script>
         <script type="text/javascript" src="loader.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+        <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-62913401-1', 'auto');
+ga('send', 'pageview');
+
+        </script>
+
     </body>
 </html>

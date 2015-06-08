@@ -144,13 +144,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f11e42005a64a466ca9c3121a3048c76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grid_scale_: 256
+  grid_scale_: 280
   percent_dissipation_: .100000001
   source_pos_: {x: .5, y: .5}
-  source_density_: 6
+  source_density_: 8
   initial_velocity_: {x: 2.70000005, y: 2.93000007}
-  rand_velocity: 3
-  velocity_scale_: 3
+  rand_velocity: 1
+  velocity_scale_: 5
   liquid_mat_: {fileID: 2100000, guid: 802b3f66ca50b430f81b8abc93552ed2, type: 2}
   source_mat_: {fileID: 2100000, guid: 7aa83d9db0f524e618ee27e2bca9e62e, type: 2}
   emit_time_: .0700000003
