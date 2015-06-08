@@ -54,6 +54,7 @@ public class PlayerPhysics : MonoBehaviour
 	private PlayerManager manager;
 	public GameObject hat;
 
+	private NetworkView nview;
 
 	//"state"
 
@@ -73,6 +74,7 @@ public class PlayerPhysics : MonoBehaviour
 		weapon = transform.Find ("weapon").gameObject;
 		weapon_state = weapon.GetComponent<Animator> ();
 		manager = GameObject.Find ("playerManager").GetComponent<PlayerManager> ();
+		nview = GetComponent<NetworkView> ();
 	}
 
 	void Start ()
@@ -113,10 +115,32 @@ public class PlayerPhysics : MonoBehaviour
 		}
 
 	}
+	
+	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+	{
+		Vector3 syncPosition = Vector3.zero;
+		Vector3 syncVelocity = Vector3.zero;
+		if (stream.isWriting) {
+			syncPosition = body.transform.position;
+			syncVelocity = body.velocity;
+			stream.Serialize (ref syncPosition);
+			stream.Serialize (ref syncVelocity);
+		} else {
+			stream.Serialize (ref syncPosition);
+			stream.Serialize (ref syncVelocity);
+			body.transform.position = syncPosition;
+			body.velocity = syncVelocity;
+		}
+	}
 
+	void Update ()
+	{
+		if (nview.isMine)
+			UpdateLocal ();
+	}
 
 	// Update is called once per frame
-	void Update ()
+	void UpdateLocal ()
 	{
 
 
