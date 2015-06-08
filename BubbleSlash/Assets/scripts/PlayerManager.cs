@@ -22,6 +22,7 @@ public class PlayerManager : MonoBehaviour
 
 	}
 
+	[RPC]
 	public void addPlayer(GameObject player)
 	{
 		players_.Add (player);

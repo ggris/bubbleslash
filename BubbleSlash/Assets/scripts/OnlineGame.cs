@@ -51,6 +51,8 @@ public class OnlineGame : MonoBehaviour
 		RefreshHostList ();
 		if (hostList.Length > 0) {
 			JoinServer (hostList [0]);
+		} else {
+			Debug.Log("No host");
 		}
 	}
 	
@@ -67,6 +69,7 @@ public class OnlineGame : MonoBehaviour
 	
 	private void JoinServer (HostData hostData)
 	{
+		Debug.Log ("Joining : " + gameName_);
 		Network.Connect (hostData);
 		gameName_ = hostData.gameName;
 	}
