@@ -80,11 +80,12 @@ public class OnlineGame : MonoBehaviour
 
 	void loadLevel ()
 	{
-		SpawnPlayer ();
+		InitPlayers ();
 		Application.LoadLevel (level_);
+		player_manager_.GetComponent<PlayerManager> ().activatePlayers ();
 	}
 
-	void SpawnPlayer ()
+	void InitPlayers ()
 	{
 		if (Network.isClient || Network.isServer) {
 			player1_factory_.createNetworkPlayer ();
@@ -93,7 +94,6 @@ public class OnlineGame : MonoBehaviour
 			player1_factory_.createPlayer ();
 			player2_factory_.createPlayer ();
 		}
-		player_manager_.GetComponent<PlayerManager> ().refreshPlayers ();
 	}
 
 }

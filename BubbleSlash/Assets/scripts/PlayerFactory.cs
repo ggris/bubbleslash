@@ -13,6 +13,8 @@ public class PlayerFactory : MonoBehaviour {
 	//prefabs
 	public GameObject[] hat_prefabs;
 	public GameObject player_prefab;
+
+	private PlayerManager player_manager = null;
 	
 	// Use this for initialization
 	void Awake () {
@@ -28,6 +30,8 @@ public class PlayerFactory : MonoBehaviour {
 	}
 
 	void configurePlayer(GameObject player) {
+		getPlayerManager().addPlayer (player);
+		player.SetActive (false);
 		player.GetComponent<PlayerPhysics> ().playerNumber = input_number;
 		player.GetComponent<PlayerPhysics> ().setHatChoice (hat);
 		setSprites (player);
@@ -45,8 +49,13 @@ public class PlayerFactory : MonoBehaviour {
 		player.transform.Find ("animation").Find ("weapon_trans").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites [2];
 		player.transform.Find ("animation").Find ("weapon_trans").Find ("weapon").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites [3];
 	}
-	
 
+	PlayerManager getPlayerManager() {
+		if (player_manager == null)
+			player_manager = FindObjectOfType (typeof(PlayerManager)) as PlayerManager;
+
+		return player_manager;
+	}
 	
 	void setColor (GameObject player, Color c)
 	{

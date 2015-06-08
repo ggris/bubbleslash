@@ -4,28 +4,38 @@ using System.Collections.Generic;
 
 public class PlayerManager : MonoBehaviour
 {
-	private GameObject[] players_;
+	public HashSet<GameObject> players_ = new HashSet<GameObject> ();
 	
+	void Awake ()
+	{
+		DontDestroyOnLoad (transform.gameObject);
+	}
+
 	// Use this for initialization
 	void Start ()
 	{
-		refreshPlayers ();
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		
+
 	}
 
-	public void refreshPlayers ()
+	public void addPlayer(GameObject player)
 	{
-		players_ = GameObject.FindGameObjectsWithTag ("Player");
+		players_.Add (player);
 	}
 
-	public GameObject[] getPlayers ()
+
+	public HashSet<GameObject> getPlayers ()
 	{
 		return players_;
+	}
+
+	public void activatePlayers() {
+		foreach (GameObject player in players_) 
+			player.SetActive (true);
 	}
 
 }
