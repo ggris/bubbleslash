@@ -13,8 +13,7 @@ public class PlayerFactory : MonoBehaviour {
 	//prefabs
 	public GameObject[] hat_prefabs;
 	public GameObject player_prefab;
-
-
+	
 	// Use this for initialization
 	void Awake () {
 		//for test : player are factored here
@@ -27,6 +26,7 @@ public class PlayerFactory : MonoBehaviour {
 		hat = PlayerSettings.Hat.dodgeHat;
 		pos = new Vector2 (5, 5);
 		createPlayer ();
+		DontDestroyOnLoad (transform.gameObject);
 	}
 	
 	// Update is called once per frame

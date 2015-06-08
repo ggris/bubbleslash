@@ -134,7 +134,7 @@ public class PlayerPhysics : MonoBehaviour
 
 	void Update ()
 	{
-		if (nview.isMine)
+		//if (nview.isMine)
 			UpdateLocal ();
 	}
 

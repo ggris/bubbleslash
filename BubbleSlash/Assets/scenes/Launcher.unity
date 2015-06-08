@@ -114,7 +114,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e699e1c4a3504c91b4f85a7b28ab139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player_prefab: {fileID: 110914, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
+  player_manager_prefab_: {fileID: 188756, guid: 65717740bae3c498da630a21bb1a27b6,
+    type: 2}
+  player_prefab_: {fileID: 110914, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
   gameName_: kaboom
   level_: TestLevel03
 --- !u!4 &438626013

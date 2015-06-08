@@ -83,7 +83,7 @@ GameObject:
   - 148: {fileID: 14824592}
   m_Layer: 8
   m_Name: player
-  m_TagString: player
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -982,7 +982,7 @@ MonoBehaviour:
   direction_action: {x: 0, y: 0}
   direction_parry: {x: 0, y: 0}
   horizontal_direction: 0
-  hat: {fileID: 175670, guid: b8bf01b96a31ac44eb12806dde13cc2f, type: 2}
+  hat_GO: {fileID: 0}
 --- !u!114 &11459460
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -3,13 +3,14 @@ using System.Collections;
 
 public class OnlineGame : MonoBehaviour
 {
-	public GameObject player_manager_;
+	public GameObject player_manager_prefab_;
 	public GameObject player_prefab_;
-
 	public const string typeName_ = "GGVLBubbleSlash";
 	public string gameName_ = "kaboom";
-	private HostData[] hostList;
 	public string level_ = "OnlineTest";
+
+	private GameObject player_manager_;
+	private HostData[] hostList;
 	
 	void Awake ()
 	{
@@ -40,14 +41,9 @@ public class OnlineGame : MonoBehaviour
 	void OnServerInitialized ()
 	{
 		Debug.Log ("Server Initializied");
+		player_manager_ = Network.Instantiate (player_manager_prefab_, new Vector3 (), new Quaternion (), 0) as GameObject;
 		loadLevel ();
 		SpawnPlayer ();
-	}
-	
-	void SpawnPlayer ()
-	{
-		GameObject player = Network.Instantiate (player_prefab_, new Vector3 (), new Quaternion (), 0) as GameObject;
-		player.GetComponent<PlayerPhysics> ().playerNumber = 2;
 	}
 	
 	void ConnectRandomServer ()
@@ -73,11 +69,11 @@ public class OnlineGame : MonoBehaviour
 	{
 		Network.Connect (hostData);
 		gameName_ = hostData.gameName;
-		Debug.Log ("Server Joined1 : " + gameName_);
 	}
 	
 	void OnConnectedToServer ()
 	{
+		player_manager_ = GameObject.Find ("playerManager");
 		loadLevel ();
 		SpawnPlayer ();
 		Debug.Log ("Server Joined2 : " + gameName_);
@@ -86,6 +82,12 @@ public class OnlineGame : MonoBehaviour
 	void loadLevel ()
 	{
 		Application.LoadLevel (level_);
+	}
+
+	void SpawnPlayer ()
+	{
+		GameObject player = Network.Instantiate (player_prefab_, new Vector3 (), new Quaternion (), 0) as GameObject;
+		player.GetComponent<PlayerPhysics> ().playerNumber = 2;
 	}
 
 }
