@@ -51,8 +51,8 @@ public class PlayerPhysics : MonoBehaviour
 	public float horizontal_direction;
 	private GameObject weapon;
 	private Animator weapon_state;
-	private PlayerManager manager;
-	public GameObject hat;
+	public GameObject hat_GO;
+	private PlayerSettings.Hat hat_choice;
 
 	private NetworkView nview;
 
@@ -73,7 +73,6 @@ public class PlayerPhysics : MonoBehaviour
 		animator = GetComponent<Animator> ();
 		weapon = transform.Find ("weapon").gameObject;
 		weapon_state = weapon.GetComponent<Animator> ();
-		manager = GameObject.Find ("playerManager").GetComponent<PlayerManager> ();
 		nview = GetComponent<NetworkView> ();
 	}
 
@@ -170,7 +169,7 @@ public class PlayerPhysics : MonoBehaviour
 		animator.SetBool ("isOnFeet", is_grounded);
 		animator.SetBool ("isOnHand", is_touching_left || is_touching_right);
 		animator.SetBool ("inputJump", playerInputButton ("Jump"));
-		animator.SetFloat ("hat", (float)manager.hatChoices [playerNumber - 1]);
+		animator.SetFloat ("hat", (float)hat_choice);
 		
 		//animation, small blood and smoke
 		//quick under tee
@@ -181,16 +180,17 @@ public class PlayerPhysics : MonoBehaviour
 			Transform tr_smoke = tr_animation.Find ("smoke");
 			tr_smoke.gameObject.GetComponent<ParticleSystem> ().Play ();
 			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, 0, tr_smoke.eulerAngles.z);
+			/*
 			if (is_grounded){
 				GetComponent<AudioSource>().pitch=2;
 			}
 			else{
 				GetComponent<AudioSource>().pitch=2.5f;
 			}
-			GetComponent<AudioSource>().Play ();
+			GetComponent<AudioSource>().Play ();*/
 		}
 
-		if (playerInputButtonDown ("Hat") && isInputFree () && hat.GetComponent<HatAbstractClass> ().hasSpecialState () && hat.GetComponent<HatAbstractClass> ().isNotInCd ())
+		if (playerInputButtonDown ("Hat") && isInputFree () && hat_GO.GetComponent<HatAbstractClass> ().hasSpecialState () && hat_GO.GetComponent<HatAbstractClass> ().isNotInCd ())
 			animator.SetTrigger ("inputHat");
 
 		if (playerInputButtonDown ("Weapon") && isAbleToAttack ()) {
@@ -308,7 +308,7 @@ public class PlayerPhysics : MonoBehaviour
 
 	bool canAttackOnHat ()
 	{
-		return hat.GetComponent<HatAbstractClass> ().canAttack ();
+		return hat_GO.GetComponent<HatAbstractClass> ().canAttack ();
 	}
 
 	bool isInputFree ()
@@ -453,7 +453,6 @@ public class PlayerPhysics : MonoBehaviour
 	{
 		if (is_wounded) {
 
-			//manager.dealWithDeath (playerNumber-1);
 			StartCoroutine(die ());
 			stopWound();
 			CancelInvoke("stopWound");
@@ -509,5 +508,9 @@ public class PlayerPhysics : MonoBehaviour
 		GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
 		GetComponent<Rigidbody2D> ().gravityScale =5;
 
+	}
+
+	public void setHatChoice(PlayerSettings.Hat hat){
+		hat_choice = hat;
 	}
 }

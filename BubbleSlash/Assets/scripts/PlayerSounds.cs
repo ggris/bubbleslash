@@ -5,6 +5,7 @@ public class PlayerSounds : MonoBehaviour {
 	private AudioSource source;
 	public AudioClip jump_;
 	public AudioClip slide_;
+	public AudioClip attack_;
 	// Use this for initialization
 	void Start () {
 		source = GetComponent<AudioSource> ();
@@ -34,5 +35,10 @@ public class PlayerSounds : MonoBehaviour {
 
 	public void stopSlide(){
 		source.loop = false;
+	}
+	public void attack(){
+		source.clip = attack_;
+		source.pitch = Random.Range (0.4f, 1.6f);
+		source.Play ();
 	}
 }

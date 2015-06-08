@@ -901,6 +901,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jump_: {fileID: 8300000, guid: ed92c6f199a00e749b22215926672c88, type: 3}
   slide_: {fileID: 8300000, guid: 1db1869808267524fad913ad567ac716, type: 3}
+  attack_: {fileID: 8300000, guid: f5a4d94617a1d4b9b8b091f6e9a4a7df, type: 3}
 --- !u!114 &11404360
 MonoBehaviour:
   m_ObjectHideFlags: 1

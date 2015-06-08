@@ -7,6 +7,7 @@ public class PlayerAttack : StateMachineBehaviour {
 		animator.gameObject.GetComponent<Rigidbody2D> ().gravityScale = 0;
 		animator.gameObject.transform.Find ("weapon/translation").gameObject.SetActive (true);
 		animator.gameObject.GetComponent<PlayerPhysics> ().startAttack (); //cooldown
+		animator.gameObject.GetComponent<PlayerSounds> ().attack ();
 
 	}
 

@@ -83,7 +83,7 @@ public class PlayerManager : MonoBehaviour
 		SetHatRendering (i);
 		GameObject hat_i = GameObject.Instantiate (hat_prefabs [(int)hatChoices [i]], new Vector3 (0, 0, 0), new Quaternion (0, 0, 0, 0)) as GameObject;
 		hat_i.transform.parent = players_ [i].transform;
-		players_ [i].GetComponent<PlayerPhysics> ().hat = hat_i;
+		players_ [i].GetComponent<PlayerPhysics> ().hat_GO = hat_i;
 		camera_tracking.resetPlayers ();
 	}
 
@@ -97,7 +97,7 @@ public class PlayerManager : MonoBehaviour
 		SetHatRendering (i);
 		GameObject hat_i = Network.Instantiate (hat_prefabs [(int)hatChoices [i]], new Vector3 (0, 0, 0), new Quaternion (0, 0, 0, 0), group) as GameObject;
 		hat_i.transform.parent = players_ [i].transform;
-		players_ [i].GetComponent<PlayerPhysics> ().hat = hat_i;
+		players_ [i].GetComponent<PlayerPhysics> ().hat_GO = hat_i;
 		camera_tracking.resetPlayers ();
 		Debug.Log ("Spawn online");
 	}
