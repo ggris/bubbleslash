@@ -18,12 +18,12 @@ public class PlayerManager : MonoBehaviour
 		
 	}
 
-	void refreshPlayers ()
+	public void refreshPlayers ()
 	{
 		players_ = GameObject.FindGameObjectsWithTag ("Player");
 	}
 
-	GameObject[] getPlayers ()
+	public GameObject[] getPlayers ()
 	{
 		return players_;
 	}
