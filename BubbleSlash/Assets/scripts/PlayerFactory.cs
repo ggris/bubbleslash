@@ -18,6 +18,7 @@ public class PlayerFactory : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		//for test : player are factored here
+		color = Color.red;
 		player_number = 1;
 		createPlayer();
 
