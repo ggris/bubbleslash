@@ -5,10 +5,12 @@ public class PlayerFactory : MonoBehaviour {
 
 	//player setting
 	public Vector2 pos = new Vector2 (0,0);
+
 	public int input_number=1;
-	public PlayerSettings.Hat hat = PlayerSettings.Hat.dashHat;
-	public PlayerSettings.Weapon weapon=PlayerSettings.Weapon.sword;
-	public Color color = Color.white;
+	PlayerSettings.Hat hat = PlayerSettings.Hat.dashHat;
+	//PlayerSettings.Weapon weapon=PlayerSettings.Weapon.sword;
+	Color color= Color.white;
+
 
 	//prefabs
 	public GameObject[] hat_prefabs;

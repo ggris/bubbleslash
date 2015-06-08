@@ -279,12 +279,12 @@ public class PlayerPhysics : MonoBehaviour
 		return Input.GetAxisRaw ("P" + playerNumber + " " + inputName);
 	}
 
-	private bool playerInputButtonDown (string inputName)
+	public bool playerInputButtonDown (string inputName)
 	{
 		return Input.GetButtonDown ("P" + playerNumber + " " + inputName);
 	}
 
-	private bool playerInputButton (string inputName)
+	public bool playerInputButton (string inputName)
 	{
 		return Input.GetButton ("P" + playerNumber + " " + inputName);
 	}
