@@ -882,7 +882,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11470404, guid: 73b8f083b529d4be3997cefcaf974869, type: 2}
       propertyPath: hat
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 11470404, guid: 73b8f083b529d4be3997cefcaf974869, type: 2}
       propertyPath: input_number
@@ -890,15 +890,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11470404, guid: 73b8f083b529d4be3997cefcaf974869, type: 2}
       propertyPath: color.g
-      value: .868410707
+      value: .566312075
       objectReference: {fileID: 0}
     - target: {fileID: 11470404, guid: 73b8f083b529d4be3997cefcaf974869, type: 2}
       propertyPath: color.b
-      value: .117755197
+      value: .259353369
       objectReference: {fileID: 0}
     - target: {fileID: 11470404, guid: 73b8f083b529d4be3997cefcaf974869, type: 2}
       propertyPath: color.r
-      value: .889705896
+      value: .904411793
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 73b8f083b529d4be3997cefcaf974869, type: 2}

@@ -7,9 +7,9 @@ public class PlayerFactory : MonoBehaviour {
 	public Vector2 pos = new Vector2 (0,0);
 
 	public int input_number=1;
-	PlayerSettings.Hat hat = PlayerSettings.Hat.dashHat;
+	public PlayerSettings.Hat hat = PlayerSettings.Hat.dashHat;
 	//PlayerSettings.Weapon weapon=PlayerSettings.Weapon.sword;
-	Color color= Color.white;
+	public Color color= Color.white;
 
 
 	//prefabs
