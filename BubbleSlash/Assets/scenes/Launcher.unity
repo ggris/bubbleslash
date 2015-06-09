@@ -96,6 +96,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 438626013}
   - 114: {fileID: 438626012}
+  - 148: {fileID: 438626014}
   m_Layer: 0
   m_Name: Online Game
   m_TagString: GameController
@@ -133,6 +134,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+--- !u!148 &438626014
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 438626011}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 0}
+  m_ViewID:
+    m_ID: 1
+    m_Type: 1
 --- !u!1 &515703505
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,6 +360,14 @@ Prefab:
     - target: {fileID: 466222, guid: 73b8f083b529d4be3997cefcaf974869, type: 2}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 14879492, guid: 73b8f083b529d4be3997cefcaf974869, type: 2}
+      propertyPath: m_ViewID.m_ID
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 14879492, guid: 73b8f083b529d4be3997cefcaf974869, type: 2}
+      propertyPath: m_ViewID.m_Type
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 73b8f083b529d4be3997cefcaf974869, type: 2}
@@ -899,6 +920,14 @@ Prefab:
     - target: {fileID: 11470404, guid: 73b8f083b529d4be3997cefcaf974869, type: 2}
       propertyPath: color.r
       value: .904411793
+      objectReference: {fileID: 0}
+    - target: {fileID: 14879492, guid: 73b8f083b529d4be3997cefcaf974869, type: 2}
+      propertyPath: m_ViewID.m_ID
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 14879492, guid: 73b8f083b529d4be3997cefcaf974869, type: 2}
+      propertyPath: m_ViewID.m_Type
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 73b8f083b529d4be3997cefcaf974869, type: 2}

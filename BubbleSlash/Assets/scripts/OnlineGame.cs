@@ -7,11 +7,13 @@ public class OnlineGame : MonoBehaviour
 	public PlayerFactory player2_factory_;
 	public GameObject player_manager_prefab_;
 	public GameObject player_prefab_;
-	public const string typeName_ = "GGVLBubbleSlash";
+	public const string typeName_ = "GGVLBubbleSlashDEV";
 	public string gameName_ = "kaboom";
 	public string level_ = "OnlineTest";
 	private GameObject player_manager_;
 	private HostData[] hostList;
+
+	NetworkView network_view_;
 	
 	void Awake ()
 	{
@@ -22,6 +24,8 @@ public class OnlineGame : MonoBehaviour
 	void Start ()
 	{
 		hostList = new HostData[0];
+		network_view_ = GetComponent<NetworkView> ();
+		Debug.Log (network_view_);
 		
 	}
 	
@@ -49,11 +53,6 @@ public class OnlineGame : MonoBehaviour
 	void ConnectRandomServer ()
 	{
 		RefreshHostList ();
-		if (hostList.Length > 0) {
-			JoinServer (hostList [0]);
-		} else {
-			Debug.Log("No host");
-		}
 	}
 	
 	private void RefreshHostList ()
@@ -65,6 +64,11 @@ public class OnlineGame : MonoBehaviour
 	{
 		if (msEvent == MasterServerEvent.HostListReceived)
 			hostList = MasterServer.PollHostList ();
+		if (hostList.Length > 0) {
+			JoinServer (hostList [0]);
+		} else {
+			Debug.Log("No host");
+		}
 	}
 	
 	private void JoinServer (HostData hostData)
@@ -76,7 +80,8 @@ public class OnlineGame : MonoBehaviour
 	
 	void OnConnectedToServer ()
 	{
-		player_manager_ = GameObject.Find ("playerManager");
+		player_manager_ = GameObject.FindGameObjectWithTag ("player manager");
+		Debug.Log (player_manager_);
 		loadLevel ();
 		Debug.Log ("Server Joined2 : " + gameName_);
 	}
