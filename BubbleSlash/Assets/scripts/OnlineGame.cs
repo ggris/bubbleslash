@@ -64,6 +64,8 @@ public class OnlineGame : MonoBehaviour
 	{
 		if (msEvent == MasterServerEvent.HostListReceived)
 			hostList = MasterServer.PollHostList ();
+		else
+			Debug.Log (msEvent);
 		if (hostList.Length > 0) {
 			JoinServer (hostList [0]);
 		} else {

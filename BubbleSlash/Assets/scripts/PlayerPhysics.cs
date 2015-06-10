@@ -47,6 +47,8 @@ public class PlayerPhysics : MonoBehaviour
 	private Animator animator;
 	private Vector2 input_direction_;
 	private bool input_jump_;
+	private bool input_weapon_;
+	private bool input_hat_;
 	public Vector2 direction_action;
 	public Vector2 direction_parry;
 	public float horizontal_direction;
@@ -55,7 +57,7 @@ public class PlayerPhysics : MonoBehaviour
 	public GameObject hat_GO;
 	private PlayerSettings.Hat hat_choice;
 
-	//private NetworkView nview;
+	private NetworkView nview;
 
 	//"state"
 
@@ -74,7 +76,7 @@ public class PlayerPhysics : MonoBehaviour
 		animator = GetComponent<Animator> ();
 		weapon = transform.Find ("weapon").gameObject;
 		weapon_state = weapon.GetComponent<Animator> ();
-		//nview = GetComponent<NetworkView> ();
+		nview = GetComponent<NetworkView> ();
 		DontDestroyOnLoad (transform.gameObject);
 	}
 
@@ -123,24 +125,34 @@ public class PlayerPhysics : MonoBehaviour
 		Vector3 syncVelocity = Vector3.zero;
 		Vector3 syncDirection = Vector2.zero;
 		bool syncJump = false;
+		bool syncHat = false;
+		bool syncWeapon = false;
 		if (stream.isWriting) {
 			syncPosition = body.transform.position;
 			syncVelocity = body.velocity;
 			syncDirection = input_direction_;
 			syncJump = input_jump_;
+			syncHat = input_hat_;
+			syncWeapon = input_weapon_;
 			stream.Serialize (ref syncPosition);
 			stream.Serialize (ref syncVelocity);
 			stream.Serialize (ref syncDirection);
 			stream.Serialize (ref syncJump);
+			stream.Serialize (ref syncHat);
+			stream.Serialize (ref syncWeapon);
 		} else {
 			stream.Serialize (ref syncPosition);
 			stream.Serialize (ref syncVelocity);
 			stream.Serialize (ref syncDirection);
 			stream.Serialize (ref syncJump);
+			stream.Serialize (ref syncHat);
+			stream.Serialize (ref syncWeapon);
 			body.transform.position = syncPosition;
 			body.velocity = syncVelocity;
 			input_direction_ = syncDirection;
 			input_jump_ = syncJump;
+			input_hat_ = syncHat;
+			input_weapon_ = syncWeapon;
 		}
 	}
 	
@@ -161,20 +173,12 @@ public class PlayerPhysics : MonoBehaviour
 		checkMove ();
 
 		input_jump_ = playerInputButton ("Jump");
+		input_hat_ = playerInputButtonDown ("Hat");
+		input_weapon_ = playerInputButtonDown ("Weapon") & isAbleToAttack();
+		if (input_weapon_)
+			nview.RPC ("triggerAttack", RPCMode.Others, null);
 		checkJump ();
-		
-		//animation, small blood and smoke
-		//quick under tee
-		
-		if (playerInputButtonDown ("Hat") && isInputFree () && hat_GO.GetComponent<HatAbstractClass> ().hasSpecialState () && hat_GO.GetComponent<HatAbstractClass> ().isNotInCd ())
-			animator.SetTrigger ("inputHat");
-		
-		if (playerInputButtonDown ("Weapon") && isAbleToAttack ()) {
-			animator.SetTrigger ("triggerAttack");
-			weapon_state.SetTrigger ("input");
-			direction_action = realDirection (input_direction_);
-			weapon.transform.localEulerAngles = new Vector3 (0, 0, getAngle (direction_action, new Vector2 (1, 0)));
-		}
+
 	}
 
 	void UpdateGlobal ()
@@ -206,6 +210,19 @@ public class PlayerPhysics : MonoBehaviour
 		animator.SetBool ("isOnHand", is_touching_left || is_touching_right);
 		animator.SetBool ("inputJump", input_jump_);
 		animator.SetFloat ("hat", (float)hat_choice);
+		
+		//animation, small blood and smoke
+		//quick under tee
+		
+		if (input_hat_ && isInputFree () && hat_GO.GetComponent<HatAbstractClass> ().hasSpecialState () && hat_GO.GetComponent<HatAbstractClass> ().isNotInCd ())
+			animator.SetTrigger ("inputHat");
+		
+		if (input_weapon_) {
+			animator.SetTrigger ("triggerAttack");
+			weapon_state.SetTrigger ("input");
+			direction_action = realDirection (input_direction_);
+			weapon.transform.localEulerAngles = new Vector3 (0, 0, getAngle (direction_action, new Vector2 (1, 0)));
+		}
 
 		//max speeds
 		checkMaxSpeeds ();
@@ -336,6 +353,15 @@ public class PlayerPhysics : MonoBehaviour
 			&& (isInputFree () 
 			|| (canAttackOnHat () && isOnHat ()) 
 			|| animator.GetCurrentAnimatorStateInfo (0).IsName ("sliding"));
+	}
+
+	[RPC]
+	void triggerAttack()
+	{
+		animator.SetTrigger ("triggerAttack");
+		weapon_state.SetTrigger ("input");
+		direction_action = realDirection (input_direction_);
+		weapon.transform.localEulerAngles = new Vector3 (0, 0, getAngle (direction_action, new Vector2 (1, 0)));
 	}
 
 	public void checkMove ()
