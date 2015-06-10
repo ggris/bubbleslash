@@ -45,11 +45,11 @@ public class PlayerPhysics : MonoBehaviour
 	//privates
 	private Rigidbody2D body;
 	private Animator animator;
-	private Vector2 input_direction_;
+	private Vector3 input_direction_;
 	private bool input_jump_;
 	private bool input_weapon_;
 	private bool input_hat_;
-	public Vector2 direction_action;
+	public Vector2 direction_action_;
 	public Vector2 direction_parry;
 	public float horizontal_direction;
 	private GameObject weapon;
@@ -176,7 +176,7 @@ public class PlayerPhysics : MonoBehaviour
 		input_hat_ = playerInputButtonDown ("Hat");
 		input_weapon_ = playerInputButtonDown ("Weapon") & isAbleToAttack ();
 		if (input_weapon_)
-			nview.RPC ("triggerAttack", RPCMode.All, null);
+			nview.RPC ("triggerAttack", RPCMode.All, input_direction_);
 		checkJump ();
 
 	}
@@ -187,9 +187,9 @@ public class PlayerPhysics : MonoBehaviour
 		//updates direction
 		if (isAttacking ()) {
 
-			if (direction_action.x < 0) 
+			if (direction_action_.x < 0) 
 				horizontal_direction = -1;
-			if (direction_action.x > 0) 
+			if (direction_action_.x > 0) 
 				horizontal_direction = 1;
 		} else {
 			if (!animator.GetCurrentAnimatorStateInfo (0).IsName ("hatSpecialState")) {
@@ -222,7 +222,7 @@ public class PlayerPhysics : MonoBehaviour
 		Transform tr_animation = transform.Find ("animation");
 
 		if (isAttacking ()) {
-			float a = getAngle (direction_action, horizontal_direction * Vector2.right);
+			float a = getAngle (direction_action_, horizontal_direction * Vector2.right);
 			tr_animation.eulerAngles = new Vector3 (0, 0, a);
 			tr_animation.localScale = new Vector3 (horizontal_direction, tr_animation.localScale.y, tr_animation.localScale.z);
 		} else {
@@ -351,12 +351,13 @@ public class PlayerPhysics : MonoBehaviour
 	}
 
 	[RPC]
-	void triggerAttack ()
+	void triggerAttack (Vector3 input_direction)
 	{
+		input_direction_ = input_direction;
 		animator.SetTrigger ("triggerAttack");
 		weapon_state.SetTrigger ("input");
-		direction_action = realDirection (input_direction_);
-		weapon.transform.localEulerAngles = new Vector3 (0, 0, getAngle (direction_action, new Vector2 (1, 0)));
+		direction_action_ = realDirection (input_direction_);
+		weapon.transform.localEulerAngles = new Vector3 (0, 0, getAngle (direction_action_, new Vector2 (1, 0)));
 	}
 
 	public void checkMove ()
