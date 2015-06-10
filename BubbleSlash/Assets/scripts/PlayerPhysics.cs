@@ -121,16 +121,26 @@ public class PlayerPhysics : MonoBehaviour
 	{
 		Vector3 syncPosition = Vector3.zero;
 		Vector3 syncVelocity = Vector3.zero;
+		Vector3 syncDirection = Vector2.zero;
+		bool syncJump = false;
 		if (stream.isWriting) {
 			syncPosition = body.transform.position;
 			syncVelocity = body.velocity;
+			syncDirection = input_direction_;
+			syncJump = input_jump_;
 			stream.Serialize (ref syncPosition);
 			stream.Serialize (ref syncVelocity);
+			stream.Serialize (ref syncDirection);
+			stream.Serialize (ref syncJump);
 		} else {
 			stream.Serialize (ref syncPosition);
 			stream.Serialize (ref syncVelocity);
+			stream.Serialize (ref syncDirection);
+			stream.Serialize (ref syncJump);
 			body.transform.position = syncPosition;
 			body.velocity = syncVelocity;
+			input_direction_ = syncDirection;
+			input_jump_ = syncJump;
 		}
 	}
 	
