@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class DashHatScript : HatAbstractClass {
@@ -9,7 +9,7 @@ public class DashHatScript : HatAbstractClass {
 
 	override public void onSpecialStateEnter(){
 		timer = 0f;
-		direction = player.GetComponent<PlayerPhysics> ().directionFromInput ();
+		direction = player.GetComponent<PlayerPhysics> ().getInputDirection ();
 		player.GetComponent<Rigidbody2D> ().gravityScale = 0;
 		player.GetComponent<Rigidbody2D> ().velocity = speed * (direction.normalized);
 

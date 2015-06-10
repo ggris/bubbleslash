@@ -90,7 +90,7 @@ public class OnlineGame : MonoBehaviour
 	{
 		InitPlayers ();
 		Application.LoadLevel (level_);
-		player_manager_.GetComponent<PlayerManager> ().activatePlayers ();
+//		player_manager_.GetComponent<PlayerManager> ().activatePlayers ();
 	}
 
 	void InitPlayers ()
@@ -98,7 +98,7 @@ public class OnlineGame : MonoBehaviour
 		if (Network.isClient || Network.isServer) {
 			player1_factory_.createNetworkPlayer ();
 		} else {
-			player_manager_ = GameObject.Instantiate (player_manager_prefab_, new Vector3 (), new Quaternion ()) as GameObject;
+			//player_manager_ = GameObject.Instantiate (player_manager_prefab_, new Vector3 (), new Quaternion ()) as GameObject;
 			player1_factory_.createPlayer ();
 			player2_factory_.createPlayer ();
 		}

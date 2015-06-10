@@ -17,12 +17,12 @@ public class PlayerFactory : MonoBehaviour {
 	public GameObject player_prefab;
 
 	private PlayerManager player_manager = null;
-	NetworkView network_view_;
+	//NetworkView network_view_;
 	
 	// Use this for initialization
 	void Awake () {
 		DontDestroyOnLoad (transform.gameObject);
-		network_view_ = GetComponent<NetworkView> ();
+		//network_view_ = GetComponent<NetworkView> ();
 	}
 	
 	public void createPlayer() {

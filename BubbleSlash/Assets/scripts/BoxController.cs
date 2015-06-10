@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -32,7 +32,7 @@ public class BoxController : MonoBehaviour {
 		if (!ignoredColliders.Contains (other)) {
 			switch(box.gameObject.name){
 			case "feet" :
-				if (physics.directionFromInput().y<0){
+				if (physics.getInputDirection().y<0){
 					ignoredColliders.Add (other);
 					Physics2D.IgnoreCollision(body,other,true);
 				}

@@ -45,7 +45,8 @@ public class PlayerPhysics : MonoBehaviour
 	//privates
 	private Rigidbody2D body;
 	private Animator animator;
-	private Vector2 direction_input;
+	private Vector2 input_direction_;
+	private bool input_jump_;
 	public Vector2 direction_action;
 	public Vector2 direction_parry;
 	public float horizontal_direction;
@@ -54,7 +55,7 @@ public class PlayerPhysics : MonoBehaviour
 	public GameObject hat_GO;
 	private PlayerSettings.Hat hat_choice;
 
-	private NetworkView nview;
+	//private NetworkView nview;
 
 	//"state"
 
@@ -73,7 +74,7 @@ public class PlayerPhysics : MonoBehaviour
 		animator = GetComponent<Animator> ();
 		weapon = transform.Find ("weapon").gameObject;
 		weapon_state = weapon.GetComponent<Animator> ();
-		nview = GetComponent<NetworkView> ();
+		//nview = GetComponent<NetworkView> ();
 		DontDestroyOnLoad (transform.gameObject);
 	}
 
@@ -132,17 +133,42 @@ public class PlayerPhysics : MonoBehaviour
 			body.velocity = syncVelocity;
 		}
 	}
-
+	
+	// Update is called once per frame
 	void Update ()
 	{
-		//if (nview.isMine)
+		if (playerNumber != 0)
 			UpdateLocal ();
+
+		UpdateGlobal ();
 	}
 
-	// Update is called once per frame
-	void UpdateLocal ()
-	{
+	void UpdateLocal() {
+		setDirectionFromInput ();
+		
+		//controls
+		
+		checkMove ();
 
+		input_jump_ = playerInputButton ("Jump");
+		checkJump ();
+		
+		//animation, small blood and smoke
+		//quick under tee
+		
+		if (playerInputButtonDown ("Hat") && isInputFree () && hat_GO.GetComponent<HatAbstractClass> ().hasSpecialState () && hat_GO.GetComponent<HatAbstractClass> ().isNotInCd ())
+			animator.SetTrigger ("inputHat");
+		
+		if (playerInputButtonDown ("Weapon") && isAbleToAttack ()) {
+			animator.SetTrigger ("triggerAttack");
+			weapon_state.SetTrigger ("input");
+			direction_action = realDirection (input_direction_);
+			weapon.transform.localEulerAngles = new Vector3 (0, 0, getAngle (direction_action, new Vector2 (1, 0)));
+		}
+	}
+
+	void UpdateGlobal ()
+	{
 
 		//updates direction
 		if (isAttacking ()) {
@@ -153,62 +179,27 @@ public class PlayerPhysics : MonoBehaviour
 				horizontal_direction = 1;
 		} else {
 			if (!animator.GetCurrentAnimatorStateInfo (0).IsName ("hatSpecialState")) {
-				direction_input = directionFromInput ();
 				//change horizontal direction if horizontal input is not equal to 0
-				if (direction_input.x < 0) 
+				if (input_direction_.x < 0) 
 					horizontal_direction = -1;
-				if (direction_input.x > 0) 
+				if (input_direction_.x > 0) 
 					horizontal_direction = 1;
 				checkSlide (); //only changes "horizontal_direction" if sliding
 			}
 		}
 
 		//set animator parameters values
-		animator.SetFloat ("inputX", direction_input.x);
-		animator.SetFloat ("inputY", direction_input.y);
+		animator.SetFloat ("inputX", input_direction_.x);
+		animator.SetFloat ("inputY", input_direction_.y);
 		animator.SetFloat ("speedX", body.velocity.x);
 		animator.SetBool ("isOnFeet", is_grounded);
 		animator.SetBool ("isOnHand", is_touching_left || is_touching_right);
-		animator.SetBool ("inputJump", playerInputButton ("Jump"));
+		animator.SetBool ("inputJump", input_jump_);
 		animator.SetFloat ("hat", (float)hat_choice);
-		
-		//animation, small blood and smoke
-		//quick under tee
-		Transform tr_animation = transform.Find ("animation");
-		
-		if (playerInputButtonDown ("Jump") && isAbleToJump ()) {
-			animator.SetTrigger ("triggerJump");
-			Transform tr_smoke = tr_animation.Find ("smoke");
-			tr_smoke.gameObject.GetComponent<ParticleSystem> ().Play ();
-			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, 0, tr_smoke.eulerAngles.z);
-			/*
-			if (is_grounded){
-				GetComponent<AudioSource>().pitch=2;
-			}
-			else{
-				GetComponent<AudioSource>().pitch=2.5f;
-			}
-			GetComponent<AudioSource>().Play ();*/
-		}
-
-		if (playerInputButtonDown ("Hat") && isInputFree () && hat_GO.GetComponent<HatAbstractClass> ().hasSpecialState () && hat_GO.GetComponent<HatAbstractClass> ().isNotInCd ())
-			animator.SetTrigger ("inputHat");
-
-		if (playerInputButtonDown ("Weapon") && isAbleToAttack ()) {
-			animator.SetTrigger ("triggerAttack");
-			weapon_state.SetTrigger ("input");
-			direction_action = realDirection (directionFromInput ());
-			weapon.transform.localEulerAngles = new Vector3 (0, 0, getAngle (direction_action, new Vector2 (1, 0)));
-		}
-
-		//controls
-
-		checkMove ();
-
-		checkJump ();
 
 		//max speeds
 		checkMaxSpeeds ();
+		Transform tr_animation = transform.Find ("animation");
 
 		if (isAttacking ()) {
 			float a = getAngle (direction_action, horizontal_direction * Vector2.right);
@@ -245,7 +236,11 @@ public class PlayerPhysics : MonoBehaviour
 
 	}
 
-	public Vector2 directionFromInput ()
+	public Vector2 getInputDirection () {
+		return input_direction_;
+	}
+
+	void setDirectionFromInput ()
 	{
 		//return direction from input + update horizontalDirection
 		Vector2 ans = new Vector2 (playerInputAxis ("Horizontal"), playerInputAxis ("Vertical"));
@@ -261,17 +256,15 @@ public class PlayerPhysics : MonoBehaviour
 
 		ans.Normalize ();
 
-
-
-		return ans;
+		input_direction_ = ans;
 	}
 
 	public Vector2 realDirection (Vector2 direction_input)
 	{
-		if (direction_input.x == 0 && direction_input.y == 0)
+		if (input_direction_.x == 0 && input_direction_.y == 0)
 			return new Vector2 (horizontal_direction, 0);
 		else
-			return direction_input;
+			return input_direction_;
 	}
 
 	private float playerInputAxis (string inputName)
@@ -337,14 +330,14 @@ public class PlayerPhysics : MonoBehaviour
 
 	public void checkMove ()
 	{
-		if (direction_input.x < 0 && isInputFree ()) {
+		if (input_direction_.x < 0 && isInputFree ()) {
 			if (is_grounded) {
 				body.AddForce (-Vector2.right * ground_acc * Time.deltaTime);
 			} else {
 				body.AddForce (-Vector2.right * air_acc * Time.deltaTime);
 			}
 		}
-		if (direction_input.x > 0 && isInputFree ()) {
+		if (input_direction_.x > 0 && isInputFree ()) {
 			if (is_grounded) {
 				body.AddForce (Vector2.right * ground_acc * Time.deltaTime);
 			} else {
@@ -397,6 +390,19 @@ public class PlayerPhysics : MonoBehaviour
 
 				}
 			}
+			animator.SetTrigger ("triggerJump");
+			Transform tr_animation = transform.Find ("animation");
+			Transform tr_smoke = tr_animation.Find ("smoke");
+			tr_smoke.gameObject.GetComponent<ParticleSystem> ().Play ();
+			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, 0, tr_smoke.eulerAngles.z);
+			/*
+			if (is_grounded){
+				GetComponent<AudioSource>().pitch=2;
+			}
+			else{
+				GetComponent<AudioSource>().pitch=2.5f;
+			}
+			GetComponent<AudioSource>().Play ();*/
 		}
 		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("jumping")) {
 
@@ -416,7 +422,7 @@ public class PlayerPhysics : MonoBehaviour
 	public void checkMaxSpeeds ()
 	{
 		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("falling")) {
-			float a = directionFromInput ().normalized.y;
+			float a = input_direction_.normalized.y;
 			if (a < 0) {
 				if (body.velocity.y < 5 && body.velocity.y >= -10) {
 					body.velocity = new Vector2 (body.velocity.x, -10);
