@@ -56,7 +56,6 @@ public class PlayerPhysics : MonoBehaviour
 	private Animator weapon_state;
 	public GameObject hat_GO;
 	private PlayerSettings.Hat hat_choice;
-
 	private NetworkView nview;
 
 	//"state"
@@ -119,7 +118,7 @@ public class PlayerPhysics : MonoBehaviour
 
 	}
 	
-	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+	void OnSerializeNetworkView (BitStream stream, NetworkMessageInfo info)
 	{
 		Vector3 syncPosition = Vector3.zero;
 		Vector3 syncVelocity = Vector3.zero;
@@ -165,7 +164,8 @@ public class PlayerPhysics : MonoBehaviour
 		UpdateGlobal ();
 	}
 
-	void UpdateLocal() {
+	void UpdateLocal ()
+	{
 		setDirectionFromInput ();
 		
 		//controls
@@ -174,9 +174,9 @@ public class PlayerPhysics : MonoBehaviour
 
 		input_jump_ = playerInputButton ("Jump");
 		input_hat_ = playerInputButtonDown ("Hat");
-		input_weapon_ = playerInputButtonDown ("Weapon") & isAbleToAttack();
+		input_weapon_ = playerInputButtonDown ("Weapon") & isAbleToAttack ();
 		if (input_weapon_)
-			nview.RPC ("triggerAttack", RPCMode.Others, null);
+			nview.RPC ("triggerAttack", RPCMode.All, null);
 		checkJump ();
 
 	}
@@ -215,14 +215,7 @@ public class PlayerPhysics : MonoBehaviour
 		//quick under tee
 		
 		if (input_hat_ && isInputFree () && hat_GO.GetComponent<HatAbstractClass> ().hasSpecialState () && hat_GO.GetComponent<HatAbstractClass> ().isNotInCd ())
-			animator.SetTrigger ("inputHat");
-		
-		if (input_weapon_) {
-			animator.SetTrigger ("triggerAttack");
-			weapon_state.SetTrigger ("input");
-			direction_action = realDirection (input_direction_);
-			weapon.transform.localEulerAngles = new Vector3 (0, 0, getAngle (direction_action, new Vector2 (1, 0)));
-		}
+			animator.SetTrigger ("inputHat");	
 
 		//max speeds
 		checkMaxSpeeds ();
@@ -242,28 +235,29 @@ public class PlayerPhysics : MonoBehaviour
 
 		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("walking")) {
 			Transform tr_smoke = tr_animation.Find ("smoke");
-			tr_smoke.gameObject.GetComponent<ParticleSystem>().Play();
-			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, -horizontal_direction*90, tr_smoke.eulerAngles.z);
+			tr_smoke.gameObject.GetComponent<ParticleSystem> ().Play ();
+			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, -horizontal_direction * 90, tr_smoke.eulerAngles.z);
 		}
 
-		if (animator.GetCurrentAnimatorStateInfo(0).IsName("sliding")){
+		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("sliding")) {
 			Transform tr_smoke = tr_animation.Find ("smoke");
-			tr_smoke.gameObject.GetComponent<ParticleSystem>().Play();
-			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, horizontal_direction*120, tr_smoke.eulerAngles.z);
+			tr_smoke.gameObject.GetComponent<ParticleSystem> ().Play ();
+			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, horizontal_direction * 120, tr_smoke.eulerAngles.z);
 		}
 
 		//death on fall
 		if (isLiving ()) {
 
 			if (transform.position.y < -10) {
-				Debug.Log("fall !");
-				StartCoroutine(die ());
+				Debug.Log ("fall !");
+				StartCoroutine (die ());
 			}
 		}
 
 	}
 
-	public Vector2 getInputDirection () {
+	public Vector2 getInputDirection ()
+	{
 		return input_direction_;
 	}
 
@@ -341,9 +335,10 @@ public class PlayerPhysics : MonoBehaviour
 			|| animator.GetCurrentAnimatorStateInfo (0).IsName ("walljumping");
 	}
 
-	bool isLiving(){
+	bool isLiving ()
+	{
 		return !(animator.GetCurrentAnimatorStateInfo (0).IsName ("dead")
-				|| animator.GetCurrentAnimatorStateInfo (0).IsName ("die"));
+			|| animator.GetCurrentAnimatorStateInfo (0).IsName ("die"));
 	}
 
 	public bool isAbleToAttack ()
@@ -356,7 +351,7 @@ public class PlayerPhysics : MonoBehaviour
 	}
 
 	[RPC]
-	void triggerAttack()
+	void triggerAttack ()
 	{
 		animator.SetTrigger ("triggerAttack");
 		weapon_state.SetTrigger ("input");
@@ -407,22 +402,24 @@ public class PlayerPhysics : MonoBehaviour
 		if (playerInputButtonDown ("Jump") && isAbleToJump ()) {
 
 			if (animator.GetCurrentAnimatorStateInfo (0).IsName ("sliding")) {
-				body.velocity = new Vector2 (horizontal_direction * push_wall_speed, wall_jump_speed);
+				nview.RPC ("startWallJump", RPCMode.All, null);
 			} else {
 				if (jumps_left > 0) {
-					
+					Vector3 velocity;
+
 					if (!is_grounded) {
 						if (playerInputAxis ("Horizontal") < -0.5 && body.velocity.x > 0)
-							body.velocity = new Vector2 (-push_air_speed, jump_speed);
+							velocity = new Vector2 (-push_air_speed, jump_speed);
 						else if (playerInputAxis ("Horizontal") > 0.5 && body.velocity.x < 0)
-							body.velocity = new Vector2 (push_air_speed, jump_speed);
+							velocity = new Vector2 (push_air_speed, jump_speed);
 						else 
-							body.velocity = new Vector2 (body.velocity.x, jump_speed);
+							velocity = new Vector2 (body.velocity.x, jump_speed);
 					
-					} else{
+					} else {
 
-						body.velocity = new Vector2 (body.velocity.x, jump_speed);
+						velocity = new Vector2 (body.velocity.x, jump_speed);
 					}
+					nview.RPC ("setBodyVelocity", RPCMode.All, velocity);
 
 				}
 			}
@@ -443,16 +440,27 @@ public class PlayerPhysics : MonoBehaviour
 		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("jumping")) {
 
 			if (body.velocity.y < carry_jump_speed) {
-				body.velocity = new Vector2 (body.velocity.x, carry_jump_speed);
+				nview.RPC ("setBodyVelocity", RPCMode.All, new Vector3 (body.velocity.x, carry_jump_speed));
 			}
 		}
 		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("walljumping")) {
 			
 			if (body.velocity.y < carry_jump_speed) {
-				body.velocity = new Vector2 (body.velocity.x, carry_jump_speed);
+				nview.RPC ("setBodyVelocity", RPCMode.All, new Vector3 (body.velocity.x, carry_jump_speed));
 			}
 		}
+	}
 
+	[RPC]
+	void startWallJump ()
+	{
+		body.velocity = new Vector2 (horizontal_direction * push_wall_speed, wall_jump_speed);
+	}
+
+	[RPC]
+	void setBodyVelocity (Vector3 velocity)
+	{
+		body.velocity = velocity;
 	}
 
 	public void checkMaxSpeeds ()
@@ -464,8 +472,8 @@ public class PlayerPhysics : MonoBehaviour
 					body.velocity = new Vector2 (body.velocity.x, -10);
 				}
 
-				if (body.velocity.y<0 ){
-					body.velocity = new Vector2 (body.velocity.x, body.velocity.y - a * fall_sprint_acc*Time.deltaTime*body.velocity.y);
+				if (body.velocity.y < 0) {
+					body.velocity = new Vector2 (body.velocity.x, body.velocity.y - a * fall_sprint_acc * Time.deltaTime * body.velocity.y);
 				}
 
 				if (body.velocity.y < -max_falling_speed_sprint)
@@ -488,7 +496,8 @@ public class PlayerPhysics : MonoBehaviour
 		}
 	}
 
-	public static float getAngle (Vector2 a, Vector2 b){
+	public static float getAngle (Vector2 a, Vector2 b)
+	{
 		return Vector2.Angle (a, b) * -1 * Mathf.Sign (Vector3.Cross (new Vector3 (a.x, a.y, 0), new Vector3 (b.x, b.y, 0)).z);
 	}
 
@@ -496,11 +505,10 @@ public class PlayerPhysics : MonoBehaviour
 	{
 		if (is_wounded) {
 
-			StartCoroutine(die ());
-			stopWound();
-			CancelInvoke("stopWound");
-		}
-		else {
+			StartCoroutine (die ());
+			stopWound ();
+			CancelInvoke ("stopWound");
+		} else {
 			is_wounded = true;
 			Invoke ("startWound", 0f);
 			Invoke ("stopWound", wound_length);
@@ -512,7 +520,6 @@ public class PlayerPhysics : MonoBehaviour
 		direction_parry = dir_parry;
 		animator.SetTrigger ("parried");
 	}
-
 
 	public void startWound ()
 	{
@@ -530,30 +537,33 @@ public class PlayerPhysics : MonoBehaviour
 		attack_start = Time.time;
 	}
 
-	public IEnumerator die(){
+	public IEnumerator die ()
+	{
 		Debug.Log ("dead !");
 		animator.SetTrigger ("die");
 		is_hitable = false;
 		GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
-		GetComponent<Rigidbody2D> ().gravityScale =0;
+		GetComponent<Rigidbody2D> ().gravityScale = 0;
 		transform.Find ("animation").gameObject.SetActive (false);
 		yield return new WaitForSeconds (1);
-		respawn (new Vector2(0, 0));
+		respawn (new Vector2 (0, 0));
 
 
 	}
 
-	public void respawn(Vector2 pos){
+	public void respawn (Vector2 pos)
+	{
 		animator.SetTrigger ("respawn");
 		is_hitable = true;
 		transform.Find ("animation").gameObject.SetActive (true);
 		gameObject.transform.position = new Vector3 (pos.x, pos.y, 0);
 		GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
-		GetComponent<Rigidbody2D> ().gravityScale =5;
+		GetComponent<Rigidbody2D> ().gravityScale = 5;
 
 	}
 
-	public void setHatChoice(PlayerSettings.Hat hat){
+	public void setHatChoice (PlayerSettings.Hat hat)
+	{
 		hat_choice = hat;
 	}
 }
