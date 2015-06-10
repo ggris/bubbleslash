@@ -61,6 +61,7 @@ public class PlayerPhysics : MonoBehaviour
 	//"state"
 
 	private bool is_wounded;
+	private bool is_network_;
 
 	void OnDestroy ()
 	{
@@ -77,6 +78,7 @@ public class PlayerPhysics : MonoBehaviour
 		weapon_state = weapon.GetComponent<Animator> ();
 		nview = GetComponent<NetworkView> ();
 		DontDestroyOnLoad (transform.gameObject);
+		is_network_ = Network.isServer || Network.isClient;
 	}
 
 	void Start ()
@@ -123,35 +125,20 @@ public class PlayerPhysics : MonoBehaviour
 		Vector3 syncPosition = Vector3.zero;
 		Vector3 syncVelocity = Vector3.zero;
 		Vector3 syncDirection = Vector2.zero;
-		bool syncJump = false;
-		bool syncHat = false;
-		bool syncWeapon = false;
 		if (stream.isWriting) {
 			syncPosition = body.transform.position;
 			syncVelocity = body.velocity;
 			syncDirection = input_direction_;
-			syncJump = input_jump_;
-			syncHat = input_hat_;
-			syncWeapon = input_weapon_;
 			stream.Serialize (ref syncPosition);
 			stream.Serialize (ref syncVelocity);
 			stream.Serialize (ref syncDirection);
-			stream.Serialize (ref syncJump);
-			stream.Serialize (ref syncHat);
-			stream.Serialize (ref syncWeapon);
 		} else {
 			stream.Serialize (ref syncPosition);
 			stream.Serialize (ref syncVelocity);
 			stream.Serialize (ref syncDirection);
-			stream.Serialize (ref syncJump);
-			stream.Serialize (ref syncHat);
-			stream.Serialize (ref syncWeapon);
 			body.transform.position = syncPosition;
 			body.velocity = syncVelocity;
 			input_direction_ = syncDirection;
-			input_jump_ = syncJump;
-			input_hat_ = syncHat;
-			input_weapon_ = syncWeapon;
 		}
 	}
 	
@@ -176,7 +163,8 @@ public class PlayerPhysics : MonoBehaviour
 		input_hat_ = playerInputButtonDown ("Hat");
 		input_weapon_ = playerInputButtonDown ("Weapon") & isAbleToAttack ();
 		if (input_weapon_)
-			nview.RPC ("triggerAttack", RPCMode.All, input_direction_);
+			triggerAttack ();
+
 		checkJump ();
 
 	}
@@ -350,8 +338,16 @@ public class PlayerPhysics : MonoBehaviour
 			|| animator.GetCurrentAnimatorStateInfo (0).IsName ("sliding"));
 	}
 
+	void triggerAttack()
+	{
+		if (is_network_)
+			nview.RPC ("triggerAttackRPC", RPCMode.All, input_direction_);
+		else
+			triggerAttackRPC (input_direction_);
+	}
+
 	[RPC]
-	void triggerAttack (Vector3 input_direction)
+	void triggerAttackRPC (Vector3 input_direction)
 	{
 		input_direction_ = input_direction;
 		animator.SetTrigger ("triggerAttack");
@@ -403,7 +399,7 @@ public class PlayerPhysics : MonoBehaviour
 		if (playerInputButtonDown ("Jump") && isAbleToJump ()) {
 
 			if (animator.GetCurrentAnimatorStateInfo (0).IsName ("sliding")) {
-				nview.RPC ("startWallJump", RPCMode.All, null);
+				setBodyVelocity(new Vector2 (horizontal_direction * push_wall_speed, wall_jump_speed));
 			} else {
 				if (jumps_left > 0) {
 					Vector3 velocity;
@@ -420,7 +416,7 @@ public class PlayerPhysics : MonoBehaviour
 
 						velocity = new Vector2 (body.velocity.x, jump_speed);
 					}
-					nview.RPC ("setBodyVelocity", RPCMode.All, velocity);
+					setBodyVelocity( velocity);
 
 				}
 			}
@@ -441,26 +437,29 @@ public class PlayerPhysics : MonoBehaviour
 		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("jumping")) {
 
 			if (body.velocity.y < carry_jump_speed) {
-				nview.RPC ("setBodyVelocity", RPCMode.All, new Vector3 (body.velocity.x, carry_jump_speed));
+				setBodyVelocity( new Vector3 (body.velocity.x, carry_jump_speed));
 			}
 		}
 		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("walljumping")) {
 			
 			if (body.velocity.y < carry_jump_speed) {
-				nview.RPC ("setBodyVelocity", RPCMode.All, new Vector3 (body.velocity.x, carry_jump_speed));
+				setBodyVelocity( new Vector3 (body.velocity.x, carry_jump_speed));
 			}
 		}
 	}
 
-	[RPC]
-	void startWallJump ()
+	void setBodyVelocity (Vector3 velocity)
 	{
-		body.velocity = new Vector2 (horizontal_direction * push_wall_speed, wall_jump_speed);
+		if (is_network_)
+			nview.RPC ("setBodyVelocityRPC", RPCMode.All, input_direction_, velocity);
+		else
+			body.velocity = velocity;
 	}
 
 	[RPC]
-	void setBodyVelocity (Vector3 velocity)
+	void setBodyVelocityRPC (Vector3 direction, Vector3 velocity)
 	{
+		input_direction_ = direction;
 		body.velocity = velocity;
 	}
 
