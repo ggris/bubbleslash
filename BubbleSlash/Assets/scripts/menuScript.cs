@@ -21,7 +21,7 @@ public class menuScript : MonoBehaviour {
 	}
 
 	void Start () {
-
+		addPlayer ();
 	}
 
 	void Update () {

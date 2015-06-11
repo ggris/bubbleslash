@@ -9,12 +9,12 @@ public class PlayerFactoryMenuScript : MonoBehaviour {
 	//settings
 	private int color_indice = 0;
 	private Color color;
-	private PlayerSettings.Hat hat = 0;
+	private PlayerSettings.Hat hat = PlayerSettings.Hat.dashHat;
 	private int input_number;
 
 	//rendering on buttons
 	UnityEngine.UI.Text text_hat;
-	UnityEngine.UI.Button button;	
+	UnityEngine.UI.Image button_image;	
 	void Awake(){
 		color_indice = 0;
 		player_factory = Instantiate (pf_prefab);
@@ -24,9 +24,11 @@ public class PlayerFactoryMenuScript : MonoBehaviour {
 		GameObject.Destroy (player_factory);
 	}
 	void Start () {
-		button = gameObject.transform.Find ("color").gameObject.GetComponent<UnityEngine.UI.Button> ();
+		button_image = gameObject.transform.Find ("color").Find("image").gameObject.GetComponent<UnityEngine.UI.Image> ();
 		text_hat = gameObject.transform.Find ("hat").Find ("Text").GetComponent<UnityEngine.UI.Text> ();
 		player_factory.GetComponent<PlayerFactory> ().color = Color.white;
+		player_factory.GetComponent<PlayerFactory> ().hat = hat;
+		text_hat.text = PlayerSettings.ToString (hat);
 	}
 	
 	// Update is called once per frame
@@ -41,7 +43,7 @@ public class PlayerFactoryMenuScript : MonoBehaviour {
 	void changeColor(){
 		color_indice = (++color_indice) % colors.Length;
 		color = colors [color_indice];
-		button.image.color = color;
+		button_image.color = color;
 		player_factory.GetComponent<PlayerFactory> ().color = color;
 	}
 	void OnGUI(){
