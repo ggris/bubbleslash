@@ -49,8 +49,16 @@ public class OnlineGame : MonoBehaviour
 			if (Network.isClient) {
 				Network.Disconnect ();
 			}
-
+			disconnect();
 		}
+	}
+
+	public static void disconnect()
+	{
+		foreach(GameObject gobj in GameObject.FindGameObjectsWithTag ("Player")) {
+			Destroy(gobj);
+		}
+		Application.LoadLevel ("Launcher");
 	}
 	
 	void LaunchServer ()
