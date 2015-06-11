@@ -187,10 +187,10 @@ RectTransform:
   - {fileID: 466864138}
   m_Father: {fileID: 1251946430}
   m_RootOrder: 1
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 623.517578, y: -40}
+  m_SizeDelta: {x: 344.321594, y: 80}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &79770428
 MonoBehaviour:
@@ -351,10 +351,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1251946430}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 230.678375, y: -40}
+  m_SizeDelta: {x: 441.35675, y: 80}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &433840556
 MonoBehaviour:
@@ -399,7 +399,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 438626013}
   - 114: {fileID: 438626012}
-  - 148: {fileID: 438626014}
   m_Layer: 0
   m_Name: Online Game
   m_TagString: GameController
@@ -437,18 +436,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
---- !u!148 &438626014
-NetworkView:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 438626011}
-  m_Enabled: 1
-  m_StateSynchronization: 1
-  m_Observed: {fileID: 438626013}
-  m_ViewID:
-    m_ID: 3
-    m_Type: 1
 --- !u!1 &447460643
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,7 +592,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &515703506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1828,7 +1815,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1521331425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2250,7 +2237,8 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 14879492, guid: 73b8f083b529d4be3997cefcaf974869, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 73b8f083b529d4be3997cefcaf974869, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &1868208661 stripped
@@ -2358,10 +2346,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1251946430}
   m_RootOrder: 2
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 967.839111, y: -40}
+  m_SizeDelta: {x: 344.321594, y: 80}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1906644064
 MonoBehaviour:

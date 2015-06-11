@@ -1037,7 +1037,7 @@ MonoBehaviour:
   able_to_jump: 0
   able_to_attack: 0
   is_hitable: 0
-  direction_action: {x: 0, y: 0}
+  direction_action_: {x: 0, y: 0}
   direction_parry: {x: 0, y: 0}
   horizontal_direction: 0
   hat_GO: {fileID: 0}
@@ -1098,7 +1098,7 @@ NetworkView:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 110914}
   m_Enabled: 1
-  m_StateSynchronization: 2
+  m_StateSynchronization: 1
   m_Observed: {fileID: 11446784}
   m_ViewID:
     m_ID: 0
