@@ -125,13 +125,16 @@ public class PlayerPhysics : MonoBehaviour
 		Vector3 syncPosition = Vector3.zero;
 		Vector3 syncVelocity = Vector3.zero;
 		Vector3 syncDirection = Vector2.zero;
+
 		if (stream.isWriting) {
 			syncPosition = body.transform.position;
 			syncVelocity = body.velocity;
 			syncDirection = input_direction_;
+
 			stream.Serialize (ref syncPosition);
 			stream.Serialize (ref syncVelocity);
 			stream.Serialize (ref syncDirection);
+
 		} else {
 			stream.Serialize (ref syncPosition);
 			stream.Serialize (ref syncVelocity);
@@ -139,6 +142,7 @@ public class PlayerPhysics : MonoBehaviour
 			body.transform.position = syncPosition;
 			body.velocity = syncVelocity;
 			input_direction_ = syncDirection;
+
 		}
 	}
 	
@@ -400,6 +404,7 @@ public class PlayerPhysics : MonoBehaviour
 
 			if (animator.GetCurrentAnimatorStateInfo (0).IsName ("sliding")) {
 				setBodyVelocity(new Vector2 (horizontal_direction * push_wall_speed, wall_jump_speed));
+
 			} else {
 				if (jumps_left > 0) {
 					Vector3 velocity;
@@ -417,6 +422,7 @@ public class PlayerPhysics : MonoBehaviour
 						velocity = new Vector2 (body.velocity.x, jump_speed);
 					}
 					setBodyVelocity( velocity);
+
 
 				}
 			}
@@ -438,12 +444,14 @@ public class PlayerPhysics : MonoBehaviour
 
 			if (body.velocity.y < carry_jump_speed) {
 				setBodyVelocity( new Vector3 (body.velocity.x, carry_jump_speed));
+
 			}
 		}
 		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("walljumping")) {
 			
 			if (body.velocity.y < carry_jump_speed) {
 				setBodyVelocity( new Vector3 (body.velocity.x, carry_jump_speed));
+
 			}
 		}
 	}
@@ -460,6 +468,7 @@ public class PlayerPhysics : MonoBehaviour
 	void setBodyVelocityRPC (Vector3 direction, Vector3 velocity)
 	{
 		input_direction_ = direction;
+
 		body.velocity = velocity;
 	}
 
