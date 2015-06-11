@@ -577,9 +577,10 @@ public class PlayerPhysics : MonoBehaviour
 
 	public void isHurt ()
 	{
-		if (is_network_)
+		if (is_network_) {
 			if (nview.isMine)
 				nview.RPC ("isHurtRPC", RPCMode.All, is_wounded_);
+		}
 		else
 			isHurtRPC (is_wounded_);
 	}
