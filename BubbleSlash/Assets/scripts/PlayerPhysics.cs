@@ -271,6 +271,11 @@ public class PlayerPhysics : MonoBehaviour
 
 	}
 
+	public bool isInputJump()
+	{
+		return input_jump_;
+	}
+
 	void updateJump()
 	{
 		bool input_jump = playerInputButton ("Jump");
@@ -320,17 +325,17 @@ public class PlayerPhysics : MonoBehaviour
 			return input_direction_;
 	}
 
-	private float playerInputAxis (string inputName)
+	float playerInputAxis (string inputName)
 	{
 		return Input.GetAxisRaw ("P" + playerNumber + " " + inputName);
 	}
 
-	public bool playerInputButtonDown (string inputName)
+	bool playerInputButtonDown (string inputName)
 	{
 		return Input.GetButtonDown ("P" + playerNumber + " " + inputName);
 	}
 
-	public bool playerInputButton (string inputName)
+	bool playerInputButton (string inputName)
 	{
 		return Input.GetButton ("P" + playerNumber + " " + inputName);
 	}
