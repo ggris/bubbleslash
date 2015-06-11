@@ -57,6 +57,12 @@ public class menuScript : MonoBehaviour {
 		playerFactoryMenus.Add (new_pfm);
 		//GameObject.Instantiate(playerFactoryPrefab) as GameObject;
 	}
+	void removePlayer(){
+		GameObject pfm = playerFactoryMenus [playerFactoryMenus.Count - 1];
+		playerFactoryMenus.Remove (pfm);
+		GameObject.Destroy (pfm);
+
+	}
 
 
 }
