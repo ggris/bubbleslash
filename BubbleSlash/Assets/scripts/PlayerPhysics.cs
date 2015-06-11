@@ -60,7 +60,7 @@ public class PlayerPhysics : MonoBehaviour
 
 	//"state"
 
-	private bool is_wounded;
+	private bool is_wounded_;
 	private bool is_network_;
 
 	void OnDestroy ()
@@ -248,6 +248,23 @@ public class PlayerPhysics : MonoBehaviour
 
 	}
 
+	void updateJump()
+	{
+		bool input_jump = playerInputButton ("Jump");
+		if (is_network_) {
+			if (input_jump != input_jump_)
+				nview.RPC ("jumpRPC", RPCMode.All, input_jump);
+		}
+		else
+			input_jump_ = input_jump;
+	}
+
+	[RPC]
+	void jumpRPC (bool input_jump)
+	{
+		input_jump_ = input_jump;
+	}
+
 	public Vector2 getInputDirection ()
 	{
 		return input_direction_;
@@ -364,26 +381,40 @@ public class PlayerPhysics : MonoBehaviour
 	{
 		if (input_direction_.x < 0 && isInputFree ()) {
 			if (is_grounded) {
-				body.AddForce (-Vector2.right * ground_acc * Time.deltaTime);
+				addForce (-Vector2.right * ground_acc * Time.deltaTime);
 			} else {
-				body.AddForce (-Vector2.right * air_acc * Time.deltaTime);
+				addForce (-Vector2.right * air_acc * Time.deltaTime);
 			}
 		}
 		if (input_direction_.x > 0 && isInputFree ()) {
 			if (is_grounded) {
-				body.AddForce (Vector2.right * ground_acc * Time.deltaTime);
+				addForce (Vector2.right * ground_acc * Time.deltaTime);
 			} else {
-				body.AddForce (Vector2.right * air_acc * Time.deltaTime);
+				addForce (Vector2.right * air_acc * Time.deltaTime);
 			}
 		}
 		if (isInputFree ()) {
 			if (is_grounded) {
-				body.AddForce (new Vector2 (-body.velocity.x, 0f) * ground_horizontal_drag * Time.deltaTime);
+				addForce (new Vector2 (-body.velocity.x, 0f) * ground_horizontal_drag * Time.deltaTime);
 			} else {
-				body.AddForce (new Vector2 (-body.velocity.x, 0f) * air_horizontal_drag * Time.deltaTime);
-				body.AddForce (new Vector2 (0f, -body.velocity.y) * air_vertical_drag * Time.deltaTime);
+				addForce (new Vector2 (-body.velocity.x, 0f) * air_horizontal_drag * Time.deltaTime);
+				addForce (new Vector2 (0f, -body.velocity.y) * air_vertical_drag * Time.deltaTime);
 			}
 		}
+	}
+
+	void addForce (Vector3 force)
+	{
+		if (is_network_)
+			nview.RPC ("addForceRPC", RPCMode.All, force);
+		else
+			addForceRPC (force);
+	}
+	
+	[RPC]
+	void addForceRPC (Vector3 force)
+	{
+		body.AddForce (force);
 	}
 
 	public void checkSlide ()
@@ -418,7 +449,6 @@ public class PlayerPhysics : MonoBehaviour
 							velocity = new Vector2 (body.velocity.x, jump_speed);
 					
 					} else {
-
 						velocity = new Vector2 (body.velocity.x, jump_speed);
 					}
 					setBodyVelocity( velocity);
@@ -426,19 +456,7 @@ public class PlayerPhysics : MonoBehaviour
 
 				}
 			}
-			animator.SetTrigger ("triggerJump");
-			Transform tr_animation = transform.Find ("animation");
-			Transform tr_smoke = tr_animation.Find ("smoke");
-			tr_smoke.gameObject.GetComponent<ParticleSystem> ().Play ();
-			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, 0, tr_smoke.eulerAngles.z);
-			/*
-			if (is_grounded){
-				GetComponent<AudioSource>().pitch=2;
-			}
-			else{
-				GetComponent<AudioSource>().pitch=2.5f;
-			}
-			GetComponent<AudioSource>().Play ();*/
+			animateJump();
 		}
 		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("jumping")) {
 
@@ -454,6 +472,32 @@ public class PlayerPhysics : MonoBehaviour
 
 			}
 		}
+	}
+
+	void animateJump()
+	{
+		if (is_network_)
+			nview.RPC ("animateJumpRPC", RPCMode.All, null);
+		else
+			animateJumpRPC();
+	}
+
+	[RPC]
+	void animateJumpRPC ()
+	{
+		animator.SetTrigger ("triggerJump");
+		Transform tr_animation = transform.Find ("animation");
+		Transform tr_smoke = tr_animation.Find ("smoke");
+		tr_smoke.gameObject.GetComponent<ParticleSystem> ().Play ();
+		tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, 0, tr_smoke.eulerAngles.z);
+		/*
+			if (is_grounded){
+				GetComponent<AudioSource>().pitch=2;
+			}
+			else{
+				GetComponent<AudioSource>().pitch=2.5f;
+			}
+			GetComponent<AudioSource>().Play ();*/
 	}
 
 	void setBodyVelocity (Vector3 velocity)
@@ -512,13 +556,23 @@ public class PlayerPhysics : MonoBehaviour
 
 	public void isHurt ()
 	{
-		if (is_wounded) {
+		if (is_network_)
+			if (nview.isMine)
+				nview.RPC ("isHurtRPC", RPCMode.All, is_wounded_);
+		else
+			isHurtRPC (is_wounded_);
+	}
 
+	[RPC]
+	void isHurtRPC(bool is_wounded)
+	{
+		if (is_wounded) {
+			
 			StartCoroutine (die ());
 			stopWound ();
 			CancelInvoke ("stopWound");
 		} else {
-			is_wounded = true;
+			is_wounded_ = true;
 			Invoke ("startWound", 0f);
 			Invoke ("stopWound", wound_length);
 		}
@@ -538,7 +592,7 @@ public class PlayerPhysics : MonoBehaviour
 	public void stopWound ()
 	{
 		gameObject.transform.Find ("animation").Find ("small blood").gameObject.GetComponent<ParticleSystem> ().Stop ();
-		is_wounded = false;
+		is_wounded_ = false;
 	}
 	
 	public void startAttack ()
