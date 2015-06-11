@@ -17,10 +17,12 @@ public class PlayerFactory : MonoBehaviour {
 	public GameObject player_prefab;
 
 	private PlayerManager player_manager = null;
+	//NetworkView network_view_;
 	
 	// Use this for initialization
 	void Awake () {
 		DontDestroyOnLoad (transform.gameObject);
+		//network_view_ = GetComponent<NetworkView> ();
 	}
 	
 	public void createPlayer() {
@@ -28,12 +30,15 @@ public class PlayerFactory : MonoBehaviour {
 	}
 
 	public void createNetworkPlayer() {
-		configurePlayer( Network.Instantiate (player_prefab, pos, new Quaternion (0, 0, 0, 0), 0) as GameObject);
+		Object player = Network.Instantiate (player_prefab, pos, new Quaternion (0, 0, 0, 0), 0);
+		configurePlayer (player);
 	}
 
-	void configurePlayer(GameObject player) {
-		getPlayerManager().addPlayer (player);
-		player.SetActive (false);
+	void configurePlayer(Object playero) {
+		GameObject player = playero as GameObject;
+		Debug.Log (player);
+		//getPlayerManager().addPlayer (player);
+		//player.SetActive (false);
 		player.GetComponent<PlayerPhysics> ().playerNumber = input_number;
 		player.GetComponent<PlayerPhysics> ().setHatChoice (hat);
 		setSprites (player);
@@ -54,7 +59,7 @@ public class PlayerFactory : MonoBehaviour {
 
 	PlayerManager getPlayerManager() {
 		if (player_manager == null)
-			player_manager = FindObjectOfType (typeof(PlayerManager)) as PlayerManager;
+			player_manager = GameObject.FindGameObjectWithTag ("player manager").GetComponent<PlayerManager>();
 
 		return player_manager;
 	}

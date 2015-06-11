@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class DodgeHatScript : HatAbstractClass {
@@ -15,7 +15,7 @@ public class DodgeHatScript : HatAbstractClass {
 
 	}
 	void setDodge(){
-		Vector2 direction = player.GetComponent<PlayerPhysics> ().directionFromInput ();
+		Vector2 direction = player.GetComponent<PlayerPhysics> ().getInputDirection ();
 		player.GetComponent<Rigidbody2D> ().gravityScale = 0;
 		player.GetComponent<Rigidbody2D> ().velocity = direction*speed;
 		player.GetComponent<PlayerPhysics> ().is_hitable = false;

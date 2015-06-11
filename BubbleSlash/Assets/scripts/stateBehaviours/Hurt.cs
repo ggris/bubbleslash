@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Hurt : StateMachineBehaviour {
@@ -8,7 +8,7 @@ public class Hurt : StateMachineBehaviour {
 		GameObject ennemy = animator.gameObject.GetComponent<WeaponBehaviour> ().ennemy;
 		GameObject player = animator.gameObject.GetComponent<WeaponBehaviour> ().player;
 		
-		Vector2 bloodspeed = ennemy.GetComponent<PlayerPhysics> ().direction_action*2;
+		Vector2 bloodspeed = ennemy.GetComponent<PlayerPhysics> ().direction_action_*2;
 	
 
 		GameObject.Find("bloodManager").GetComponent<BloodPop>().displayBlood(player.transform.position,bloodspeed);

@@ -271,6 +271,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 438626013}
   - 114: {fileID: 438626012}
+  - 148: {fileID: 438626014}
   m_Layer: 0
   m_Name: Online Game
   m_TagString: GameController

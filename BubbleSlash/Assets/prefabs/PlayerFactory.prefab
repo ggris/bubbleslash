@@ -9,6 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 466222}
   - 114: {fileID: 11470404}
+  - 148: {fileID: 14879492}
   m_Layer: 0
   m_Name: PlayerFactory
   m_TagString: Untagged
@@ -42,7 +43,6 @@ MonoBehaviour:
   pos: {x: 0, y: 0}
   input_number: 2
   hat: 2
-  weapon: 0
   color: {r: .435986131, g: .885878742, b: .926470578, a: 1}
   hat_prefabs:
   - {fileID: 148122, guid: 1edc466c12db3424e9e423d931ab7ea3, type: 2}
@@ -50,6 +50,18 @@ MonoBehaviour:
   - {fileID: 155382, guid: 8a51aed5273fe9543ba692aeceb472ce, type: 2}
   - {fileID: 155840, guid: b2710c4a21c3797479a2281c8a144cce, type: 2}
   player_prefab: {fileID: 110914, guid: 6ab6b7d6d470d7142928fc676667eeeb, type: 2}
+--- !u!148 &14879492
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 191472}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 0}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

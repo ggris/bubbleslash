@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PlayerAttack : StateMachineBehaviour {
@@ -12,7 +12,7 @@ public class PlayerAttack : StateMachineBehaviour {
 	}
 
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-		animator.gameObject.GetComponent<Rigidbody2D> ().velocity = animator.gameObject.GetComponent<PlayerPhysics> ().direction_action * animator.gameObject.GetComponent<PlayerPhysics> ().dash_speed;
+		animator.gameObject.GetComponent<Rigidbody2D> ().velocity = animator.gameObject.GetComponent<PlayerPhysics> ().direction_action_ * animator.gameObject.GetComponent<PlayerPhysics> ().dash_speed;
 	}
 	
 

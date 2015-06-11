@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Parry : StateMachineBehaviour {
@@ -14,7 +14,7 @@ public class Parry : StateMachineBehaviour {
 		playerToEnnemy.Normalize ();
 		Vector2 playerProj = - playerToEnnemy.normalized * ennemy.GetComponent<PlayerPhysics> ().parry_speed;
 		Vector2 ennemyProj = playerToEnnemy.normalized * player.GetComponent<PlayerPhysics> ().parry_speed;
-		float scalar = Vector2.Dot (ennemy.GetComponent<PlayerPhysics> ().direction_action, player.GetComponent<PlayerPhysics> ().direction_action);
+		float scalar = Vector2.Dot (ennemy.GetComponent<PlayerPhysics> ().direction_action_, player.GetComponent<PlayerPhysics> ().direction_action_);
 		if (scalar < 0) {
 			GameObject.FindObjectOfType<ShockWave> ().pop ((player.transform.position+ennemy.transform.position)/2);
 			animator.gameObject.GetComponent<WeaponBehaviour> ().ennemy.GetComponent<PlayerPhysics> ().isParried (ennemyProj);
