@@ -30,21 +30,21 @@ public class PlayerFactory : MonoBehaviour {
 	}
 
 	public void createNetworkPlayer() {
-		Object player = Network.Instantiate (player_prefab, pos, new Quaternion (0, 0, 0, 0), 0);
+		GameObject player = Network.Instantiate (player_prefab, pos, new Quaternion (0, 0, 0, 0), 0) as GameObject;
 		configurePlayer (player);
 	}
 
-	void configurePlayer(Object playero) {
-		GameObject player = playero as GameObject;
+	void configurePlayer(GameObject player) {
 		Debug.Log (player);
 		//getPlayerManager().addPlayer (player);
 		//player.SetActive (false);
-		player.GetComponent<PlayerPhysics> ().playerNumber = input_number;
-		player.GetComponent<PlayerPhysics> ().setHatChoice (hat);
-		setSprites (player);
-		setColor (player, color);
-		setHatRendering (player);
-		createHat (player);
+		PlayerPhysics player_physics = player.GetComponent<PlayerPhysics> ();
+		player_physics.playerNumber = input_number;
+		player_physics.setHatChoice (hat);
+		player_physics.setColor(color);
+		//setSprites (player);
+		//setHatRendering (player);
+		//createHat (player);
 		//notify playermanager
 	}
 

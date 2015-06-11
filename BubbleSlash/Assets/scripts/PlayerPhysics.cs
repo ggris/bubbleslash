@@ -7,6 +7,8 @@ public class PlayerPhysics : MonoBehaviour
 
 	public int playerNumber;
 
+	public GameObject[] hat_prefabs;
+
 	//physics settings
 	public float ground_acc;
 	public float air_acc;
@@ -577,9 +579,10 @@ public class PlayerPhysics : MonoBehaviour
 
 	public void isHurt ()
 	{
-		if (is_network_)
+		if (is_network_) {
 			if (nview.isMine)
 				nview.RPC ("isHurtRPC", RPCMode.All, is_wounded_);
+		}
 		else
 			isHurtRPC (is_wounded_);
 	}
@@ -648,6 +651,54 @@ public class PlayerPhysics : MonoBehaviour
 
 	public void setHatChoice (PlayerSettings.Hat hat)
 	{
-		hat_choice = hat;
+		if (is_network_) {
+			nview.RPC ("setHatChoiceRPC", RPCMode.AllBuffered, (int)hat);
+		} else
+			hat_choice = hat;
 	}
+
+	[RPC]
+	void setHatChoiceRPC (int hat)
+	{
+		hat_choice = (PlayerSettings.Hat)hat;
+		setHatRendering ();
+		createHat ();
+	}
+
+	public void setColor (Color c)
+	{
+		Vector3 color = new Vector3 (c.r, c.g, c.b);
+		if (is_network_) {
+			nview.RPC ("setColorRPC", RPCMode.AllBuffered, color);
+		} else
+			setColorRPC(color);
+	}
+
+	[RPC]
+	void setColorRPC (Vector3 color)
+	{
+		Color c = new Color(color.x, color.y, color.z);
+		transform.Find ("animation").Find ("body").gameObject.GetComponent<SpriteRenderer> ().color = c;
+		transform.Find ("animation").Find ("eye").gameObject.GetComponent<SpriteRenderer> ().color = c;
+		transform.Find ("animation").Find ("weapon_trans").gameObject.GetComponent<SpriteRenderer> ().color = c;
+	}
+
+	void setHatRendering ()
+	{
+		GameObject anim = transform.Find ("animation").gameObject;
+		if (hat_choice == PlayerSettings.Hat.dashHat) {
+			anim.transform.FindChild ("dodgeHat").gameObject.SetActive (false);
+			anim.transform.FindChild ("dashHat").gameObject.SetActive (true);
+		}
+		if (hat_choice == PlayerSettings.Hat.dodgeHat) {
+			anim.transform.FindChild ("dashHat").gameObject.SetActive (false);
+			anim.transform.FindChild ("dodgeHat").gameObject.SetActive (true);
+		}
+	}
+
+	void createHat(){
+		hat_GO = GameObject.Instantiate (hat_prefabs [(int)hat_choice], new Vector3 (0, 0, 0), new Quaternion (0, 0, 0, 0)) as GameObject;
+		hat_GO.transform.parent = transform;
+	}
+
 }

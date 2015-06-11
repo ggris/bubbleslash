@@ -1007,6 +1007,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 0
+  hat_prefabs:
+  - {fileID: 148122, guid: 1edc466c12db3424e9e423d931ab7ea3, type: 2}
+  - {fileID: 175670, guid: b8bf01b96a31ac44eb12806dde13cc2f, type: 2}
+  - {fileID: 155382, guid: 8a51aed5273fe9543ba692aeceb472ce, type: 2}
+  - {fileID: 155840, guid: b2710c4a21c3797479a2281c8a144cce, type: 2}
   ground_acc: 10000
   air_acc: 3000
   jump_speed: 20
@@ -1030,9 +1035,9 @@ MonoBehaviour:
   jumps_left: 0
   max_attacks: 0
   attacks_left: 0
-  is_grounded: 0
-  is_touching_left: 0
-  is_touching_right: 1
+  is_grounded_: 0
+  is_touching_left_: 0
+  is_touching_right_: 0
   able_to_move: 1
   able_to_jump: 0
   able_to_attack: 0
@@ -1098,7 +1103,7 @@ NetworkView:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 110914}
   m_Enabled: 1
-  m_StateSynchronization: 1
+  m_StateSynchronization: 2
   m_Observed: {fileID: 11446784}
   m_ViewID:
     m_ID: 0

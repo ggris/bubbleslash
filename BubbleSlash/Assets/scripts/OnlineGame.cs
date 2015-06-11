@@ -4,7 +4,8 @@ using System.Collections.Generic;
 public class OnlineGame : MonoBehaviour
 {
 
-	//private List<PlayerFactory> player_factories;
+	public static OnlineGame unique_game_;
+
 
 	//public PlayerFactory player1_factory_;
 	//public PlayerFactory player2_factory_;
@@ -16,9 +17,14 @@ public class OnlineGame : MonoBehaviour
 	private GameObject player_manager_;
 	private HostData[] hostList;
 	public menuScript menu;
+
 	void Awake ()
-	{
-		DontDestroyOnLoad (transform.gameObject);
+	{      
+		if (!unique_game_) {
+			unique_game_ = this;
+			DontDestroyOnLoad (gameObject);
+		} else 
+			Destroy (gameObject);
 	}
 	
 	// Use this for initialization
@@ -68,7 +74,7 @@ public class OnlineGame : MonoBehaviour
 		if (hostList.Length > 0) {
 			JoinServer (hostList [0]);
 		} else {
-			Debug.Log("No host");
+			Debug.Log ("No host");
 		}
 	}
 	
@@ -104,6 +110,7 @@ public class OnlineGame : MonoBehaviour
 			foreach (PlayerFactory pf in pfs) {
 				pf.createNetworkPlayer();
 			}
+
 
 		} else {
 			foreach (PlayerFactory pf in pfs) {
