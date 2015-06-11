@@ -3,6 +3,9 @@ using System.Collections;
 
 public class OnlineGame : MonoBehaviour
 {
+
+
+
 	public PlayerFactory player1_factory_;
 	public PlayerFactory player2_factory_;
 	public GameObject player_manager_prefab_;
@@ -12,10 +15,11 @@ public class OnlineGame : MonoBehaviour
 	public string level_ = "OnlineTest";
 	private GameObject player_manager_;
 	private HostData[] hostList;
-	
+
 	void Awake ()
 	{
 		DontDestroyOnLoad (transform.gameObject);
+
 	}
 	
 	// Use this for initialization
@@ -37,6 +41,7 @@ public class OnlineGame : MonoBehaviour
 		bool useNat = !Network.HavePublicAddress ();
 		Network.InitializeServer (32, 25000, useNat);
 		MasterServer.RegisterHost (typeName_, gameName_);
+		loadLevel ();
 	}
 	
 	void OnServerInitialized ()
@@ -80,7 +85,7 @@ public class OnlineGame : MonoBehaviour
 		loadLevel ();
 		Debug.Log ("Server Joined2 : " + gameName_);
 	}
-
+	
 	void loadLevel ()
 	{
 		InitPlayers ();
@@ -98,5 +103,7 @@ public class OnlineGame : MonoBehaviour
 			player2_factory_.createPlayer ();
 		}
 	}
+
+
 
 }
