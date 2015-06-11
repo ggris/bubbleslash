@@ -85,7 +85,7 @@ public class CameraTracking : MonoBehaviour {
 
 		Vector3 target_position = new Vector3 (pos_speed_.x, pos_speed_.y, 0);
 		transform.position += target_position;
-		transform.position += new Vector3 (Mathf.Sin (10.0f*Time.time), Mathf.Cos (10.0f*Time.time), 0) * 0.1f;
+		//transform.position += new Vector3 (Mathf.Sin (10.0f*Time.time), Mathf.Cos (10.0f*Time.time), 0) * 0.1f;
 	}
 
 	float moveTowards(float a, float b) {
