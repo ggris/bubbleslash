@@ -11,8 +11,8 @@ public class Hurt : StateMachineBehaviour {
 		Vector2 bloodspeed = ennemy.GetComponent<PlayerPhysics> ().direction_action_*2;
 	
 
-		GameObject.Find("bloodManager").GetComponent<BloodPop>().displayBlood(player.transform.position,bloodspeed);
-		animator.gameObject.GetComponent<WeaponBehaviour> ().player.GetComponent<PlayerPhysics> ().isHurt ();
+		//GameObject.Find("bloodManager").GetComponent<BloodPop>().displayBlood(player.transform.position,bloodspeed);
+		animator.gameObject.GetComponent<WeaponBehaviour> ().player.GetComponent<PlayerPhysics> ().isHurt (ennemy);
 
 	}
 

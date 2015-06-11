@@ -47,7 +47,7 @@ public class BoxController : MonoBehaviour {
 				physics.is_touching_right_ = true;
 				break;
 			case "head" :
-				if(physics.playerInputButton("Jump")){
+				if(physics.isInputJump()){
 					ignoredColliders.Add (other);
 					Physics2D.IgnoreCollision(body,other,true);
 				}

@@ -271,6 +271,11 @@ public class PlayerPhysics : MonoBehaviour
 
 	}
 
+	public bool isInputJump()
+	{
+		return input_jump_;
+	}
+
 	void updateJump()
 	{
 		bool input_jump = playerInputButton ("Jump");
@@ -320,17 +325,17 @@ public class PlayerPhysics : MonoBehaviour
 			return input_direction_;
 	}
 
-	private float playerInputAxis (string inputName)
+	float playerInputAxis (string inputName)
 	{
 		return Input.GetAxisRaw ("P" + playerNumber + " " + inputName);
 	}
 
-	public bool playerInputButtonDown (string inputName)
+	bool playerInputButtonDown (string inputName)
 	{
 		return Input.GetButtonDown ("P" + playerNumber + " " + inputName);
 	}
 
-	public bool playerInputButton (string inputName)
+	bool playerInputButton (string inputName)
 	{
 		return Input.GetButton ("P" + playerNumber + " " + inputName);
 	}
@@ -577,20 +582,22 @@ public class PlayerPhysics : MonoBehaviour
 		return Vector2.Angle (a, b) * -1 * Mathf.Sign (Vector3.Cross (new Vector3 (a.x, a.y, 0), new Vector3 (b.x, b.y, 0)).z);
 	}
 
-	public void isHurt ()
+	public void isHurt (GameObject ennemy)
 	{
+		Vector3 bloodspeed = ennemy.GetComponent<PlayerPhysics> ().direction_action_*2;
 		if (is_network_) {
 			if (nview.isMine)
-				nview.RPC ("isHurtRPC", RPCMode.All, is_wounded_);
+				nview.RPC ("isHurtRPC", RPCMode.All, bloodspeed, is_wounded_);
 		}
 		else
-			isHurtRPC (is_wounded_);
+			isHurtRPC (bloodspeed, is_wounded_);
 	}
 
 	[RPC]
-	void isHurtRPC(bool is_wounded)
+	void isHurtRPC(Vector3 bloodspeed, bool is_wounded)
 	{
 		if (is_wounded) {
+			popBlood(bloodspeed);
 			
 			StartCoroutine (die ());
 			stopWound ();
@@ -600,6 +607,11 @@ public class PlayerPhysics : MonoBehaviour
 			Invoke ("startWound", 0f);
 			Invoke ("stopWound", wound_length);
 		}
+	}
+
+	void popBlood(Vector2 bloodspeed)
+	{
+		GameObject.Find("bloodManager").GetComponent<BloodPop>().displayBlood(transform.position,bloodspeed);
 	}
 
 	public void isParried (Vector2 dir_parry)
@@ -654,7 +666,7 @@ public class PlayerPhysics : MonoBehaviour
 		if (is_network_) {
 			nview.RPC ("setHatChoiceRPC", RPCMode.AllBuffered, (int)hat);
 		} else
-			hat_choice = hat;
+			setHatChoiceRPC ((int) hat);
 	}
 
 	[RPC]
