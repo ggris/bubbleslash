@@ -29,7 +29,7 @@ public class CameraTracking : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (players.Length>=2){
+		if (players.Length>=1){
 			updateMinMax ();
 			updatePosition ();
 			updateZoom ();
