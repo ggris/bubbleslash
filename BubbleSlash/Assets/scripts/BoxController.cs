@@ -14,13 +14,13 @@ public class BoxController : MonoBehaviour {
 		if (!ignoredColliders.Contains (other)) {
 			switch(box.gameObject.name){
 			case "feet" :
-				physics.is_grounded = true;
+				physics.is_grounded_ = true;
 				break;
 			case "left" :
-				physics.is_touching_left = true;
+				physics.is_touching_left_ = true;
 				break;
 			case "right" :
-				physics.is_touching_right = true;
+				physics.is_touching_right_ = true;
 				break;
 			default :
 				break;
@@ -37,14 +37,14 @@ public class BoxController : MonoBehaviour {
 					Physics2D.IgnoreCollision(body,other,true);
 				}
 				else {
-					physics.is_grounded=true;
+					physics.is_grounded_=true;
 				}
 				break;
 			case "left" :
-				physics.is_touching_left = true;
+				physics.is_touching_left_ = true;
 				break;
 			case "right" :
-				physics.is_touching_right = true;
+				physics.is_touching_right_ = true;
 				break;
 			case "head" :
 				if(physics.playerInputButton("Jump")){
@@ -63,13 +63,13 @@ public class BoxController : MonoBehaviour {
 		//if (!ignoredColliders.Contains (other)) {
 			switch(box.gameObject.name){
 			case "feet" :
-				physics.is_grounded = false;
+				physics.is_grounded_ = false;
 				break;
 			case "left" :
-				physics.is_touching_left = false;
+				physics.is_touching_left_ = false;
 				break;
 			case "right" :
-				physics.is_touching_right = false;
+				physics.is_touching_right_ = false;
 				break;
 			default :
 				break;

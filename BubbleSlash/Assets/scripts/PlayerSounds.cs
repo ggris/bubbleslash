@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PlayerSounds : MonoBehaviour {
@@ -18,7 +18,7 @@ public class PlayerSounds : MonoBehaviour {
 
 
 	public void jump(){
-		if (GetComponent<PlayerPhysics> ().is_grounded)
+		if (GetComponent<PlayerPhysics> ().is_grounded_)
 			source.pitch = 2;
 		else
 			source.pitch = 2.5f;

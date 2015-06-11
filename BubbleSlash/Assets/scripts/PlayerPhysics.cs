@@ -34,9 +34,11 @@ public class PlayerPhysics : MonoBehaviour
 	public int jumps_left;
 	public int max_attacks;
 	public int attacks_left;
-	public bool is_grounded;
-	public bool is_touching_left;
-	public bool is_touching_right;
+
+	public bool is_grounded_;
+	public bool is_touching_left_;
+	public bool is_touching_right_;
+
 	public bool able_to_move;
 	public bool able_to_jump;
 	public bool able_to_attack;
@@ -84,13 +86,13 @@ public class PlayerPhysics : MonoBehaviour
 	void Start ()
 	{
 		jumps_left = max_jumps - 1;
-		is_grounded = false;
+		is_grounded_ = false;
 		horizontal_direction = 1;		
 		able_to_move = true;
 		able_to_jump = true;
 		attack_start = Time.time;
-		is_touching_left = false;
-		is_touching_right = false;
+		is_touching_left_ = false;
+		is_touching_right_ = false;
 		is_hitable = true;
 	}
 
@@ -217,8 +219,8 @@ public class PlayerPhysics : MonoBehaviour
 		animator.SetFloat ("inputX", input_direction_.x);
 		animator.SetFloat ("inputY", input_direction_.y);
 		animator.SetFloat ("speedX", body.velocity.x);
-		animator.SetBool ("isOnFeet", is_grounded);
-		animator.SetBool ("isOnHand", is_touching_left || is_touching_right);
+		animator.SetBool ("isOnFeet", is_grounded_);
+		animator.SetBool ("isOnHand", is_touching_left_ || is_touching_right_);
 		animator.SetBool ("inputJump", input_jump_);
 		animator.SetFloat ("hat", (float)hat_choice);
 		
@@ -399,21 +401,21 @@ public class PlayerPhysics : MonoBehaviour
 	public void checkMove ()
 	{
 		if (input_direction_.x < 0 && isInputFree ()) {
-			if (is_grounded) {
+			if (is_grounded_) {
 				addForce (-Vector2.right * ground_acc * Time.deltaTime);
 			} else {
 				addForce (-Vector2.right * air_acc * Time.deltaTime);
 			}
 		}
 		if (input_direction_.x > 0 && isInputFree ()) {
-			if (is_grounded) {
+			if (is_grounded_) {
 				addForce (Vector2.right * ground_acc * Time.deltaTime);
 			} else {
 				addForce (Vector2.right * air_acc * Time.deltaTime);
 			}
 		}
 		if (isInputFree ()) {
-			if (is_grounded) {
+			if (is_grounded_) {
 				addForce (new Vector2 (-body.velocity.x, 0f) * ground_horizontal_drag * Time.deltaTime);
 			} else {
 				addForce (new Vector2 (-body.velocity.x, 0f) * air_horizontal_drag * Time.deltaTime);
@@ -439,10 +441,10 @@ public class PlayerPhysics : MonoBehaviour
 	public void checkSlide ()
 	{
 		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("sliding")) {
-			if (is_touching_left)
+			if (is_touching_left_)
 				horizontal_direction = 1;
 			else {
-				if (is_touching_right)
+				if (is_touching_right_)
 					horizontal_direction = -1;
 			}
 		}
@@ -459,7 +461,7 @@ public class PlayerPhysics : MonoBehaviour
 				if (jumps_left > 0) {
 					Vector3 velocity;
 
-					if (!is_grounded) {
+					if (!is_grounded_) {
 						if (playerInputAxis ("Horizontal") < -0.5 && body.velocity.x > 0)
 							velocity = new Vector2 (-push_air_speed, jump_speed);
 						else if (playerInputAxis ("Horizontal") > 0.5 && body.velocity.x < 0)
