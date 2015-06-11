@@ -11,6 +11,7 @@ public class PlayerFactoryMenuScript : MonoBehaviour {
 	private Color color;
 	private PlayerSettings.Hat hat = 0;
 	private int input_number;
+
 	//rendering on buttons
 	UnityEngine.UI.Text text_hat;
 	UnityEngine.UI.Button button;	
@@ -30,10 +31,11 @@ public class PlayerFactoryMenuScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+		 
 	}
 	void changeHat(){
 		hat = PlayerSettings.nextHat (hat);
+		player_factory.GetComponent<PlayerFactory> ().hat = hat;
 		text_hat.text = PlayerSettings.ToString (hat);
 	}
 	void changeColor(){

@@ -53,9 +53,10 @@ public class menuScript : MonoBehaviour {
 
 	void addPlayer(){
 		GameObject new_pfm = GameObject.Instantiate(playerFactoryMenuPrefab) as GameObject;
-		new_pfm.transform.SetParent(GameObject.Find("Settings").transform);
+		RectTransform rect_tr = new_pfm.GetComponent<RectTransform> ();
+		rect_tr.SetParent (GameObject.Find ("Settings").GetComponent<RectTransform> ());
 		new_pfm.transform.localScale = new Vector3 (1, 1, 1);
-		new_pfm.transform.position = new Vector3 (0, 100-playerFactoryMenus.Count * 80);
+		new_pfm.GetComponent<RectTransform> ().position = new Vector3 (0, 100 - 80*playerFactoryMenus.Count, 0);
 		new_pfm.GetComponent<PlayerFactoryMenuScript> ().setInputNumber (playerFactoryMenus.Count + 1);
 		playerFactoryMenus.Add (new_pfm);
 
