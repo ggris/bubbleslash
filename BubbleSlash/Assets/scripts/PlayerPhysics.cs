@@ -659,7 +659,7 @@ public class PlayerPhysics : MonoBehaviour
 		if (is_network_) {
 			nview.RPC ("setHatChoiceRPC", RPCMode.AllBuffered, (int)hat);
 		} else
-			hat_choice = hat;
+			setHatChoiceRPC ((int) hat);
 	}
 
 	[RPC]
