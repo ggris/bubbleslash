@@ -183,7 +183,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   main_canvas: {fileID: 515703505}
-  options_canvas: {fileID: 0}
   settings_canvas: {fileID: 1521331424}
   playerFactoryMenuPrefab: {fileID: 187106, guid: d3e36db9378bd034b90060ec8d76d390,
     type: 2}

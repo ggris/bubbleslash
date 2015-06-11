@@ -10,7 +10,7 @@ public class PlayerFactoryMenuScript : MonoBehaviour {
 	private int color_indice = 0;
 	private Color color;
 	private PlayerSettings.Hat hat = PlayerSettings.Hat.dashHat;
-	private int input_number;
+	//private int input_number;
 
 	//rendering on buttons
 	UnityEngine.UI.Text text_hat;
@@ -46,13 +46,10 @@ public class PlayerFactoryMenuScript : MonoBehaviour {
 		button_image.color = color;
 		player_factory.GetComponent<PlayerFactory> ().color = color;
 	}
-	void OnGUI(){
-		//bool showlist = false;
-		//int picked_item = comboBoxControl.Show ();
-		//GUI.Box(this.GetComponent<RectTransform>().rect,picked_item.ToString());
-	}
+
+
 	public void setInputNumber(int i){
-		input_number = i;
 		player_factory.GetComponent<PlayerFactory> ().input_number = i;
 	}
+
 }
