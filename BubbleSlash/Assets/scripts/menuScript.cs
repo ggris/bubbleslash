@@ -28,9 +28,11 @@ public class menuScript : MonoBehaviour {
 	
 	}
 	void goToSettings(){
-		settings_canvas.SetActive (true);
 		main_canvas.SetActive (false);
 		options_canvas.SetActive (false);
+		settings_canvas.SetActive (true);
+
+		addPlayer ();
 		Debug.Log ("go to settings");
 	}
 	
@@ -42,8 +44,9 @@ public class menuScript : MonoBehaviour {
 	
 	void goToMain(){
 		settings_canvas.SetActive (false);
-		main_canvas.SetActive (true);
 		options_canvas.SetActive (false);
+		main_canvas.SetActive (true);
+
 	}
 
 	void startGame(){
