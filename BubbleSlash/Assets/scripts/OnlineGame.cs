@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+
 public class OnlineGame : MonoBehaviour
 {
 
@@ -14,7 +15,7 @@ public class OnlineGame : MonoBehaviour
 	public const string typeName_ = "GGVLBubbleSlashDEV";
 	public string gameName_ = "kaboom";
 	public string level_ = "OnlineTest";
-	private GameObject player_manager_;
+	//private GameObject player_manager_;
 	private HostData[] hostList;
 	public menuScript menu;
 
@@ -23,8 +24,11 @@ public class OnlineGame : MonoBehaviour
 		if (!unique_game_) {
 			unique_game_ = this;
 			DontDestroyOnLoad (gameObject);
-		} else 
-			Destroy (gameObject);
+		} else {
+			Destroy (unique_game_.gameObject);
+			unique_game_ = this;
+			DontDestroyOnLoad (gameObject);
+		}
 	}
 	
 	// Use this for initialization
@@ -37,7 +41,16 @@ public class OnlineGame : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			if (Network.isServer) {
+				Network.Disconnect ();
+				MasterServer.UnregisterHost ();
+			}
+			if (Network.isClient) {
+				Network.Disconnect ();
+			}
+
+		}
 	}
 	
 	void LaunchServer ()
@@ -51,7 +64,7 @@ public class OnlineGame : MonoBehaviour
 	void OnServerInitialized ()
 	{
 		Debug.Log ("Server Initializied");
-		player_manager_ = Network.Instantiate (player_manager_prefab_, new Vector3 (), new Quaternion (), 0) as GameObject;
+		//player_manager_ = Network.Instantiate (player_manager_prefab_, new Vector3 (), new Quaternion (), 0) as GameObject;
 		menu.SendMessage ("goToSettings");
 	}
 	
@@ -87,8 +100,8 @@ public class OnlineGame : MonoBehaviour
 	
 	void OnConnectedToServer ()
 	{
-		player_manager_ = GameObject.FindGameObjectWithTag ("player manager");
-		Debug.Log (player_manager_);
+		//player_manager_ = GameObject.FindGameObjectWithTag ("player manager");
+		//Debug.Log (player_manager_);
 		Debug.Log ("Server Joined : " + gameName_);
 		menu.SendMessage ("goToSettings");
 	}
@@ -103,18 +116,18 @@ public class OnlineGame : MonoBehaviour
 	void InitPlayers ()
 	{
 
-		PlayerFactory [] pfs = GameObject.FindObjectsOfType(typeof(PlayerFactory)) as PlayerFactory[];
+		PlayerFactory [] pfs = GameObject.FindObjectsOfType (typeof(PlayerFactory)) as PlayerFactory[];
 		Debug.Log (pfs.Length + " players created");
 
 		if (Network.isClient || Network.isServer) {
 			foreach (PlayerFactory pf in pfs) {
-				pf.createNetworkPlayer();
+				pf.createNetworkPlayer ();
 			}
 
 
 		} else {
 			foreach (PlayerFactory pf in pfs) {
-				pf.createPlayer();
+				pf.createPlayer ();
 			}
 		}
 	}
