@@ -271,7 +271,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 438626013}
   - 114: {fileID: 438626012}
-  - 148: {fileID: 438626014}
   m_Layer: 0
   m_Name: Online Game
   m_TagString: GameController
@@ -308,19 +307,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
---- !u!148 &438626014
-NetworkView:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 438626011}
-  m_Enabled: 1
-  m_StateSynchronization: 1
-  m_Observed: {fileID: 438626013}
-  m_ViewID:
-    m_ID: 3
-    m_Type: 1
+  m_RootOrder: 4
 --- !u!1 &447460643
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,7 +689,8 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 14879492, guid: 73b8f083b529d4be3997cefcaf974869, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 73b8f083b529d4be3997cefcaf974869, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &1111797085 stripped
@@ -1942,7 +1930,8 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 14879492, guid: 73b8f083b529d4be3997cefcaf974869, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 73b8f083b529d4be3997cefcaf974869, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &1868208661 stripped

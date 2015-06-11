@@ -16,7 +16,6 @@ public class OnlineGame : MonoBehaviour
 	private GameObject player_manager_;
 	private HostData[] hostList;
 
-	NetworkView network_view_;
 	void Awake ()
 	{
 		DontDestroyOnLoad (transform.gameObject);
@@ -27,8 +26,6 @@ public class OnlineGame : MonoBehaviour
 	void Start ()
 	{
 		hostList = new HostData[0];
-		network_view_ = GetComponent<NetworkView> ();
-		Debug.Log (network_view_);
 		
 	}
 	

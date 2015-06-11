@@ -100,6 +100,19 @@ public class PlayerPhysics : MonoBehaviour
 		Network.DestroyPlayerObjects(player);
 	}
 
+	void OnDisconnectedFromServer(NetworkDisconnection info) {
+		if (Network.isServer)
+			Debug.Log("Local server connection disconnected");
+		else
+			if (info == NetworkDisconnection.LostConnection)
+				Debug.Log("Lost connection to the server");
+		else
+			Debug.Log("Successfully diconnected from the server");
+		Application.LoadLevel ("Launcher");
+		Destroy(GameObject.Find("playerManager"));
+		        Destroy(this.gameObject);
+	}
+
 	void logState ()
 	{
 		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("idle")) {
