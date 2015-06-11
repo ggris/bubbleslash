@@ -44,7 +44,6 @@ public class OnlineGame : MonoBehaviour
 		bool useNat = !Network.HavePublicAddress ();
 		Network.InitializeServer (32, 25000, useNat);
 		MasterServer.RegisterHost (typeName_, gameName_);
-		loadLevel ();
 	}
 	
 	void OnServerInitialized ()
@@ -103,6 +102,7 @@ public class OnlineGame : MonoBehaviour
 	{
 		if (Network.isClient || Network.isServer) {
 			player1_factory_.createNetworkPlayer ();
+			Debug.Log("Create P1");
 		} else {
 			//player_manager_ = GameObject.Instantiate (player_manager_prefab_, new Vector3 (), new Quaternion ()) as GameObject;
 			player1_factory_.createPlayer ();
