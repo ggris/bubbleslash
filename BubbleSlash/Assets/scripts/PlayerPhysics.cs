@@ -4,7 +4,6 @@ using System.Collections;
 public class PlayerPhysics : MonoBehaviour
 {
 
-
 	public int playerNumber;
 
 	public GameObject[] hat_prefabs;
@@ -112,9 +111,8 @@ public class PlayerPhysics : MonoBehaviour
 				Debug.Log("Lost connection to the server");
 		else
 			Debug.Log("Successfully diconnected from the server");
-		Application.LoadLevel ("Launcher");
-		Destroy(GameObject.Find("playerManager"));
-		        Destroy(this.gameObject);
+		OnlineGame.disconnect ();
+		Destroy(this.gameObject);
 	}
 
 	void logState ()
