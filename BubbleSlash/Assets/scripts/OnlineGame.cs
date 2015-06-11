@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
 public class OnlineGame : MonoBehaviour
 {
 
+	//private List<PlayerFactory> player_factories;
 
-
-	public PlayerFactory player1_factory_;
-	public PlayerFactory player2_factory_;
+	//public PlayerFactory player1_factory_;
+	//public PlayerFactory player2_factory_;
 	public GameObject player_manager_prefab_;
 	public GameObject player_prefab_;
 	public const string typeName_ = "GGVLBubbleSlashDEV";
@@ -15,11 +15,10 @@ public class OnlineGame : MonoBehaviour
 	public string level_ = "OnlineTest";
 	private GameObject player_manager_;
 	private HostData[] hostList;
-
+	public menuScript menu;
 	void Awake ()
 	{
 		DontDestroyOnLoad (transform.gameObject);
-
 	}
 	
 	// Use this for initialization
@@ -47,7 +46,7 @@ public class OnlineGame : MonoBehaviour
 	{
 		Debug.Log ("Server Initializied");
 		player_manager_ = Network.Instantiate (player_manager_prefab_, new Vector3 (), new Quaternion (), 0) as GameObject;
-		loadLevel ();
+		menu.SendMessage ("goToSettings");
 	}
 	
 	void ConnectRandomServer ()
@@ -84,8 +83,8 @@ public class OnlineGame : MonoBehaviour
 	{
 		player_manager_ = GameObject.FindGameObjectWithTag ("player manager");
 		Debug.Log (player_manager_);
-		loadLevel ();
-		Debug.Log ("Server Joined2 : " + gameName_);
+		Debug.Log ("Server Joined : " + gameName_);
+		menu.SendMessage ("goToSettings");
 	}
 	
 	void loadLevel ()
@@ -97,16 +96,20 @@ public class OnlineGame : MonoBehaviour
 
 	void InitPlayers ()
 	{
+
+		PlayerFactory [] pfs = GameObject.FindObjectsOfType(typeof(PlayerFactory)) as PlayerFactory[];
+		Debug.Log (pfs.Length + " players created");
+
 		if (Network.isClient || Network.isServer) {
-			player1_factory_.createNetworkPlayer ();
-			Debug.Log("Create P1");
+			foreach (PlayerFactory pf in pfs) {
+				pf.createNetworkPlayer();
+			}
+
 		} else {
-			//player_manager_ = GameObject.Instantiate (player_manager_prefab_, new Vector3 (), new Quaternion ()) as GameObject;
-			player1_factory_.createPlayer ();
-			player2_factory_.createPlayer ();
+			foreach (PlayerFactory pf in pfs) {
+				pf.createPlayer();
+			}
 		}
 	}
-
-
 
 }

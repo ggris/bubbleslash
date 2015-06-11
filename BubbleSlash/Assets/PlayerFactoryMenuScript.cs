@@ -6,27 +6,26 @@ public class PlayerFactoryMenuScript : MonoBehaviour {
 	public GameObject pf_prefab;
 	public Color[] colors;
 
-
 	//settings
 	private int color_indice = 0;
 	private Color color;
 	private PlayerSettings.Hat hat = 0;
-
+	private int input_number;
 	//rendering on buttons
 	UnityEngine.UI.Text text_hat;
 	UnityEngine.UI.Button button;	
 	void Awake(){
 		color_indice = 0;
-
+		player_factory = Instantiate (pf_prefab);
 	}
 
 	void OnDestroy(){
 		GameObject.Destroy (player_factory);
 	}
 	void Start () {
-		player_factory = Instantiate (pf_prefab);
 		button = gameObject.transform.Find ("color").gameObject.GetComponent<UnityEngine.UI.Button> ();
 		text_hat = gameObject.transform.Find ("hat").Find ("Text").GetComponent<UnityEngine.UI.Text> ();
+		player_factory.GetComponent<PlayerFactory> ().color = Color.white;
 	}
 	
 	// Update is called once per frame
@@ -47,5 +46,9 @@ public class PlayerFactoryMenuScript : MonoBehaviour {
 		//bool showlist = false;
 		//int picked_item = comboBoxControl.Show ();
 		//GUI.Box(this.GetComponent<RectTransform>().rect,picked_item.ToString());
+	}
+	public void setInputNumber(int i){
+		input_number = i;
+		player_factory.GetComponent<PlayerFactory> ().input_number = i;
 	}
 }

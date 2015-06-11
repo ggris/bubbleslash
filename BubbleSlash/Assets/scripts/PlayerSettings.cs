@@ -15,16 +15,12 @@ public class PlayerSettings {
 		switch (myHat){
 		case Hat.testHat :
 			return "test";
-			break;
 		case Hat.speedHat :
 			return "speed";
-			break;
 		case Hat.dodgeHat :
 			return "dodge";
-			break;
 		case Hat.dashHat :
 			return "dash";
-			break;
 		default :
 			return "";
 		}
