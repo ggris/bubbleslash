@@ -4,7 +4,6 @@ using System.Collections.Generic;
 public class menuScript : MonoBehaviour {
 	//canvas
 	public GameObject main_canvas;
-	public GameObject options_canvas;
 	public GameObject settings_canvas;
 	public GameObject playerFactoryMenuPrefab;
 	public GameObject playerFactoryPrefab;
@@ -15,7 +14,7 @@ public class menuScript : MonoBehaviour {
 	*/
 	public OnlineGame online_game;
 
-	void Awake(){
+	void Awake(){ 
 		//current_menu = menu.main;
 		playerFactoryMenus = new List<GameObject> ();
 	}
@@ -29,22 +28,20 @@ public class menuScript : MonoBehaviour {
 	}
 	void goToSettings(){
 		main_canvas.SetActive (false);
-		options_canvas.SetActive (false);
 		settings_canvas.SetActive (true);
 
 		addPlayer ();
 		Debug.Log ("go to settings");
 	}
-	
+	/*
 	void goToOptions(){
 		settings_canvas.SetActive (false);
 		main_canvas.SetActive (false);
-		options_canvas.SetActive (true);
-	}
+
+	}*/
 	
 	void goToMain(){
 		settings_canvas.SetActive (false);
-		options_canvas.SetActive (false);
 		main_canvas.SetActive (true);
 
 	}
