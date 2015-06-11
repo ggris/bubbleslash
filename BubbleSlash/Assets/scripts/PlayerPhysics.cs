@@ -649,6 +649,16 @@ public class PlayerPhysics : MonoBehaviour
 
 	public void setHatChoice (PlayerSettings.Hat hat)
 	{
-		hat_choice = hat;
+		if (is_network_) {
+			nview.RPC ("setHatChoiceRPC", RPCMode.All, (int)hat);
+		} else
+			hat_choice = hat;
 	}
+
+	[RPC]
+	void setHatChoiceRPC (int hat)
+	{
+		hat_choice = (PlayerSettings.Hat)hat;
+	}
+
 }

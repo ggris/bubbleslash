@@ -3,7 +3,7 @@ using System.Collections;
 
 public class OnlineGame : MonoBehaviour
 {
-
+	public static OnlineGame unique_game_;
 
 
 	public PlayerFactory player1_factory_;
@@ -17,9 +17,12 @@ public class OnlineGame : MonoBehaviour
 	private HostData[] hostList;
 
 	void Awake ()
-	{
-		DontDestroyOnLoad (transform.gameObject);
-
+	{      
+		if (!unique_game_) {
+			unique_game_ = this;
+			DontDestroyOnLoad (gameObject);
+		} else 
+			Destroy (gameObject);
 	}
 	
 	// Use this for initialization
@@ -69,7 +72,7 @@ public class OnlineGame : MonoBehaviour
 		if (hostList.Length > 0) {
 			JoinServer (hostList [0]);
 		} else {
-			Debug.Log("No host");
+			Debug.Log ("No host");
 		}
 	}
 	
@@ -99,7 +102,7 @@ public class OnlineGame : MonoBehaviour
 	{
 		if (Network.isClient || Network.isServer) {
 			player1_factory_.createNetworkPlayer ();
-			Debug.Log("Create P1");
+			Debug.Log ("Create P1");
 		} else {
 			//player_manager_ = GameObject.Instantiate (player_manager_prefab_, new Vector3 (), new Quaternion ()) as GameObject;
 			player1_factory_.createPlayer ();

@@ -30,12 +30,11 @@ public class PlayerFactory : MonoBehaviour {
 	}
 
 	public void createNetworkPlayer() {
-		Object player = Network.Instantiate (player_prefab, pos, new Quaternion (0, 0, 0, 0), 0);
+		GameObject player = Network.Instantiate (player_prefab, pos, new Quaternion (0, 0, 0, 0), 0) as GameObject;
 		configurePlayer (player);
 	}
 
-	void configurePlayer(Object playero) {
-		GameObject player = playero as GameObject;
+	void configurePlayer(GameObject player) {
 		Debug.Log (player);
 		//getPlayerManager().addPlayer (player);
 		//player.SetActive (false);
