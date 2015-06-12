@@ -47,8 +47,8 @@ public class menuScript : MonoBehaviour {
 	}
 
 	void startGame(){
-
-		online_game.SendMessage ("loadLevel");
+		online_game.loadLevel ();
+		//online_game.SendMessage ("loadLevel");
 	}
 
 	void addPlayer(){

@@ -114,11 +114,11 @@ public class OnlineGame : MonoBehaviour
 		menu.SendMessage ("goToSettings");
 	}
 	
-	void loadLevel ()
+	public void loadLevel ()
 	{
 		InitPlayers ();
 		Application.LoadLevel (level_);
-//		player_manager_.GetComponent<PlayerManager> ().activatePlayers ();
+		//		player_manager_.GetComponent<PlayerManager> ().activatePlayers ();
 	}
 
 	void InitPlayers ()

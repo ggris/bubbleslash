@@ -3,7 +3,6 @@ using System.Collections;
 
 public class PlayerFactory : MonoBehaviour {
 
-	static int next_unique_player_number=0;
 	private int unique_player_number;
 
 	//player setting
