@@ -87,6 +87,10 @@ NavMeshSettings:
     cellSize: .166666672
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &58719864 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 496978, guid: 2b19c349648a04966ab6c9679542c630, type: 2}
+  m_PrefabInternal: {fileID: 1319059737}
 --- !u!1 &88934821
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,7 +155,7 @@ GameObject:
   - 4: {fileID: 108832796}
   - 212: {fileID: 108832795}
   m_Layer: 0
-  m_Name: grass_2
+  m_Name: grass_11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -193,8 +197,8 @@ Transform:
   m_LocalPosition: {x: -12.4700003, y: -.779999971, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_Father: {fileID: 1393559805}
+  m_RootOrder: 10
 --- !u!1001 &171365082
 Prefab:
   m_ObjectHideFlags: 0
@@ -418,8 +422,9 @@ Transform:
   - {fileID: 1060628074}
   - {fileID: 937360237}
   - {fileID: 1802279455}
+  - {fileID: 58719864}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 1
 --- !u!1 &692351719
 GameObject:
   m_ObjectHideFlags: 0
@@ -723,7 +728,7 @@ GameObject:
   - 4: {fileID: 1020158979}
   - 212: {fileID: 1020158978}
   m_Layer: 0
-  m_Name: grass_1
+  m_Name: grass_12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -765,8 +770,8 @@ Transform:
   m_LocalPosition: {x: -9.47000027, y: -4.8499999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 1393559805}
+  m_RootOrder: 11
 --- !u!4 &1022840024 stripped
 Transform:
   m_PrefabParentObject: {fileID: 455980, guid: 68d931fd1c276674383288f874de6278, type: 2}
@@ -935,15 +940,15 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 654800741}
     m_Modifications:
     - target: {fileID: 496978, guid: 2b19c349648a04966ab6c9679542c630, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 16.5499992
+      value: 15.6738358
       objectReference: {fileID: 0}
     - target: {fileID: 496978, guid: 2b19c349648a04966ab6c9679542c630, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.69000006
+      value: 2.81800413
       objectReference: {fileID: 0}
     - target: {fileID: 496978, guid: 2b19c349648a04966ab6c9679542c630, type: 2}
       propertyPath: m_LocalPosition.z
@@ -967,11 +972,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 496978, guid: 2b19c349648a04966ab6c9679542c630, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 189500, guid: 2b19c349648a04966ab6c9679542c630, type: 2}
       propertyPath: m_Name
-      value: plateform 1
+      value: plateform 3
       objectReference: {fileID: 0}
     - target: {fileID: 496978, guid: 2b19c349648a04966ab6c9679542c630, type: 2}
       propertyPath: m_LocalScale.x
@@ -1019,8 +1024,10 @@ Transform:
   - {fileID: 1433661166}
   - {fileID: 271268092}
   - {fileID: 796952358}
+  - {fileID: 108832796}
+  - {fileID: 1020158979}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 5
 --- !u!1 &1433661165
 GameObject:
   m_ObjectHideFlags: 0
@@ -1118,7 +1125,7 @@ Transform:
   - {fileID: 1277516381}
   - {fileID: 1524818783}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 4
 --- !u!1 &1502568118
 GameObject:
   m_ObjectHideFlags: 0
@@ -1313,7 +1320,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 3
 --- !u!1 &1600085481
 GameObject:
   m_ObjectHideFlags: 0
@@ -1603,7 +1610,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 2
 --- !u!114 &1926901656
 MonoBehaviour:
   m_ObjectHideFlags: 0
