@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: .694117665, g: .756862819, b: .847058892, a: 1}
   m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
@@ -335,12 +335,12 @@ MonoBehaviour:
   pf_prefab: {fileID: 191472, guid: 73b8f083b529d4be3997cefcaf974869, type: 2}
   colors:
   - {r: 1, g: 1, b: 1, a: 1}
-  - {r: .952941179, g: .827450991, b: .172549024, a: 1}
-  - {r: 1, g: .546754539, b: .198529422, a: 1}
-  - {r: 1, g: 0, b: 0, a: 1}
-  - {r: .525354981, g: 1, b: .338235319, a: 1}
-  - {r: 0, g: .172413826, b: 1, a: 1}
-  - {r: 1, g: .345588207, b: .873630941, a: 1}
+  - {r: 1, g: .946255982, b: .529411793, a: 1}
+  - {r: 1, g: .592331648, b: .529411793, a: 1}
+  - {r: .833524346, g: .529411793, b: 1, a: 1}
+  - {r: .534655094, g: 1, b: .529411793, a: 1}
+  - {r: 1, g: .859741151, b: .529411793, a: 1}
+  - {r: .529411793, g: .948877573, b: 1, a: 1}
 --- !u!114 &11447952
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -381,7 +381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: .694117665, g: .756862819, b: .847058892, a: 1}
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0

@@ -57,3 +57,6 @@ TagManager:
   - name: foreground
     uniqueID: 3868812911
     locked: 0
+  - name: blood
+    uniqueID: 1414849739
+    locked: 0
