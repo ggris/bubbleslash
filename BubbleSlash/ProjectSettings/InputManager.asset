@@ -6,7 +6,7 @@ InputManager:
   serializedVersion: 2
   m_Axes:
   - serializedVersion: 3
-    m_Name: P2 Horizontal
+    m_Name: P1 Horizontal
     descriptiveName: 'Player 1 : Move right'
     descriptiveNegativeName: 'Player 1 : Move left'
     negativeButton: 
@@ -22,7 +22,7 @@ InputManager:
     axis: 0
     joyNum: 1
   - serializedVersion: 3
-    m_Name: P2 Vertical
+    m_Name: P1 Vertical
     descriptiveName: 'Player 1 : Look up'
     descriptiveNegativeName: 'Player 1 : Look down'
     negativeButton: 
@@ -166,7 +166,7 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: P1 Horizontal
+    m_Name: P2 Horizontal
     descriptiveName: 'Player 1 : Horizontal alt'
     descriptiveNegativeName: 
     negativeButton: q
@@ -182,7 +182,7 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: P1 Vertical
+    m_Name: P2 Vertical
     descriptiveName: 'Player 1 : Horizontal alt'
     descriptiveNegativeName: 
     negativeButton: s
