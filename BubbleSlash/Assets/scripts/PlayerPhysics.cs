@@ -274,14 +274,16 @@ public class PlayerPhysics : MonoBehaviour
 			tr_smoke.eulerAngles = new Vector3 (tr_smoke.eulerAngles.x, horizontal_direction * 120, tr_smoke.eulerAngles.z);
 		}
 
-		//death on fall
+		//death on fall is now supported with a box collider
+		/*
 		if (isLiving ()) {
 
-			if (transform.position.y < -10) {
+			if (transform.position.y < -20) {
 				Debug.Log ("fall !");
 				StartCoroutine (die ());
 			}
 		}
+		*/
 
 	}
 
