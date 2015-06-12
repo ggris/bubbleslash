@@ -1709,7 +1709,7 @@ Transform:
   m_LocalScale: {x: 60, y: 40, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 8
 --- !u!4 &1802279455 stripped
 Transform:
   m_PrefabParentObject: {fileID: 455980, guid: 68d931fd1c276674383288f874de6278, type: 2}
@@ -1752,6 +1752,14 @@ Prefab:
     - target: {fileID: 462552, guid: 4687e31f254dcf742906b9fe489bdf1a, type: 2}
       propertyPath: m_RootOrder
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 21264514, guid: 4687e31f254dcf742906b9fe489bdf1a, type: 2}
+      propertyPath: m_SortingLayerID
+      value: 552543623
+      objectReference: {fileID: 0}
+    - target: {fileID: 21275346, guid: 4687e31f254dcf742906b9fe489bdf1a, type: 2}
+      propertyPath: m_SortingLayerID
+      value: 552543623
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4687e31f254dcf742906b9fe489bdf1a, type: 2}
