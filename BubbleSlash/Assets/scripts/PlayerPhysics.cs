@@ -3,6 +3,8 @@ using System.Collections;
 
 public class PlayerPhysics : MonoBehaviour
 {
+	static int next_unique_player_number=0;
+	private int unique_player_number;
 
 	public int playerNumber;
 
@@ -95,6 +97,20 @@ public class PlayerPhysics : MonoBehaviour
 		is_touching_left_ = false;
 		is_touching_right_ = false;
 		is_hitable = true;
+		setOrderInLayerRPC ();
+
+		unique_player_number = next_unique_player_number;
+		next_unique_player_number ++;
+		if (Network.isServer) {
+			nview.RPC ("setPlayerNumberRPC", RPCMode.AllBuffered, unique_player_number);
+		}
+		setOrderInLayer ();
+
+	}
+	[RPC]
+	void setPlayerNumberRPC(int pn){
+		unique_player_number = pn;
+		setOrderInLayer();
 	}
 
 	void OnPlayerDisconnected(NetworkPlayer player) {
@@ -691,6 +707,23 @@ public class PlayerPhysics : MonoBehaviour
 		transform.Find ("animation").Find ("body").gameObject.GetComponent<SpriteRenderer> ().color = c;
 		transform.Find ("animation").Find ("eye").gameObject.GetComponent<SpriteRenderer> ().color = c;
 		transform.Find ("animation").Find ("weapon_trans").gameObject.GetComponent<SpriteRenderer> ().color = c;
+	}
+
+	public void setOrderInLayer(){
+		if (is_network_) {
+			nview.RPC ("setOrderInLayerRPC", RPCMode.AllBuffered);
+		} else {
+			setOrderInLayerRPC();
+		}
+	}
+
+	[RPC]
+	void setOrderInLayerRPC(){
+
+		SpriteRenderer [] allSprites = gameObject.GetComponentsInChildren <SpriteRenderer> ();
+		foreach (SpriteRenderer sr in allSprites) {
+			sr.sortingOrder = unique_player_number;
+		}
 	}
 
 	void setHatRendering ()

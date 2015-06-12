@@ -398,7 +398,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 110914}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.81239343, y: -1.26787376, z: 0}
+  m_LocalPosition: {x: .180000007, y: -1.79999995, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 405282}
@@ -1006,7 +1006,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08c8e783d24dc12468d3e744090d711f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNumber: 0
+  playerNumber: 1
   hat_prefabs:
   - {fileID: 148122, guid: 1edc466c12db3424e9e423d931ab7ea3, type: 2}
   - {fileID: 175670, guid: b8bf01b96a31ac44eb12806dde13cc2f, type: 2}
@@ -3252,7 +3252,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1001642703
+  m_SortingLayerID: -1907707797
   m_SortingOrder: 0
   m_RenderMode: 0
   m_MaxParticleSize: 1.02999997
