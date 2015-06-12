@@ -25,6 +25,7 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu">
+                                        <li><a href="game?12">V12</a></li>
                                         <li><a href="game?11">V11</a></li>
                                         <li><a href="game?10">V10</a></li>
                                         <li><a href="game?9">V9</a></li>
@@ -52,6 +53,7 @@
                     </div>
 
                     <div class="inner cover">
+                      <p> Move with Arrows, Space, B and N -- or use a gamepad.
                         <div id="unityPlayer">
                             <div class="missing">
                                 <a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!">
