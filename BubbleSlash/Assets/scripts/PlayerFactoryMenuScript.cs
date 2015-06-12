@@ -43,8 +43,9 @@ public class PlayerFactoryMenuScript : MonoBehaviour {
 	void changeColor(){
 		color_indice = (++color_indice) % colors.Length;
 		color = colors [color_indice];
-		button_image.color = color;
 		player_factory.GetComponent<PlayerFactory> ().color = color;
+		color *= new Color (0.69f, 0.75f, 0.85f);
+		button_image.color = color;
 	}
 
 

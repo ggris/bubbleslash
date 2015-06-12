@@ -612,11 +612,11 @@ public class PlayerPhysics : MonoBehaviour
 	{
 		if (is_wounded) {
 			popBlood(bloodspeed);
-			
 			StartCoroutine (die ());
 			stopWound ();
 			CancelInvoke ("stopWound");
 		} else {
+			popBlood(bloodspeed);
 			is_wounded_ = true;
 			Invoke ("startWound", 0f);
 			Invoke ("stopWound", wound_length);

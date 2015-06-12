@@ -44,9 +44,9 @@ public class CameraTracking : MonoBehaviour {
 	}
 
 	void updateMinMax() {
-		min_ = players [0].position;
-		max_ = players [0].position;
-		for (int i=1; i< players.Length; ++i) {
+		min_ = new Vector2();
+		max_ = new Vector2();
+		for (int i=0; i< players.Length; ++i) {
 			Vector2 pos = players [i].position;
 			min_.x = Mathf.Min(pos.x, min_.x);
 			min_.y = Mathf.Min(pos.y, min_.y);
