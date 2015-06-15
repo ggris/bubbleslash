@@ -30,6 +30,7 @@ public class Score : MonoBehaviour {
 
 	public static void hit() {
 		score_ -= 17;
+		if (score_<0) score_ = 0;
 		power_ /= 2;
 	}
 
