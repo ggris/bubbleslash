@@ -8,8 +8,10 @@ public class CameraTracking : MonoBehaviour {
 	public float max_zoom = 4.0f;
 
 
-	public float acceleration_ = 0.9f;
-	public float damp_ = 0.9f;
+	public float acceleration_target_ = 0.9f;
+	private float acceleration_;
+	public float damp_target_ = 0.9f;
+	private float damp_;
 
 	private Camera my_camera;
 
@@ -25,6 +27,8 @@ public class CameraTracking : MonoBehaviour {
 		resetPlayers ();
 		zoom_speed_ = 0.0f;
 		pos_speed_ = new Vector2 ();
+		acceleration_ = acceleration_target_;
+		damp_ = damp_target_;
 	}
 	
 	// Update is called once per frame
@@ -33,6 +37,13 @@ public class CameraTracking : MonoBehaviour {
 			updateMinMax ();
 			updatePosition ();
 			updateZoom ();
+		}
+		acceleration_ *= damp_;
+		acceleration_ += acceleration_target_ * (1 - damp_);
+		damp_ *= 0.9f;
+		damp_ += damp_target_ * (1 - 0.9f);
+		if (Input.GetKeyDown(KeyCode.U)) {
+			hit(new Vector2(1, 1));
 		}
 	}
 	public void resetPlayers(){
@@ -86,6 +97,11 @@ public class CameraTracking : MonoBehaviour {
 		Vector3 target_position = new Vector3 (pos_speed_.x, pos_speed_.y, 0);
 		transform.position += target_position;
 		//transform.position += new Vector3 (Mathf.Sin (10.0f*Time.time), Mathf.Cos (10.0f*Time.time), 0) * 0.1f;
+	}
+
+	public void hit(Vector2 direction) {
+		pos_speed_ += direction;
+		damp_ = 1;
 	}
 
 	float moveTowards(float a, float b) {
