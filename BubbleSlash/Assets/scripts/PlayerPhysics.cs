@@ -612,6 +612,7 @@ public class PlayerPhysics : MonoBehaviour
 	[RPC]
 	void isHurtRPC(Vector3 bloodspeed, bool is_wounded)
 	{
+		GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraTracking> ().hit (bloodspeed);
 		if (is_wounded) {
 			popBlood(bloodspeed);
 			StartCoroutine (die ());
