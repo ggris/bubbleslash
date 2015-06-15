@@ -100,8 +100,11 @@ public class CameraTracking : MonoBehaviour {
 	}
 
 	public void hit(Vector2 direction) {
-		pos_speed_ += direction;
-		damp_ = 1;
+		direction += 0.5f * new Vector2 (Random.Range(-1, 1), Random.Range(-1, 1));
+		direction *= 0.2f;
+ 		pos_speed_ += direction;
+		damp_ = 1f;
+		acceleration_ *= 0.2f;
 	}
 
 	float moveTowards(float a, float b) {
