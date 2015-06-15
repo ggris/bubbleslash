@@ -623,11 +623,19 @@ public class PlayerPhysics : MonoBehaviour
 			StartCoroutine (die ());
 			stopWound ();
 			CancelInvoke ("stopWound");
+			if (playerNumber == 1)
+				Score.die ();
+			else
+				Score.kill();
 		} else {
 			popBlood(bloodspeed);
 			is_wounded_ = true;
 			Invoke ("startWound", 0f);
 			Invoke ("stopWound", wound_length);
+			if (playerNumber == 1)
+				Score.hit ();
+			else
+				Score.hurt();
 		}
 	}
 
