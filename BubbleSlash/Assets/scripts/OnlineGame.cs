@@ -5,6 +5,11 @@ using System.Collections.Generic;
 public class OnlineGame : MonoBehaviour
 {
 
+	enum GameStatus {
+		MainMenu,
+		InGame
+	}
+
 	public static OnlineGame unique_game_;
 
 
@@ -18,6 +23,8 @@ public class OnlineGame : MonoBehaviour
 	//private GameObject player_manager_;
 	private HostData[] hostList;
 	public menuScript menu;
+	public GameObject esc_menu_;
+	GameStatus game_status_;
 
 	void Awake ()
 	{      
@@ -29,6 +36,9 @@ public class OnlineGame : MonoBehaviour
 			unique_game_ = this;
 			DontDestroyOnLoad (gameObject);
 		}
+		game_status_ = GameStatus.MainMenu;
+		
+		DontDestroyOnLoad (esc_menu_.gameObject);
 	}
 	
 	// Use this for initialization
@@ -41,16 +51,9 @@ public class OnlineGame : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if (Input.GetKeyDown (KeyCode.Escape)) {
-			if (Network.isServer) {
-				Network.Disconnect ();
-				MasterServer.UnregisterHost ();
-			}
-			if (Network.isClient) {
-				Network.Disconnect ();
-			}
-			disconnect();
-		}
+
+		if (Input.GetKey (KeyCode.Escape) && game_status_ == GameStatus.InGame)
+			esc_menu_.SetActive (true);
 	}
 
 	public static void disconnect()
@@ -118,6 +121,7 @@ public class OnlineGame : MonoBehaviour
 	{
 		InitPlayers ();
 		Application.LoadLevel (level_);
+		game_status_ = GameStatus.InGame;
 		//		player_manager_.GetComponent<PlayerManager> ().activatePlayers ();
 	}
 
