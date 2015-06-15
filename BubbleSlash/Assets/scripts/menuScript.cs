@@ -54,12 +54,14 @@ public class menuScript : MonoBehaviour {
 	void addPlayer(){
 		GameObject new_pfm = GameObject.Instantiate(playerFactoryMenuPrefab) as GameObject;
 		RectTransform rect_tr = new_pfm.GetComponent<RectTransform> ();
-		rect_tr.SetParent (GameObject.Find ("Settings").GetComponent<RectTransform> ());
+		rect_tr.SetParent (GameObject.Find ("PlayerFactoryMenus").GetComponent<RectTransform> ());
 		new_pfm.transform.localScale = new Vector3 (1, 1, 1);
-		new_pfm.GetComponent<RectTransform> ().position = new Vector3 (0, 100 - 80*playerFactoryMenus.Count, 0);
-		new_pfm.GetComponent<PlayerFactoryMenuScript> ().setInputNumber (playerFactoryMenus.Count + 1);
-		playerFactoryMenus.Add (new_pfm);
+		//GameObject.Find ("PlayerFactoryMenus").GetComponent<RectTransform> ().offsetMin = new Vector2 (0, 0);
 
+		//new_pfm.GetComponent<RectTransform> ().position = new Vector3 (0, 500- 80*playerFactoryMenus.Count, 0);
+		//new_pfm.GetComponent<PlayerFactoryMenuScript> ().setInputNumber (playerFactoryMenus.Count + 1);
+		playerFactoryMenus.Add (new_pfm);
+		GameObject.Find ("PlayerFactoryMenus").GetComponent<RectTransform> ().offsetMin = new Vector2 (0, 80 + 90 *(4- playerFactoryMenus.Count));
 		//GameObject player_factory = GameObject.Instantiate(playerFactoryPrefab) as GameObject;
 		//online_game.addFactory (player_factory.GetComponent<PlayerFactory> ());
 	}
@@ -67,6 +69,7 @@ public class menuScript : MonoBehaviour {
 		GameObject pfm = playerFactoryMenus [playerFactoryMenus.Count - 1];
 		playerFactoryMenus.Remove (pfm);
 		GameObject.Destroy (pfm);
+		GameObject.Find ("PlayerFactoryMenus").GetComponent<RectTransform> ().offsetMin = new Vector2 (0, 80 + 90 *(4- playerFactoryMenus.Count));
 
 	}
 
