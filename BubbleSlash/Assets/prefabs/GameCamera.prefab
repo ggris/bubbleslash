@@ -33,7 +33,7 @@ GameObject:
   - 82: {fileID: 8268986}
   - 82: {fileID: 8265352}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: GameCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,7 +73,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: .664197683, g: .740457356, b: .860294104, a: .0196078438}
+  m_BackGroundColor: {r: .521518171, g: .619339824, b: .779411793, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -83,7 +83,7 @@ Camera:
   near clip plane: .300000012
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 8
   m_Depth: -1
   m_CullingMask:
@@ -275,7 +275,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   min_zoom: 20
   max_zoom: 6
-  acceleration_target_: .899999976
+  acceleration_target_: .600000024
   damp_target_: .100000001
 --- !u!124 &12431566
 Behaviour:
