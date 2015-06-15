@@ -39,6 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0ad94ba572dad74e949659158a8ece8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player_preview: {fileID: 113606, guid: 62c822ca9cf5e3646bdef191a53fb002, type: 2}
   pos: {x: 0, y: 0}
   input_number: 2
   hat: 2
