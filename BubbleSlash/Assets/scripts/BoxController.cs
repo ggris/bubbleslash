@@ -32,7 +32,7 @@ public class BoxController : MonoBehaviour {
 		if (!ignoredColliders.Contains (other)) {
 			switch(box.gameObject.name){
 			case "feet" :
-				if (physics.getInputDirection().y<0){
+				if (physics.getInputDirection().y<0 && other.gameObject.tag=="semiobstacle"){
 					ignoredColliders.Add (other);
 					Physics2D.IgnoreCollision(body,other,true);
 				}
@@ -47,7 +47,7 @@ public class BoxController : MonoBehaviour {
 				physics.is_touching_right_ = true;
 				break;
 			case "head" :
-				if(physics.isInputJump()){
+				if(physics.isInputJump() && other.gameObject.tag=="semiobstacle"){
 					ignoredColliders.Add (other);
 					Physics2D.IgnoreCollision(body,other,true);
 				}
