@@ -12,9 +12,6 @@ public class OnlineGame : MonoBehaviour
 
 	public static OnlineGame unique_game_;
 
-
-	//public PlayerFactory player1_factory_;
-	//public PlayerFactory player2_factory_;
 	public GameObject player_manager_prefab_;
 	public GameObject player_prefab_;
 	public const string typeName_ = "GGVLBubbleSlashDEV";

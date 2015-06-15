@@ -1,13 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 public class menuScript : MonoBehaviour {
 	//canvas
 	public GameObject main_canvas;
 	public GameObject settings_canvas;
+	public GameObject maps_canvas;
 	public GameObject playerFactoryMenuPrefab;
 	public GameObject playerFactoryPrefab;
 	private List<GameObject> playerFactoryMenus;
+
+	public Sprite[] map_previews;
+	private int map_preview_index = 0;
 	/*
 	enum menu {main,options,settings};
 	private menu current_menu;
@@ -28,25 +33,28 @@ public class menuScript : MonoBehaviour {
 	}
 	void goToSettings(){
 		main_canvas.SetActive (false);
+		maps_canvas.SetActive (false);
 		settings_canvas.SetActive (true);
 
 		addPlayer ();
 		Debug.Log ("go to settings");
 	}
-	/*
-	void goToOptions(){
+
+	void goToMaps(){
 		settings_canvas.SetActive (false);
 		main_canvas.SetActive (false);
-
-	}*/
+		maps_canvas.SetActive (true);
+	}
 	
 	void goToMain(){
+		maps_canvas.SetActive (false);
 		settings_canvas.SetActive (false);
 		main_canvas.SetActive (true);
 
 	}
 
 	void startGame(){
+		online_game.level_ = sceneName (map_preview_index);
 		online_game.loadLevel ();
 		//online_game.SendMessage ("loadLevel");
 	}
@@ -74,5 +82,28 @@ public class menuScript : MonoBehaviour {
 
 	}
 
+	void mapRight(){
+		map_preview_index = (++map_preview_index) % map_previews.Length;
+		GameObject.Find ("MapPreview").GetComponent<Image> ().sprite = map_previews [map_preview_index];
+	}
+	void mapLeft(){
+		map_preview_index = (--map_preview_index);
+		if (map_preview_index < 0)
+			map_preview_index = map_previews.Length - 1;
+		GameObject.Find ("MapPreview").GetComponent<Image> ().sprite = map_previews [map_preview_index];
+	}
+	string sceneName(int map_index){
+		switch (map_index) {
+		case 0:
+			return ("level0");
+		case 1 :
+			return ("level1");
+		case 2 :
+			return ("TestLevel03");
+		default :
+			return("");
+
+		}
+	}
 
 }
