@@ -14,7 +14,7 @@ public class Box : MonoBehaviour {
 	}
 	void OnTriggerEnter2D(Collider2D other){
 		//if (!controller.isIgnored (other)) {
-			if (other.gameObject.tag == "floor") {
+		if (other.gameObject.tag == "obstacle" || other.gameObject.tag == "semiobstacle") {
 
 					controller.enter (GetComponent<Collider2D>(), other);
 
@@ -23,14 +23,14 @@ public class Box : MonoBehaviour {
 	}
 	void OnTriggerStay2D(Collider2D other){
 		//if (!controller.isIgnored (other)) {
-			if (other.gameObject.tag == "floor") {
+		if (other.gameObject.tag == "obstacle" || other.gameObject.tag == "semiobstacle"){
 				controller.stay (GetComponent<Collider2D>(), other);
 			}
 		//}
 	}
 	void OnTriggerExit2D(Collider2D other){
 		//if (!controller.isIgnored (other)) {
-			if (other.gameObject.tag == "floor") {
+		if (other.gameObject.tag == "obstacle" || other.gameObject.tag == "semiobstacle") {
 
 				controller.exit (GetComponent<Collider2D>(), other);
 

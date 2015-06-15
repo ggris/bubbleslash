@@ -8,6 +8,8 @@ TagManager:
   - weapon
   - player
   - player manager
+  - semiobstacle
+  - obstacle
   layers:
   - Default
   - TransparentFX
