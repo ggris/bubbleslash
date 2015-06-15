@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class PlayerFactory : MonoBehaviour {
-
+	public GameObject player_preview;
 	private int unique_player_number;
 
 	//player setting
@@ -17,7 +17,6 @@ public class PlayerFactory : MonoBehaviour {
 	//prefabs
 	public GameObject[] hat_prefabs;
 	public GameObject player_prefab;
-
 	private PlayerManager player_manager = null;
 	//NetworkView network_view_;
 	
@@ -50,13 +49,18 @@ public class PlayerFactory : MonoBehaviour {
 		//notify playermanager
 	}
 
+	public void configurePreview(Color c){
+		setSprites (player_preview);
+		setHatRendering (player_preview);
+		setColor (player_preview, c);
+	}
+
 	void setSprites (GameObject player)
 	{
 		Object [] sprites = Resources.LoadAll<Sprite> ("sprites/playerSpriteSheet_" + "blue");
 		player.transform.Find ("animation").Find ("body").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites [0];
 		player.transform.Find ("animation").Find ("eye").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites [1];
 		player.transform.Find ("animation").Find ("weapon_trans").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites [2];
-		player.transform.Find ("animation").Find ("weapon_trans").Find ("weapon").gameObject.GetComponent<SpriteRenderer> ().sprite = (Sprite)sprites [3];
 	}
 
 	PlayerManager getPlayerManager() {

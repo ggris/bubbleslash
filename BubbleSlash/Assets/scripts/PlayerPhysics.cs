@@ -97,7 +97,7 @@ public class PlayerPhysics : MonoBehaviour
 		is_touching_left_ = false;
 		is_touching_right_ = false;
 		is_hitable = true;
-		setOrderInLayerRPC ();
+		//setOrderInLayerRPC ();
 
 		unique_player_number = next_unique_player_number;
 		next_unique_player_number ++;
@@ -724,7 +724,7 @@ public class PlayerPhysics : MonoBehaviour
 
 		SpriteRenderer [] allSprites = gameObject.GetComponentsInChildren <SpriteRenderer> ();
 		foreach (SpriteRenderer sr in allSprites) {
-			sr.sortingOrder = unique_player_number;
+			sr.sortingOrder = (sr.sortingOrder % 10) + 10 * unique_player_number;
 		}
 	}
 

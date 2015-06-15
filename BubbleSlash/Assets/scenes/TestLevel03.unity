@@ -1331,7 +1331,7 @@ Transform:
   - {fileID: 108832796}
   - {fileID: 1020158979}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
 --- !u!1001 &1426916975
 Prefab:
   m_ObjectHideFlags: 0
@@ -1475,7 +1475,7 @@ Transform:
   - {fileID: 1277516381}
   - {fileID: 1524818783}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!1 &1502568118
 GameObject:
   m_ObjectHideFlags: 0
