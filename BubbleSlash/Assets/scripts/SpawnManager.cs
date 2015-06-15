@@ -23,7 +23,7 @@ public class SpawnManager : MonoBehaviour
 	
 	}
 
-	Vector2 getRespawnPoint (Vector2 player_pos)
+	public Vector2 getRespawnPoint (Vector2 player_pos)
 	{
 		List<Vector2> far_enough_spawn_points = new List<Vector2> ();
 		float sqr_max_mag = min_spawn_distance_ * min_spawn_distance_;
