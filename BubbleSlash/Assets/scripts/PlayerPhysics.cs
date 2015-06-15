@@ -666,13 +666,18 @@ public class PlayerPhysics : MonoBehaviour
 		GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
 		GetComponent<Rigidbody2D> ().gravityScale = 0;
 		transform.Find ("animation").gameObject.SetActive (false);
+		Vector2 next_pos = GameObject.Find ("Spawns").GetComponent<SpawnManager> ().getRespawnPoint (new Vector2 (transform.position.x,transform.position.y));
+		Vector3 next_pos_3 = new Vector3 (next_pos.x, next_pos.y, 0);
 		yield return new WaitForSeconds (1);
-		respawn (new Vector2 (0, 0));
 
-
+		if (Network.isServer) {
+			nview.RPC ("respawnRPC", RPCMode.AllBuffered, next_pos_3);
+		} else if (!Network.isClient) {
+			respawnRPC(next_pos_3);
+		}
 	}
-
-	public void respawn (Vector2 pos)
+	[RPC]
+	public void respawnRPC (Vector3 pos)
 	{
 		animator.SetTrigger ("respawn");
 		is_hitable = true;
