@@ -51,7 +51,9 @@ public class FluidSim : MonoBehaviour {
 		Camera camera = GetComponent<Camera> ();
 		camera.aspect = 1.0f;
 		camera.targetTexture = obstacles_;
+		transform.position += new Vector3 (0, 0, -6);
 		camera.Render ();
+		transform.position += new Vector3 (0, 0, 6);
 
 		// Creating a copy of the post material to display the fluid.
 

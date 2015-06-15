@@ -600,7 +600,9 @@ public class PlayerPhysics : MonoBehaviour
 
 	public void isHurt (GameObject ennemy)
 	{
-		Vector3 bloodspeed = ennemy.GetComponent<PlayerPhysics> ().direction_action_*2;
+		Vector3 bloodspeed = ennemy.GetComponent<PlayerPhysics> ().direction_action_;
+		bloodspeed.Normalize ();
+		bloodspeed *= 2;
 		if (is_network_) {
 			if (nview.isMine)
 				nview.RPC ("isHurtRPC", RPCMode.All, bloodspeed, is_wounded_);
@@ -612,7 +614,10 @@ public class PlayerPhysics : MonoBehaviour
 	[RPC]
 	void isHurtRPC(Vector3 bloodspeed, bool is_wounded)
 	{
-		GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraTracking> ().hit (bloodspeed);
+		GameObject cam = GameObject.Find ("GameCamera");
+		if (cam!=null)
+			cam.GetComponent<CameraTracking> ().hit (-bloodspeed);
+
 		if (is_wounded) {
 			popBlood(bloodspeed);
 			StartCoroutine (die ());

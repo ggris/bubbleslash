@@ -36,7 +36,7 @@ public class CameraTracking : MonoBehaviour {
 		if (players.Length>=1){
 			updateMinMax ();
 			updatePosition ();
-			updateZoom ();
+			//updateZoom ();
 		}
 		acceleration_ *= damp_;
 		acceleration_ += acceleration_target_ * (1 - damp_);
@@ -66,7 +66,7 @@ public class CameraTracking : MonoBehaviour {
 		}
 	}
 
-	void updateZoom() {
+	float deltaZoom() {
 		Vector2 delta = max_ - min_;
 		delta.x /= my_camera.aspect;
 		float delta_ortho = Mathf.Max (delta.x, delta.y);
@@ -74,37 +74,49 @@ public class CameraTracking : MonoBehaviour {
 		delta_ortho /= 1.3f;
 		delta_ortho = moveTowards (delta_ortho, my_camera.orthographicSize);
 		delta_ortho /= my_camera.orthographicSize;
-
+		
 		zoom_speed_ *= damp_;
 		zoom_speed_ += delta_ortho;
 
-		my_camera.orthographicSize += delta_ortho;
+		return delta_ortho;
+	}
+
+	void updateZoom() {
+
+		my_camera.orthographicSize += deltaZoom ();
 
 		my_camera.orthographicSize = Mathf.Clamp (my_camera.orthographicSize, max_zoom, min_zoom);
 	}
 
 	void updatePosition() {
 		Vector2 center = (max_ + min_) / 2;
+		Vector2 delta = max_ - min_;
+		delta.x /= my_camera.aspect;
+		float dz = Mathf.Max (delta.x, delta.y);
+		dz += max_zoom;
+		dz *= -1.5f;
 		float dx = moveTowards (center.x, transform.position.x);
 		float dy = moveTowards (center.y, transform.position.y);
+		dz = moveTowards (dz, transform.position.z);
 		dx = Mathf.Clamp (dx, -acceleration_*2, acceleration_*2);
 		dy = Mathf.Clamp (dy, -acceleration_*2, acceleration_*2);
 
 		pos_speed_ *= damp_;
 		pos_speed_ += new Vector2 (dx, dy);
+		zoom_speed_ *= damp_;
+		zoom_speed_ += dz;
 
-
-		Vector3 target_position = new Vector3 (pos_speed_.x, pos_speed_.y, 0);
+		Vector3 target_position = new Vector3 (pos_speed_.x, pos_speed_.y, 0.1f*zoom_speed_);
 		transform.position += target_position;
 		//transform.position += new Vector3 (Mathf.Sin (10.0f*Time.time), Mathf.Cos (10.0f*Time.time), 0) * 0.1f;
 	}
 
 	public void hit(Vector2 direction) {
-		direction += 0.5f * new Vector2 (Random.Range(-1, 1), Random.Range(-1, 1));
-		direction *= 0.2f;
+		direction += 0.3f * new Vector2 (Random.Range(-1, 1), Random.Range(-1, 1));
+		direction *= 0.1f;
  		pos_speed_ += direction;
-		damp_ = 1f;
-		acceleration_ *= 0.2f;
+		damp_ = 0.8f;
+		acceleration_ *= 0.0f;
 	}
 
 	float moveTowards(float a, float b) {
