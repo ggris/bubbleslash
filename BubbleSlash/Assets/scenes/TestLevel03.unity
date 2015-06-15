@@ -428,37 +428,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 19831702, guid: dbdbc737ad3fc4e84a20985523ef37ee, type: 2}
-      propertyPath: ShapeModule.type
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 19831702, guid: dbdbc737ad3fc4e84a20985523ef37ee, type: 2}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 19831702, guid: dbdbc737ad3fc4e84a20985523ef37ee, type: 2}
-      propertyPath: lengthInSec
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 19831702, guid: dbdbc737ad3fc4e84a20985523ef37ee, type: 2}
-      propertyPath: InitialModule.maxNumParticles
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 19831702, guid: dbdbc737ad3fc4e84a20985523ef37ee, type: 2}
-      propertyPath: ShapeModule.angle
-      value: 5.4641514e-05
-      objectReference: {fileID: 0}
-    - target: {fileID: 496668, guid: dbdbc737ad3fc4e84a20985523ef37ee, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 496668, guid: dbdbc737ad3fc4e84a20985523ef37ee, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 496668, guid: dbdbc737ad3fc4e84a20985523ef37ee, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1
+    - target: {fileID: 19966312, guid: dbdbc737ad3fc4e84a20985523ef37ee, type: 2}
+      propertyPath: m_RenderMode
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dbdbc737ad3fc4e84a20985523ef37ee, type: 2}
@@ -1709,7 +1681,7 @@ Transform:
   m_LocalScale: {x: 60, y: 40, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
 --- !u!4 &1802279455 stripped
 Transform:
   m_PrefabParentObject: {fileID: 455980, guid: 68d931fd1c276674383288f874de6278, type: 2}
