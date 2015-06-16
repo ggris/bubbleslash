@@ -318,6 +318,7 @@ MonoBehaviour:
   playerFactoryMenuPrefab: {fileID: 187106, guid: d3e36db9378bd034b90060ec8d76d390,
     type: 2}
   playerFactoryPrefab: {fileID: 191472, guid: 73b8f083b529d4be3997cefcaf974869, type: 2}
+  startButton: {fileID: 1675981287}
   map_previews:
   - {fileID: 21300000, guid: 84caf40b9ac61204a99a112c5902ad30, type: 3}
   - {fileID: 21300000, guid: 99c781cbe2b1ea0449a4dc2fc16bdbba, type: 3}
@@ -344,6 +345,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 438626013}
   - 114: {fileID: 438626012}
+  - 148: {fileID: 438626014}
   m_Layer: 0
   m_Name: Online Game
   m_TagString: GameController
@@ -369,7 +371,7 @@ MonoBehaviour:
   level_: TestLevel03
   menu: {fileID: 248054383}
   esc_menu_: {fileID: 1626636011}
-  nview_: {fileID: 0}
+  nview_: {fileID: 438626014}
 --- !u!4 &438626013
 Transform:
   m_ObjectHideFlags: 0
@@ -383,6 +385,18 @@ Transform:
   - {fileID: 1626636013}
   m_Father: {fileID: 0}
   m_RootOrder: 4
+--- !u!148 &438626014
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 438626011}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 0}
+  m_ViewID:
+    m_ID: 1
+    m_Type: 1
 --- !u!1 &447460643
 GameObject:
   m_ObjectHideFlags: 0
