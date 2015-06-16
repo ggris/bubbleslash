@@ -22,6 +22,7 @@ public class OnlineGame : MonoBehaviour
 	public menuScript menu;
 	public GameObject esc_menu_;
 	GameStatus game_status_;
+	public NetworkView nview_;
 
 	void Awake ()
 	{      
@@ -112,6 +113,16 @@ public class OnlineGame : MonoBehaviour
 		//Debug.Log (player_manager_);
 		Debug.Log ("Server Joined : " + gameName_);
 		menu.SendMessage ("goToSettings");
+	}
+
+	void OnClientConnected (NetworkPlayer player)
+	{
+		nview_.RPC ("setLevelRPC", player, level_);
+	}
+
+	[RPC]
+	void setLevelRPC(string level) {
+		level_ = level;
 	}
 	
 	public void loadLevel ()
