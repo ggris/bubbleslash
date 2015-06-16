@@ -449,8 +449,9 @@ public class PlayerPhysics : MonoBehaviour
 
 	void addForce (Vector3 force)
 	{
-		if (is_network_){
-				nview.RPC ("addForceRPC", RPCMode.All, force);
+		if (is_network_) {
+			nview.RPC ("addForceRPC", RPCMode.All, force);
+		}
 		else
 			addForceRPC (force);
 	}
