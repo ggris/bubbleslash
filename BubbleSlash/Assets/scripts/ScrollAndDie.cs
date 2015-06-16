@@ -10,6 +10,7 @@ public class ScrollAndDie : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		t_ = Time.time;
+		color_ = GetComponent<Text> ().color;
 	}
 	
 	// Update is called once per frame
