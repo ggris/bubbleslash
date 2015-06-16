@@ -504,7 +504,7 @@ GameObject:
   - 4: {fileID: 692351720}
   m_Layer: 0
   m_Name: spawn3
-  m_TagString: Untagged
+  m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -917,7 +917,7 @@ GameObject:
   - 4: {fileID: 1277516381}
   m_Layer: 0
   m_Name: spawn2
-  m_TagString: Untagged
+  m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1191,7 +1191,7 @@ GameObject:
   - 4: {fileID: 1524818783}
   m_Layer: 0
   m_Name: spawn0
-  m_TagString: Untagged
+  m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1565,7 +1565,7 @@ GameObject:
   - 4: {fileID: 1936019727}
   m_Layer: 0
   m_Name: spawn1
-  m_TagString: Untagged
+  m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

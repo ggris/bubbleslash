@@ -97,7 +97,7 @@ GameObject:
   - 4: {fileID: 14557338}
   m_Layer: 0
   m_Name: spawn6
-  m_TagString: Untagged
+  m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1059,7 +1059,7 @@ GameObject:
   - 4: {fileID: 692351720}
   m_Layer: 0
   m_Name: spawn3
-  m_TagString: Untagged
+  m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1717,7 +1717,7 @@ GameObject:
   - 4: {fileID: 1100955526}
   m_Layer: 0
   m_Name: spawn4
-  m_TagString: Untagged
+  m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1869,7 +1869,7 @@ GameObject:
   - 4: {fileID: 1277516381}
   m_Layer: 0
   m_Name: spawn2
-  m_TagString: Untagged
+  m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1896,7 +1896,7 @@ GameObject:
   - 4: {fileID: 1300238714}
   m_Layer: 0
   m_Name: spawn5
-  m_TagString: Untagged
+  m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2366,7 +2366,7 @@ GameObject:
   - 4: {fileID: 1524818783}
   m_Layer: 0
   m_Name: spawn0
-  m_TagString: Untagged
+  m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2593,9 +2593,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: -.00771851558, y: .0324198715}
+  m_Offset: {x: -.0527089164, y: .0488799177}
   serializedVersion: 2
-  m_Size: {x: 1.01543939, y: 1.06484056}
+  m_Size: {x: 1.3863399, y: 1.09776056}
 --- !u!4 &1788946444
 Transform:
   m_ObjectHideFlags: 0
@@ -2889,7 +2889,7 @@ GameObject:
   - 4: {fileID: 1936019727}
   m_Layer: 0
   m_Name: spawn1
-  m_TagString: Untagged
+  m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
