@@ -112,21 +112,26 @@ public class OnlineGame : MonoBehaviour
 		//player_manager_ = GameObject.FindGameObjectWithTag ("player manager");
 		//Debug.Log (player_manager_);
 		Debug.Log ("Server Joined : " + gameName_);
-		menu.SendMessage ("goToSettings");
+		menu.goToSettings();
 	}
 
-	void OnClientConnected (NetworkPlayer player)
+	void OnPlayerConnected (NetworkPlayer player)
 	{
-		nview_.RPC ("setLevelRPC", player, level_);
+		if (game_status_ == GameStatus.InGame)
+			nview_.RPC ("setLevelRPC", player, level_);
 	}
 
 	[RPC]
 	void setLevelRPC(string level) {
 		level_ = level;
+		menu.enableStartButtonRPC();
 	}
 	
 	public void loadLevel ()
 	{
+		if (Network.isServer) {
+			nview_.RPC("setLevelRPC", RPCMode.OthersBuffered, level_);
+		}
 		InitPlayers ();
 		Application.LoadLevel (level_);
 		game_status_ = GameStatus.InGame;

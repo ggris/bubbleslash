@@ -9,6 +9,7 @@ public class menuScript : MonoBehaviour {
 	public GameObject maps_canvas;
 	public GameObject playerFactoryMenuPrefab;
 	public GameObject playerFactoryPrefab;
+	public GameObject startButton;
 	private List<GameObject> playerFactoryMenus;
 
 	public Sprite[] map_previews;
@@ -31,16 +32,34 @@ public class menuScript : MonoBehaviour {
 	void Update () {
 	
 	}
-	void goToSettings(){
+	
+	void disableStartButton () {
+		startButton.GetComponent<Button> ().enabled = false;
+		startButton.GetComponentInChildren<Text>().text = "Waiting for server ...";
+	}
+	
+	[RPC]
+	public void enableStartButtonRPC () {
+		startButton.GetComponent<Button> ().enabled = true;
+		startButton.GetComponentInChildren<Text>().text = "Start";
+	}
+
+	public void goToSettings(){
 		main_canvas.SetActive (false);
 		maps_canvas.SetActive (false);
 		settings_canvas.SetActive (true);
+		if (Network.isClient) {
+			disableStartButton ();
+		}
 
 		addPlayer ();
 		Debug.Log ("go to settings");
 	}
 
 	void goToMaps(){
+		if (Network.isClient) {
+			online_game.loadLevel ();
+		}
 		settings_canvas.SetActive (false);
 		main_canvas.SetActive (false);
 		maps_canvas.SetActive (true);
