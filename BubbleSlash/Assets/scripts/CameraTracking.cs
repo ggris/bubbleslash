@@ -102,9 +102,9 @@ public class CameraTracking : MonoBehaviour {
 		dy = Mathf.Clamp (dy, -acceleration_*2, acceleration_*2);
 
 		pos_speed_ *= damp_;
-		pos_speed_ += new Vector2 (dx, dy);
+		pos_speed_ += new Vector2 (dx, dy)*(1-damp_);
 		zoom_speed_ *= damp_;
-		zoom_speed_ += dz;
+		zoom_speed_ += dz*(1-damp_);
 
 		Vector3 target_position = new Vector3 (pos_speed_.x, pos_speed_.y, 0.1f*zoom_speed_);
 		transform.position += target_position;
