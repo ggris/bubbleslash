@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value_: {fileID: 11462030}
+  message_prefab_: {fileID: 126224, guid: 1472cef7a404941fa882ed006fbd4db4, type: 2}
 --- !u!114 &11483604
 MonoBehaviour:
   m_ObjectHideFlags: 1
