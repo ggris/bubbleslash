@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Liquid
-  m_Shader: {fileID: 4800000, guid: 17d0b4fcbb5fc454bb346fe9b599ebe1, type: 3}
+  m_Name: Accumulate
+  m_Shader: {fileID: 4800000, guid: cbb14034e235e4e258ca6a933efa4bdf, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: -1
@@ -77,6 +77,13 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Buffer
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -132,8 +139,8 @@ Material:
         second: 0
       data:
         first:
-          name: _GradScale
-        second: 1
+          name: _Factor
+        second: .300000012
     m_Colors:
       data:
         first:
@@ -147,7 +154,3 @@ Material:
         first:
           name: _EmissionColorUI
         second: {r: 1, g: 1, b: 1, a: 1}
-      data:
-        first:
-          name: _Gravity
-        second: {r: 0, g: -4.80999994, b: 0, a: 0}

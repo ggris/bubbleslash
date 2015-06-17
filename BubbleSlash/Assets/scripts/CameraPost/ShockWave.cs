@@ -52,6 +52,8 @@ public class ShockWave : MonoBehaviour
 			internal_material_.SetFloat ("_Radius", radius);
 			internal_material_.SetVector ("_Center", center);
 			Graphics.Blit (source, destination, internal_material_);
+		} else {
+			Graphics.Blit (source, destination);
 		}
 	}
 
