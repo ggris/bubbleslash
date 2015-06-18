@@ -5,7 +5,9 @@ public class ShockWave : MonoBehaviour
 {
 	public Material shockwave_material_;
 	public float speed_ = 1.2f;
-	public float max_time_;
+	public float max_time_ = 1;
+	public float variance_ = 0.5f;
+	public float amplitude_ = 0.01f;
 
 	private Material internal_material_;
 	private Vector3 center_;
@@ -33,24 +35,27 @@ public class ShockWave : MonoBehaviour
 
 	float getRadius (float delta_t)
 	{
-		float radius = delta_t * ( 0.2f*delta_t + 1 ) ;
+		float radius = delta_t * ( 0.2f*delta_t + 0.5f ) ;
 		radius *= speed_;
-		
-		float scale = GetComponent<Camera>().orthographicSize;
-		radius /= scale;
+
 
 		return radius;
 	}
 
 	void OnRenderImage (RenderTexture source, RenderTexture destination)
 	{
-		float delta_t = Time.time - time_;
+		float delta_t = 0.01f +Time.time - time_;
 		if (delta_t < max_time_) {
 			float radius = getRadius (delta_t);
 			Vector3 center = GetComponent<Camera> ().WorldToViewportPoint (center_);
-
-			internal_material_.SetFloat ("_Radius", radius);
+			
+			float scale = -transform.position.z;
+			radius /= scale;
+			internal_material_.SetFloat ("_Radius", radius/scale);
 			internal_material_.SetVector ("_Center", center);
+			internal_material_.SetFloat ("_Sigma", variance_/scale*radius);
+			internal_material_.SetFloat ("_Amplitude", amplitude_/scale*radius);
+			internal_material_.SetFloat ("_Ratio", GetComponent<Camera>().aspect);
 			Graphics.Blit (source, destination, internal_material_);
 		} else {
 			Graphics.Blit (source, destination);

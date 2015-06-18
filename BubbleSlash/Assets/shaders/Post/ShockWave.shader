@@ -1,10 +1,6 @@
 ﻿Shader "Custom/Post/ShockWave" {
     Properties {
         _MainTex ("", 2D) = "white" {}
-        //_Center ("Center", Vector) = (0.5,0.5,0,0)
-        //_Radius ("Radius", Float) = 0.2
-        _Sigma ("Variance", Float) = 0.2
-        _Amplitude ("Amplitude", Float) = 0.01
     }
 
     SubShader {
@@ -32,11 +28,13 @@
             sampler2D _MainTex;
             uniform float2 _Center;
             uniform float _Radius;
-            float _Sigma;
-            float _Amplitude;
+            uniform float _Sigma;
+            uniform float _Amplitude;
+            uniform float _Ratio;
             
             float deform(float x) {
             	float y = x/_Radius;
+            	y*=y;
             	y -= 1;
             	y *= y;
             	float sigma = _Sigma/(_Sigma*2+_Radius);
@@ -46,7 +44,9 @@
 
             fixed4 frag (v2f i) : COLOR{
             	float2 u = i.uv - _Center;
-            	float l = length(u);
+            	float2 u1 = u;
+            	u1.x *= _Ratio;
+            	float l = length(u1);
             	float d = deform(l);
             	float2 v = _Center + u*(l-d)/l;
             

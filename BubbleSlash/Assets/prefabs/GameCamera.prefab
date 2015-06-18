@@ -273,8 +273,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shockwave_material_: {fileID: 2100000, guid: 95aabaed9b60e406cbdf9d9617dd1aaa, type: 2}
-  speed_: 10
+  speed_: 800
   max_time_: 1
+  variance_: 3
+  amplitude_: .200000003
 --- !u!114 &11497346
 MonoBehaviour:
   m_ObjectHideFlags: 1
