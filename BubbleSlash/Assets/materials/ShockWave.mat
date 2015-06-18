@@ -96,10 +96,6 @@ Material:
         second: 0
       data:
         first:
-          name: _Sigma
-        second: .0500000007
-      data:
-        first:
           name: _Parallax
         second: .0199999996
       data:
@@ -140,8 +136,12 @@ Material:
         second: 0
       data:
         first:
+          name: _Sigma
+        second: .5
+      data:
+        first:
           name: _Amplitude
-        second: .00100000005
+        second: .00999999978
     m_Colors:
       data:
         first:
