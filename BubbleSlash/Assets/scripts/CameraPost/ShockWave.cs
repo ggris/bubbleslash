@@ -4,6 +4,7 @@ using System.Collections;
 public class ShockWave : MonoBehaviour
 {
 	public Material shockwave_material_;
+	public Material flip_;
 	public float speed_ = 1.2f;
 	public float max_time_ = 1;
 	public float variance_ = 0.5f;
@@ -58,7 +59,7 @@ public class ShockWave : MonoBehaviour
 			internal_material_.SetFloat ("_Ratio", GetComponent<Camera> ().aspect);
 			Graphics.Blit (source, destination, internal_material_);
 		} else {
-			Graphics.Blit (source, destination);
+			Graphics.Blit (source, destination, flip_);
 		}
 	}
 

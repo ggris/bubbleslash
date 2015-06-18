@@ -273,6 +273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shockwave_material_: {fileID: 2100000, guid: 95aabaed9b60e406cbdf9d9617dd1aaa, type: 2}
+  flip_: {fileID: 2100000, guid: ae1abde9a8b744a9c834e08aa030f102, type: 2}
   speed_: 1200
   max_time_: 1
   variance_: 3
