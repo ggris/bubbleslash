@@ -286,15 +286,15 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1393559805}
+    m_TransformParent: {fileID: 654800741}
     m_Modifications:
     - target: {fileID: 496978, guid: 2b19c349648a04966ab6c9679542c630, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -3.38000011
+      value: -4.13000011
       objectReference: {fileID: 0}
     - target: {fileID: 496978, guid: 2b19c349648a04966ab6c9679542c630, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 4.30999994
+      value: 3.11999989
       objectReference: {fileID: 0}
     - target: {fileID: 496978, guid: 2b19c349648a04966ab6c9679542c630, type: 2}
       propertyPath: m_LocalPosition.z
@@ -318,7 +318,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 496978, guid: 2b19c349648a04966ab6c9679542c630, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 189500, guid: 2b19c349648a04966ab6c9679542c630, type: 2}
       propertyPath: m_Name
@@ -446,6 +446,7 @@ Transform:
   - {fileID: 892178079}
   - {fileID: 538644995}
   - {fileID: 553783543}
+  - {fileID: 474173231}
   m_Father: {fileID: 0}
   m_RootOrder: 1
 --- !u!1 &692351719
@@ -498,11 +499,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 881365945}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.67999983, y: 5.5, z: 0}
+  m_LocalPosition: {x: -5.55000019, y: 4.17999983, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1393559805}
-  m_RootOrder: 9
+  m_RootOrder: 8
 --- !u!212 &881365947
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -610,11 +611,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 929415460}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.0999999, y: 5.57999992, z: 0}
+  m_LocalPosition: {x: -3.97000003, y: 4.26000023, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1393559805}
-  m_RootOrder: 8
+  m_RootOrder: 7
 --- !u!212 &929415462
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -732,7 +733,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 496978, guid: 2b19c349648a04966ab6c9679542c630, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 189500, guid: 2b19c349648a04966ab6c9679542c630, type: 2}
       propertyPath: m_Name
@@ -866,7 +867,6 @@ Transform:
   - {fileID: 88934822}
   - {fileID: 1433661166}
   - {fileID: 1020158979}
-  - {fileID: 474173231}
   - {fileID: 929415461}
   - {fileID: 881365946}
   m_Father: {fileID: 0}

@@ -12,7 +12,7 @@ public class DashHatScript : HatAbstractClass {
 		direction = player.GetComponent<PlayerPhysics> ().getInputDirection ();
 		player.GetComponent<Rigidbody2D> ().gravityScale = 0;
 		player.GetComponent<Rigidbody2D> ().velocity = speed * (direction.normalized);
-
+		player.GetComponent<PlayerSounds> ().dash ();
 		//float a = PlayerPhysics.getAngle (direction, player.GetComponent<PlayerPhysics>().horizontal_direction * Vector2.right);
 		//tr_animation.eulerAngles = new Vector3 (0,0, a);
 		//tr_animation.localScale = new Vector3(player.GetComponent<PlayerPhysics>().horizontal_direction, tr_animation.localScale.y,tr_animation.localScale.z);

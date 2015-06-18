@@ -28,6 +28,7 @@ public class PlayerSounds : MonoBehaviour {
 
 
 	public void startSlide(){
+		source.pitch = 1f;
 		source.loop = true;
 		source.clip = slide_;
 		source.Play ();
@@ -39,6 +40,11 @@ public class PlayerSounds : MonoBehaviour {
 	public void attack(){
 		source.clip = attack_;
 		source.pitch = Random.Range (0.4f, 1.6f);
+		source.Play ();
+	}
+	public void dash(){
+		source.clip = attack_;
+		source.pitch = 0.3f;
 		source.Play ();
 	}
 }
