@@ -48,7 +48,11 @@
             	u1.x *= _Ratio;
             	float l = length(u1);
             	float d = deform(l);
-            	float2 v = _Center + u*(l-d)/l;
+	            #if UNITY_UV_STARTS_AT_TOP
+	        		float2 v = 1 - _Center + u*(l-d)/l;
+	        	#else
+            		float2 v = _Center + u*(l-d)/l;
+				#endif
             
                 fixed4 orgCol = tex2D(_MainTex, v);
                 fixed4 shock = fixed4(d/l*0.5, d/l, d/l, 0);
