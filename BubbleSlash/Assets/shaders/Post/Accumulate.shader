@@ -9,28 +9,17 @@
         ZTest Always Cull Off ZWrite Off Fog { Mode Off } //Rendering settings
 
         Pass{
-            CGPROGRAM
-			#pragma vertex vert
+			CGPROGRAM
+			#include "UnityCG.cginc"
+            #pragma vertex vert_img
 			#pragma fragment frag
-			#include "UnityCG.cginc" 
-
-                struct v2f {
-                    float4 pos : POSITION;
-                    half2 uv : TEXCOORD0;
-                };
-
-            v2f vert (appdata_img v){
-                v2f o;
-                o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
-                o.uv = v.texcoord.xy;
-                return o; 
-            }
+            #pragma target 3.0
 
             sampler2D _MainTex;
             uniform sampler2D _Buffer;
             float _Factor;
 
-            fixed4 frag (v2f i) : COLOR{
+            fixed4 frag (v2f_img i) : COLOR{
                 fixed4 orgCol = tex2D(_MainTex, i.uv);
                 fixed4 lastCol = tex2D(_Buffer, i.uv);
 				

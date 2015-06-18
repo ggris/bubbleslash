@@ -9,21 +9,10 @@
 
         Pass{
             CGPROGRAM
-			#pragma vertex vert
+			#include "UnityCG.cginc"
+            #pragma vertex vert_img
 			#pragma fragment frag
-			#include "UnityCG.cginc" 
-
-                struct v2f {
-                    float4 pos : POSITION;
-                    half2 uv : TEXCOORD0;
-                };
-
-            v2f vert (appdata_img v){
-                v2f o;
-                o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
-                o.uv = v.texcoord.xy;
-                return o; 
-            }
+            #pragma target 3.0
 
             sampler2D _MainTex;
             uniform float2 _Center;
@@ -42,7 +31,7 @@
             	return deform*_Amplitude;
             }
 
-            fixed4 frag (v2f i) : COLOR{
+            fixed4 frag (v2f_img i) : COLOR{
             	float2 u = i.uv - _Center;
             	float2 u1 = u;
             	u1.x *= _Ratio;
