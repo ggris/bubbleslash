@@ -10,9 +10,19 @@
         Pass{
             CGPROGRAM
 			#include "UnityCG.cginc"
-            #pragma vertex vert_img
+            #pragma vertex vert
 			#pragma fragment frag
             #pragma target 3.0
+
+            v2f_img vert( appdata_img v ) { 
+            	v2f_img o;
+            	o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+            	o.uv = MultiplyUV( UNITY_MATRIX_TEXTURE0, v.texcoord );
+	            #if UNITY_UV_STARTS_AT_TOP
+	        		o.uv.y = 1-o.uv.y;
+				#endif
+            	return o;
+            } 
 
             sampler2D _MainTex;
             uniform float2 _Center;
@@ -20,7 +30,7 @@
             uniform float _Sigma;
             uniform float _Amplitude;
             uniform float _Ratio;
-            
+       
             float deform(float x) {
             	float y = x/_Radius;
             	y*=y;
