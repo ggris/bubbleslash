@@ -1436,7 +1436,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Launch server
+  m_Text: Play online
 --- !u!222 &1272945450
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1571,7 +1571,7 @@ GameObject:
   - 114: {fileID: 1308001243}
   - 114: {fileID: 1308001242}
   m_Layer: 5
-  m_Name: Server
+  m_Name: PlayOffline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1635,8 +1635,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 438626012}
-        m_MethodName: SendMessage
-        m_Mode: 5
+        m_MethodName: PlayOnline
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
@@ -2727,9 +2727,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Start Offline
-
-'
+  m_Text: Play offline
 --- !u!222 &1871801125
 CanvasRenderer:
   m_ObjectHideFlags: 0

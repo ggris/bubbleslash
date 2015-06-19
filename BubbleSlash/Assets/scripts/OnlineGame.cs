@@ -7,6 +7,7 @@ public class OnlineGame : MonoBehaviour
 
 	enum GameStatus {
 		MainMenu,
+		Settings,
 		InGame
 	}
 
@@ -69,12 +70,16 @@ public class OnlineGame : MonoBehaviour
 		Network.InitializeServer (32, 25000, useNat);
 		MasterServer.RegisterHost (typeName_, gameName_);
 	}
+
+	public void PlayOnline() {
+		RefreshHostList ();
+	}
 	
 	void OnServerInitialized ()
 	{
 		Debug.Log ("Server Initializied");
 		//player_manager_ = Network.Instantiate (player_manager_prefab_, new Vector3 (), new Quaternion (), 0) as GameObject;
-		menu.SendMessage ("goToSettings");
+		menu.goToSettings ();
 	}
 	
 	void ConnectRandomServer ()
@@ -93,10 +98,14 @@ public class OnlineGame : MonoBehaviour
 			hostList = MasterServer.PollHostList ();
 		else
 			Debug.Log (msEvent);
-		if (hostList.Length > 0) {
-			JoinServer (hostList [0]);
-		} else {
-			Debug.Log ("No host");
+		if (game_status_ == GameStatus.MainMenu) {
+			if (hostList.Length > 0) {
+				game_status_ = GameStatus.Settings;
+				JoinServer (hostList [0]);
+			} else {
+				game_status_ = GameStatus.Settings;
+				LaunchServer ();
+			}
 		}
 	}
 	
