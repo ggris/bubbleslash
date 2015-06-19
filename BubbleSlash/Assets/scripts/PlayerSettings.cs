@@ -8,6 +8,8 @@ public class PlayerSettings {
 
 	public static Hat nextHat(Hat myhat){
 		int output = ((int)myhat + 1) % 4;
+		if (output == 0)
+			output ++;
 		return (Hat)output;
 	}
 
