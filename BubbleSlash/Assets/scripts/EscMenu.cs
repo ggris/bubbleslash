@@ -23,7 +23,7 @@ public class EscMenu : MonoBehaviour
 		mainMenu ();
 	}
 
-	public void mainMenu ()
+	public static void mainMenu ()
 	{
 		if (Network.isServer) {
 			Network.Disconnect ();

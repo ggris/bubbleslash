@@ -44,7 +44,7 @@ public class menuScript : MonoBehaviour {
 		startButton.GetComponentInChildren<Text>().text = "Start";
 	}
 
-	public void goToSettings(){
+	public void goToSettings(int number_of_players = 1){
 		main_canvas.SetActive (false);
 		maps_canvas.SetActive (false);
 		settings_canvas.SetActive (true);
@@ -52,7 +52,9 @@ public class menuScript : MonoBehaviour {
 			disableStartButton ();
 		}
 
-		addPlayer ();
+		for (int i=0; i < number_of_players; ++i) {
+			addPlayer ();
+		}
 		Debug.Log ("go to settings");
 	}
 
