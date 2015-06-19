@@ -44,6 +44,9 @@
             uniform sampler2D _Buffer;
 
             fixed4 frag (v2f_img i) : COLOR{
+				#if UNITY_UV_STARTS_AT_TOP
+				_Center.y = 1-_Center.y;
+				#endif
             	float2 u = i.uv - _Center;
             	float2 u1 = u;
             	u1.x *= _Ratio;
