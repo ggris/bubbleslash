@@ -766,4 +766,8 @@ public class PlayerPhysics : MonoBehaviour
 		hat_GO.transform.parent = transform;
 	}
 
+	[RPC]
+	void dashSoundRPC(){
+		GetComponent<PlayerSounds> ().dash ();
+	}
 }
