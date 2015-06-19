@@ -1,6 +1,7 @@
 ﻿Shader "Custom/Post/ShockWave" {
     Properties {
         _MainTex ("", 2D) = "white" {}
+        _Factor ("", Float) = 0.5
     }
 
     SubShader {
@@ -19,10 +20,7 @@
             v2f_img vert( appdata_img v ) { 
             	v2f_img o;
             	o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
-            	o.uv = MultiplyUV( UNITY_MATRIX_TEXTURE0, v.texcoord ) - _Center;
-	            #if UNITY_UV_STARTS_AT_TOP
-	        		o.uv.y = 1-o.uv.y;
-				#endif
+            	o.uv = MultiplyUV( UNITY_MATRIX_TEXTURE0, v.texcoord );
             	return o;
             } 
 
@@ -31,6 +29,7 @@
             uniform float _Sigma;
             uniform float _Amplitude;
             uniform float _Ratio;
+            float _Factor;
        
             float deform(float x) {
             	float y = x/_Radius;
@@ -41,23 +40,25 @@
             	float deform = exp(-y/sigma/sigma)/sigma/(_Sigma+_Radius);
             	return deform*_Amplitude;
             }
+            
+            uniform sampler2D _Buffer;
 
             fixed4 frag (v2f_img i) : COLOR{
-            	float2 u = i.uv;
+            	float2 u = i.uv - _Center;
             	float2 u1 = u;
             	u1.x *= _Ratio;
             	float l = length(u1);
             	float d = deform(l);
-	            #if UNITY_UV_STARTS_AT_TOP
-	        		float2 v = 1 - _Center + u*(l-d)/l;
-	        	#else
-            		float2 v = _Center + u*(l-d)/l;
-				#endif
+            	float2 v = _Center + u*(l-d)/l;
             
                 fixed4 orgCol = tex2D(_MainTex, v);
                 fixed4 shock = fixed4(d/l*0.5, d/l, d/l, 0);
 				
-                return orgCol*(d*0.1+l)/l + shock*0.2;
+                fixed4 lastCol = tex2D(_Buffer, i.uv);
+				
+				orgCol *= (d*0.1+l)/l;
+				orgCol += shock*0.2;
+                return lerp(orgCol, lastCol, _Factor);
             }
             ENDCG
         }

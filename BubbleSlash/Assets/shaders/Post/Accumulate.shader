@@ -23,9 +23,6 @@
             	v2f_img o;
             	o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
             	o.uv = MultiplyUV( UNITY_MATRIX_TEXTURE0, v.texcoord );
-	            #if UNITY_UV_STARTS_AT_TOP
-	        		o.uv.y = 1-o.uv.y;
-				#endif
             	return o;
             } 
 

@@ -4,6 +4,7 @@ using System.Collections;
 public class ShockWave : MonoBehaviour
 {
 	public Material shockwave_material_;
+	RenderTexture last_;
 	public Material flip_;
 	public float speed_ = 1.2f;
 	public float max_time_ = 1;
@@ -17,6 +18,10 @@ public class ShockWave : MonoBehaviour
 	{
 		time_ = Time.time - max_time_; // No Shockwave on start.
 		internal_material_ = new Material (shockwave_material_);
+		last_ = new RenderTexture (GetComponent<Camera> ().pixelWidth, GetComponent<Camera> ().pixelHeight, 0, RenderTextureFormat.Default);
+		last_.filterMode = FilterMode.Bilinear;
+		last_.Create ();
+		internal_material_.SetTexture ("_Buffer", last_);
 	}
 	
 	// Update is called once per frame
@@ -46,21 +51,18 @@ public class ShockWave : MonoBehaviour
 	void OnRenderImage (RenderTexture source, RenderTexture destination)
 	{
 		float delta_t = 0.01f + Time.time - time_;
-		if (delta_t < max_time_) {
-			float radius = getRadius (delta_t);
-			Vector3 center = GetComponent<Camera> ().WorldToViewportPoint (center_);
+		float radius = getRadius (delta_t);
+		Vector3 center = GetComponent<Camera> ().WorldToViewportPoint (center_);
 			
-			float scale = -transform.position.z;
-			radius /= scale;
-			internal_material_.SetFloat ("_Radius", radius / scale);
-			internal_material_.SetVector ("_Center", center);
-			internal_material_.SetFloat ("_Sigma", variance_ / scale * radius);
-			internal_material_.SetFloat ("_Amplitude", amplitude_ / scale * radius);
-			internal_material_.SetFloat ("_Ratio", GetComponent<Camera> ().aspect);
-			Graphics.Blit (source, destination, internal_material_);
-		} else {
-			Graphics.Blit (source, destination, flip_);
-		}
+		float scale = -transform.position.z;
+		radius /= scale;
+		internal_material_.SetFloat ("_Radius", radius / scale);
+		internal_material_.SetVector ("_Center", center);
+		internal_material_.SetFloat ("_Sigma", variance_ / scale * radius);
+		internal_material_.SetFloat ("_Amplitude", amplitude_ / scale * radius);
+		internal_material_.SetFloat ("_Ratio", GetComponent<Camera> ().aspect);
+		Graphics.Blit (source, destination, internal_material_);
+		Graphics.Blit (destination, last_);
 	}
 
 }
