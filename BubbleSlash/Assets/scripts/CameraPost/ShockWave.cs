@@ -53,6 +53,9 @@ public class ShockWave : MonoBehaviour
 		float delta_t = 0.01f + Time.time - time_;
 		float radius = getRadius (delta_t);
 		Vector3 center = GetComponent<Camera> ().WorldToViewportPoint (center_);
+		#if UNITY_UV_STARTS_AT_TOP
+		center.y = 1-center.y;
+		#endif
 			
 		float scale = -transform.position.z;
 		radius /= scale;
