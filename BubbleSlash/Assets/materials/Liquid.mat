@@ -133,7 +133,7 @@ Material:
       data:
         first:
           name: _GradScale
-        second: 1
+        second: 1.79999995
     m_Colors:
       data:
         first:
@@ -150,4 +150,4 @@ Material:
       data:
         first:
           name: _Gravity
-        second: {r: 0, g: -4.80999994, b: 0, a: 0}
+        second: {r: 0, g: -2.80999994, b: 0, a: 0}

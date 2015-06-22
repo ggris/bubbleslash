@@ -61,14 +61,14 @@ SubShader
 			}
 			
 			float pressure(float density) {
-				float d = 0.4;
-				float pM = 1.2;
-				float p = pM-1/d;
+				const float d = 0.4;
+				const float pM = 1.2;
+				const float p = pM-1/d;
 				return density<d ? pM + p*density : density;
 			}
 			
 			float isLiquid(float density) {
-				float d = 0.4;
+				const float d = 0.4;
 				return density<d ? 0 : density;
 			}
 			
@@ -78,7 +78,7 @@ SubShader
 			    
 			    float2 origin = getOrigin(IN.uv);
 			    
-				int _PatchR = 3;
+				const int _PatchR = 2;
 			   	for (int i=-_PatchR; i<=_PatchR; i++)
 			   	{
 			   		for (int j=-_PatchR; j<=_PatchR; j++)
@@ -87,7 +87,7 @@ SubShader
 			   		}
 			   	}
 			    
-			    float k = _InvGridScale * 0.7;
+			    float k = 0.002;
 			    float pN = pressure(tex2D(_UxUyD, IN.uv + float2(0, k)).z);
 			    float pS = pressure(tex2D(_UxUyD, IN.uv + float2(0, -k)).z);
 			    float pE = pressure(tex2D(_UxUyD, IN.uv + float2(k, 0)).z);
@@ -99,14 +99,14 @@ SubShader
 			    float2 grad = float2(pE - pW, pN - pS) * _GradScale;
 			    grad *= abs(grad);
 			    	
-			    result.xy -= grad * _Delta / p * 530;
+			    result.xy -= grad * _Delta / p * 1000;
 			    
 			    result.xy += _Gravity * _Delta * isLiquid(result.z) * 70;
 			    
 			    if (obs !=0)
 			    	result.xy *= 0.7;
 			    
-			    result.z *=0.99;
+			    result.z = result.z *0.98 - 0.001;
 			    
 			    return float4(result, 0)	;
 			}

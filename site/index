@@ -21,7 +21,7 @@
                             <nav>
                                 <ul class="nav masthead-nav">
                                     <li class="active"><a href="index">Home</a></li>
-                                    <li><a href="game?12">Play</a></li>
+                                    <li><a href="game?13">Play</a></li>
                                     <li><a href="about">About</a></li>
                                 </ul>
                             </nav>
@@ -31,15 +31,15 @@
                     <div class="inner cover">
                         <h1 class="cover-heading">Slash them all !</h1>
                         <p class="lead">BubbleSlash is a 2D multiplayer fighting game. <br/>Battle with your epic bubble and humiliate your opponents.</p>
-                        <p> Last release : June 12</p>
-                        <p> You can now play online !</p>
+                        <p> Last release : June 22</p>
+                        <p> Final vesion Release Candidate</p>
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-6">
 
                                     <p>Play the game right into you web browser.
                                     </p>
-                                        <a href="game?12" class="btn btn-lg btn-default">
+                                        <a href="game?13" class="btn btn-lg btn-default">
                                         Play In browser
                                     </a>
                                 </div>
